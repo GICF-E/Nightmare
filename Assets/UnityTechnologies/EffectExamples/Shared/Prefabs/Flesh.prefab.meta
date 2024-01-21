@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a7034287e2bd6a141ab896f71d0b1357
+timeCreated: 1474622016
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73777
+  packageName: Legacy Particle Pack
+  packageVersion: 1.8
+  assetPath: Assets/UnityTechnologies/EffectExamples/Shared/Prefabs/Flesh.prefab
+  uploadId: 563305

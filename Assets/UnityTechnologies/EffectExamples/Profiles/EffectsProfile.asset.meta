@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: fd12609cdb539f941a85cc98e826d1ed
+timeCreated: 1490202661
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73777
+  packageName: Legacy Particle Pack
+  packageVersion: 1.8
+  assetPath: Assets/UnityTechnologies/EffectExamples/Profiles/EffectsProfile.asset
+  uploadId: 563305
