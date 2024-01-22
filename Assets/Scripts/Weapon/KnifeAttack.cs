@@ -5,29 +5,38 @@ using UnityEngine;
 public class KnifeAttack : StateMachineBehaviour
 {
     [Header("属性")]
-    [Tooltip("攻击范围")]public float attackRange = 2.5f;
-    [Tooltip("攻击伤害")]public int attackDamage = 150;
+    [Tooltip("攻击范围")] public float attackRange = 2.5f;
+    [Tooltip("攻击伤害")] public int attackDamage = 150;
+    [Tooltip("喷血特效")] public Transform [] bloodImpactPrefabs;
+    [Tooltip("获取角色位置")] private Transform transform;
 
     public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        // 从角色前方发射射线
-        RaycastHit hit;
-        if (Physics.Raycast(GameObject.Find("Player").transform.position, GameObject.Find("Player").transform.forward, out hit, attackRange))
+        // 获取角色位置
+        transform = animator.transform;
+        // 获取球体内所有碰撞体
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position + transform.forward * 0.5f - Vector3.down * 0.5f, attackRange);
+        foreach (var hitCollider in hitColliders)
         {
-            // 如果射线检测到标记为Enemy的对象
-            if(hit.transform.tag == "Collider" || hit.transform.tag == "Enemy"){
+            // 如果碰撞体标记为Enemy
+            if (hitCollider.CompareTag("Collider"))
+            {
                 // 敌人扣血的代码
-                hit.transform.GetComponentInParent<Enemy>().Health(attackDamage);
+                hitCollider.GetComponentInParent<Enemy>().Health(attackDamage);
+                // 生成喷血特效
+			    Instantiate (bloodImpactPrefabs [Random.Range (0, bloodImpactPrefabs.Length)], transform.position + transform.forward * 0.5f, Quaternion.LookRotation (transform.position + Vector3.right * 5));
             }
-            // 如果射线检测到油桶
-            if(hit.transform.tag == "ExplosiveBarrel"){
+            // 如果碰撞体标记为ExplosiveBarrel
+            else if (hitCollider.CompareTag("ExplosiveBarrel"))
+            {
                 // 使油桶爆炸
-                hit.transform.GetComponent<ExplosiveBarrelScript>().explode = true;
+                hitCollider.GetComponent<ExplosiveBarrelScript>().explode = true;
             }
-            // 如果射线检测到气瓶
-            if(hit.transform.tag == "GasTank"){
+            // 如果碰撞体标记为GasTank
+            else if (hitCollider.CompareTag("GasTank"))
+            {
                 // 使气瓶泄气
-                hit.transform.GetComponent<GasTankScript>().isHit = true;
+                hitCollider.GetComponent<GasTankScript>().isHit = true;
             }
         }
     }

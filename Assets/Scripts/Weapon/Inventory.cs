@@ -95,14 +95,12 @@ public class Inventory : MonoBehaviour
         // 遍历武器库
         for(int i = 0; i < weapons.Count; i++)
         {
+            // 先隐藏武器，以便显示takeout动画
+            weapons[i].gameObject.SetActive(false);
             // 根据武器编号显示对应的武器
             if(WeaponID == i)
             {
                 weapons[i].gameObject.SetActive(true);
-            }
-            else
-            {
-                weapons[i].gameObject.SetActive(false);
             }
         }
     }
@@ -144,9 +142,7 @@ public class Inventory : MonoBehaviour
         {
             // 生成这把枪械的实体
             // 根据是否是狙击枪使用不同的生成模式
-            if(throwWeapon.GetComponent<Weapon_AutomaticGun>().IS_SNIPER) Instantiate(gunsModel[itemID], GameObject.Find("Player").transform.position + GameObject.Find("Player").transform.forward * 2, Quaternion.Euler(GameObject.Find("Player").transform.eulerAngles.x, GameObject.Find("Player").transform.eulerAngles.y + 90, GameObject.Find("Player").transform.eulerAngles.z));
-            else Instantiate(gunsModel[itemID], GameObject.Find("Player").transform.position + GameObject.Find("Player").transform.forward * 2, Quaternion.Euler(GameObject.Find("Player").transform.eulerAngles.x, GameObject.Find("Player").transform.eulerAngles.y + 90, GameObject.Find("Player").transform.eulerAngles.z + 90));
-            currentWeaponID = -1;
+            Instantiate(gunsModel[itemID], GameObject.Find("Player").transform.position + GameObject.Find("Player").transform.forward * 2 + Vector3.down * 0.5f, Quaternion.Euler(GameObject.Find("Player").transform.eulerAngles.x, GameObject.Find("Player").transform.eulerAngles.y + 90, GameObject.Find("Player").transform.eulerAngles.z));
             // 遍历武器库
             for (int i = 0; i < weapons.Count; i++)
             {

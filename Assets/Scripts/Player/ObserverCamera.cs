@@ -29,10 +29,6 @@ public class ObserverCamera : MonoBehaviour
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        // 检测是否按下Q或E键来上升或下降
-        if (Input.GetKey(KeyCode.Q)) moveUpDown = 1;
-        else if (Input.GetKey(KeyCode.E)) moveUpDown = -1;
-
         // 根据用户输入计算移动量
         Vector3 movement;
         if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
@@ -44,15 +40,21 @@ public class ObserverCamera : MonoBehaviour
         transform.parent.Translate(movement);
 
         // 判断用户QE输入
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.E))
         {
             // 移动摄像机
-            transform.parent.Translate(Vector3.up * flySpeed * Time.deltaTime);
+            if(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+                transform.parent.Translate(Vector3.up * flySpeed * Time.deltaTime * 2);
+            else 
+                transform.parent.Translate(Vector3.up * flySpeed * Time.deltaTime);
         }
-        if (Input.GetKey(KeyCode.LeftControl))
+        if (Input.GetKey(KeyCode.Q))
         {
             // 移动摄像机
-            transform.parent.Translate(Vector3.down * flySpeed * Time.deltaTime);
+            if(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+                transform.parent.Translate(Vector3.down * flySpeed * Time.deltaTime * 2);
+            else
+                transform.parent.Translate(Vector3.down * flySpeed * Time.deltaTime);
         }
 
         // 计算摄像机在X轴上的旋转角度

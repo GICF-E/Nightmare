@@ -1,66 +1,108 @@
-# FPS-Demo文档
-## 项目概述
-这是一个简单的基于Low Poly风格模型实现的恐怖FPS游戏，提供了可拾取的数款枪械并设计了射击和敌人系统。  
-**注意：** FPS-Demo仅供学习参考使用，可能缺乏一定娱乐性及趣味性，不用于商业用途。  
-目前该项目持续开发中，当前版本仅为初期概念演示。
+# FPS-Demo Documentation
+## Project Overview
+This is a simple horror FPS game based on Low Poly style models. It provides several weapons that can be picked up and has designed shooting and enemy systems. It's created using the `C#` language and `Unity3D Build-In` rendering pipeline.  
 
-## 操作介绍
-### 观察者模式
-观察者模式中移动使用WASD进行平面移动，通过鼠标移动视角（上下视角有最大角度限制）。其中，WASD的移动只会受到鼠标左右视角移动所受到的旋转影响，即WASD永远只能实现平面移动，不能进行Y轴移动。可以使用以下按键对观察者摄像机进行操作：
-   - 使用[Space]键对Y轴进行正移动
-   - 使用[Control]键实现Y轴负移动
-**注：**观察者摄像机不存在碰撞题且不受重力影响，不会受到场景碰撞题的影响。
-### 角色移动
-FPS-Demo通过经典的WASD来平面移动，通过以下按键来对玩家执行操作：
-   - 通过[SPACE]键完成跳跃
-   - 通过[LeftShift]键实现奔跑以增加速度
-   - 通过[Control]按键实现下蹲以降低移动声音并减小速度
-### 武器操作
-FPS-Demo的所有武器使用统一的操作逻辑。通过鼠标左键实现射击，对于全自动武器，按住鼠标左键可以连续射击。FPS-Demo的开镜由鼠标右键的点击完成，单击一次开镜，再次单击关镜。可以通过以下按键操控武器：
-   - 按 [I] 键进行检视
-   - 按 [R] 键进行换弹
-   - 按 [C] 键可以切换手电筒的开闭状态
-   - 按 [Q] 可以发动近战
-   - 按[X]键更换射击模式（仅对全自动武器有效）
-### 武器库操作
-FPS-Demo中武器库存在武器的上限为3，即当武器空中已有3把武器后将不能在拾取武器。武器库通过鼠标滚轮或数字键盘来判定武器的更改武器，其中，当使用鼠标滚轮切换武器并已是最后一把武器时，再次向下滚动鼠标滚轮讲切换到第1把武器，而使用数字键盘切换武器时若输入为0或超出武器库中武器的数量，将切换到空手状态。如果想要拾取武器，只需要移动到武器所在的位置，武器将被自动拾起并切换到当前武器。按下[T]键可以丢弃武器，武器将被丢弃在玩家正前方，可以重新拾取。
-### 攻击敌人
-FPS-Demo中可以用武器和场景中的可交互物体对敌人进行攻击。使用枪械对敌人造成伤害的判定使用基于物理的Raycast，不同型号和种类的枪械对于敌人造成的伤害不同。同样的，场景中的大部分可交互物体，如油桶和气瓶，也可以对敌人造成伤害，使用子弹或近战可使其爆炸，不同种类的物体对敌人造成的伤害和伤害的范围各不相同。对于场景中的可交互物体，内容详见/场景/可交互物体/。
+**Note: FPS-Demo is for learning and reference only. It may lack certain entertainment and fun elements and is not intended for commercial use. We do not take any responsibility for the stability and final results of the project.**
 
-## 枪械实现
-### 枪械渲染
-FPS-Demo中的所有枪械都与场景分开渲染，将GunCamera渲染的Player层深度视图叠加到MainCamera上。因此，FPS-Demo中的所有枪械不可能与场景中的物体发生穿模现象。
-### 射击判定
-FPS-Demo同时使用了两套系统进行判定，对于击中敌人和扣血的判定，使用从枪口发射的Physics.Raycast(射线检测)，而对于弹孔和场景中可交互物体（如油桶、气瓶）及弹孔的生成，使用了基于物理Rigidbody的真实子弹，对子弹施加初始速度，以基于几何节点的碰撞起判定碰撞。
-### 枪械换弹
-对于所有的步枪、手枪和部份有弹夹的狙击枪换单子弹会在插入弹夹时被瞬间增加。对于所有的霰弹枪和部份狙击枪，换单时子弹的增加会依据动画状态机中动画的执行，即真实的子弹数会根据一颗一颗填入子弹的动画而自然地增加。
-### 开镜镜内放大效果的实现
-FPS-Demo中所有狙击枪的镜内放大效果都使用了一个专门的低FOV像机将图像映射到空间中狙击镜的前部，已实现开镜效果。狙击镜在开镜和关镜状态下会前玻璃会呈现出不同的颜色以模拟真实的效果。
-### 武器的丢弃与拾取
-FPS-Demo中为枪械模型添加Trigger碰撞箱以使枪械能够自动地被拾取。丢弃武器时该项目采用直接生成的方式，用基于物理的MeshCollider及RigidBody使枪械物体自然地落到地上。
+## Language
+The default README language for FPS-Demo projects is English, if you want to choose another language, please select it below:
+- [FPS-Demo中文文档](README_ZH.md)
 
-## 敌人实现
-### 敌人概述
-FPS-Demo中暂时只有两种敌人，'Zombie'「丧失」和'Mutant'「变种人」。变种人无论是血量、速度、伤害等方面都远远强于丧失，因此理论上来说，丧失通常会在变种人的带领下扎堆活动。通常地来说，敌人应当在没有发现玩家时以行走速度执行巡逻，发现玩家后向玩家奔跑。当然，也不乏丧失或变种人单独出现活动甚至不巡逻的情况。
-### 敌人发现玩家的判定
-敌人只有在满足一定条件下才会发现玩家，具体情况如下:
-```c#
-// 伪代码
-if(玩家进入敌人的可发现范围){
-    if(玩家不在下蹲&&玩家正在移动) 敌人发现玩家;
-    if(玩家使用了不带有消音器的枪械开枪) 敌人发现玩家;
-    if(玩家达到了敌人的绝对发现阈值) 敌人发现玩家；
+## Table of Contents
+If you only want to experience the project simply, you can refer to the first and second parts without understanding the underlying principles. If you are learning C# or Unity, we recommend reading our entire documentation to familiarize yourself with the operation logic and mechanisms of FPS-Demo for reference and learning.
+#### Part One - [Download and Usage](#section1)
+#### Part Two - [Control Modes](#section2)
+#### Part Three - [Implementation of Firearms](#section3)
+#### Part Four - [Implementation of Enemies](#section4)
+#### Part Five - [Scenes](#section5)
+
+<h2 id="section1">Download and Usage</h2>
+
+### Download
+Generally, we recommend users to directly go to the `Releases` page to download the packaged game software corresponding to the operating version, instead of directly downloading the source code in `Code - DownloadZip`.
+
+### aunch
+FPS-Demo has different installation methods on different operating systems. Please follow the instructions below after downloading the software for your architecture:
+#### MacOS
+If you are using MacOS, you can directly move the downloaded software to `Finder-Sidebar-Applications` or `Users/(Your Username)/Application`. If all goes well, you will see it in the Launchpad. Clicking the left mouse button will open it, and you can force exit the game by clicking `Esc - Quit Game` in the game or pressing `[LeftCommand] + [Q]` on any interface.
+#### Windows
+If you are using Windows, you will typically receive a folder. If you want to launch the program directly, you can enter the folder and open `FPS-Demo.exe`. For a better launch experience, you can manually move the folder to the default download folder or a custom path, i.e., `C:\Program Files\`, and add a shortcut to the desktop.
+
+<h2 id="section2">Control Modes</h2>
+
+### Observer Mode
+In Observer Mode, use `WASD` for planar movement, and move the mouse to change the viewpoint (with a maximum angle limit for up and down angles). The movement of `WASD` is only affected by the rotation caused by the left and right movement of the mouse, meaning WASD can only achieve planar movement and cannot move on the Y-axis. You can operate the observer camera with the following keys:
+   - Use the `[E]` key for positive movement on the Y-axis.
+   - Use the `[Q]` key for negative movement on the Y-axis.  
+ 
+**Note: The observer camera has no collision and is not affected by gravity, so it is not influenced by scene collision objects.**
+
+### Character Movement
+FPS-Demo uses the classic WASD for planar movement. The following keys perform operations on the player:
+   - Use the `[SPACE]` key to jump.
+   - Use the `[LeftShift]` key to run and increase speed.
+   - Use the `[Control]` key to crouch, reducing movement noise and speed.
+
+### Weapon Operation
+All weapons in FPS-Demo use the same operation logic. Shooting is achieved by clicking the left mouse button. For automatic weapons, holding down the left mouse button allows continuous shooting. Zooming in with the weapon is done by clicking the right mouse button; click once to zoom in, click again to zoom out. The following keys control the weapon:
+   - Press `[I]` to inspect.
+   - Press `[R]` to reload.
+   - Press `[C]` to toggle the flashlight on and off.
+   - Press `[Q]` for melee attack.
+   - Press `[X]` to switch firing mode (only effective for automatic weapons).
+
+### Weapon Inventory Operation
+The weapon inventory in FPS-Demo has a maximum of 3 weapons. When there are already 3 weapons in the inventory, no more can be picked up. Weapon switching is determined by the mouse wheel or the numeric keypad. When using the mouse wheel to switch weapons and it's already the last weapon, scrolling the mouse wheel down will switch to the first weapon. Using the numeric keypad to switch weapons, if the input is 0 or exceeds the number of weapons in the inventory, it will switch to unarmed. To pick up a weapon, just move to the weapon's position, and it will be automatically picked up and switched to the current weapon. Press `[T]` to discard the weapon; it will be dropped in front of the player and can be picked up again.
+
+### Attacking Enemies
+In FPS-Demo, you can attack enemies with weapons and interactive objects in the scene. The judgment for causing damage to enemies with firearms uses Raycast based on physics. Different models and types of firearms cause different damage to enemies. Similarly, most interactive objects in the scene, such as oil drums and gas cylinders, can also damage enemies. Bullets or melee can cause them to explode. Different types of objects cause different damage and have different damage ranges to enemies. For interactive objects in the scene, see `/Scene - Interactive Objects/`.
+
+<h2 id="section3">Implementation of Firearms</h2>
+
+### Implementation of Firearms
+All firearms in FPS-Demo are rendered separately from the scene, overlaying the depth view of the Player layer rendered by GunCamera on top of MainCamera. Thus, all firearms in FPS-Demo can never penetrate through scene objects.
+
+### Shooting Judgment
+FPS-Demo uses two systems for judgment. For hit detection and damage deduction on enemies, it uses Physics.Raycast (ray detection) emitted from the gun muzzle. For the generation of bullet holes and interactive objects in the scene (such as oil drums, gas cylinders), and bullet holes, it uses real bullets based on Rigidbody physics, applying initial velocity to the bullets, and uses geometric node-based collision to determine impacts.
+
+### Reloading of Firearms
+For all rifles, pistols, and some sniper rifles with magazines, the bullets are instantly added when inserting the magazine. For all shotguns and some sniper rifles, the addition of bullets is according to the execution of the animation in the animation state machine, meaning the actual number of bullets naturally increases according to the animation of loading the bullets one by one.
+
+###  Implementation of Zoom-in Effect Inside the Scope
+All sniper rifles in FPS-Demo map the image to the front of the sniper scope in space using a special low FOV camera to achieve the zoom-in effect. The sniper scope will display different colors on the front glass when zooming in and out to simulate the real effect.
+
+### Dropping and Picking Up Weapons
+FPS-Demo adds a Trigger collision box to the firearm models so that firearms can be automatically picked up. When discarding a weapon, the project uses the direct generation method, using a MeshCollider and Rigidbody based on physics to make the firearm object naturally fall to the ground.
+
+<h2 id="section4">Implementation of Enemies</h2>
+
+### Overview of Enemies
+There are currently only two types of enemies in FPS-Demo, Zombie and Mutant. Mutants are far stronger than zombies in terms of health, speed, and damage. Therefore, theoretically, zombies usually operate in groups under the leadership of mutants. Generally, enemies should patrol at walking speed when they have not discovered the player and run towards the player after spotting them. Of course, it's not uncommon for zombies or mutants to appear or even patrol alone.
+
+### Enemy Detection of Players
+Enemies will only detect players under certain conditions, as follows:
+```swift
+// Pseudocode
+if(player enters the enemy's detection range){
+    if(player is not crouching && player is moving) enemy detects player;
+    if(player uses a gun without a silencer to shoot) enemy detects player;
+    if(player reaches the enemy's absolute detection threshold) enemy detects player;
 }else{
-    敌人不会发现玩家；
+    the enemy will not detect the player;
 }
-```
-**注：** 不同敌人的可发现范围和绝对发现阈值不同。
-### 敌人的攻击
-敌人会在进入攻击范围后停止并执行攻击程序，不同种类的敌人的攻击伤害和CD不同。对于丧失，敌人会有较短的CD和较小的伤害；对于变种人，敌人会有较长的CD和极大的伤害，变种人攻击时有爆炸例子特效。玩家在敌人的攻击范围内并且敌人在执行CD冷却时会执行Idle动画。
 
-## 场景
-### 可交互物体
-FPS-Demo场景中只有油桶和气瓶可以与子弹和玩家交互。油桶和气瓶可以被玩家推动，可交互物体的爆炸判定有物理发射的子弹执行。其中，当子弹碰撞到油桶时，油桶会瞬间爆炸并在大范围内释放出大量伤害；当子弹碰撞到气瓶时，气瓶会从顶部漏气，内部压力达到一个阈值时就会产生爆炸，在一个相对小的范围内释放出一定伤害。  
-**注：** 场景中的可交互物体的破坏不会影响地形。
-### 特殊场景
-FPS-Demo中的一些特定场景会对玩家造成一定的影响。例如，水中玩家会被强行下蹲，不能跳跃并在移动的时候播放水中移动的音效。对于场景中所有通过玩家进入且此时天花板的高度小于玩家站立高度的情况，玩家会被强制下蹲，即使用户松开[Control]，离开该场景且用户没有按下[Control]的情况中，玩家会自动重新进入站立状态。
+``` 
+**Note: Different enemies have different detection ranges and absolute detection thresholds.**
+
+### Enemy Attacks
+Enemies will stop and initiate attack routines when they enter the attack range. Different types of enemies have different attack damages and cooldowns. For zombies, the enemy will have a shorter cooldown and lesser damage; for mutants, the enemy will have a longer cooldown and significantly more damage, and mutants will have explosive particle effects when attacking. Players in the enemy's attack range and when the enemy is on cooldown will perform an Idle animation.
+
+<h2 id="section5">Scenes</h2>
+
+### Interactive Objects
+Only oil drums and gas cylinders in the FPS-Demo scene can interact with bullets and players. Oil drums and gas cylinders can be pushed by players. The explosion judgment of interactive objects is executed by physically launched bullets. When a bullet collides with an oil drum, the drum will explode instantly, releasing a large amount of damage over a large area. When a bullet collides with a gas cylinder, the cylinder will leak gas from the top, and when the internal pressure reaches a threshold, it will explode, releasing a certain amount of damage over a relatively small area.  
+  
+**Note: The destruction of interactive objects in the scene will not affect the terrain.**
+
+### Special Scenes
+Some specific scenes in FPS-Demo will have certain effects on the player. For example, in water, players will be forced to crouch, cannot jump, and will play the sound of moving in water when moving. For all scenes entered by the player and at this time the height of the ceiling is less than the standing height of the player, the player will be forced to crouch. Even if the user releases `[Control]`, as long as the user does not press `[Control]` after leaving the scene, the player will automatically re-enter the standing state.

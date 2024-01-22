@@ -86,7 +86,7 @@ public class Weapon_AutomaticGun : Weapon
     [Tooltip("声音对象")] public WeaponSoundClips soundClips;
 
     [Header("动画")]
-    [Tooltip("动画状态机")] private Animator animator;
+    [Tooltip("动画状态机")] public Animator animator;
 
     [Header("UI")]
     [Tooltip("准心")] public Image[] crossQuarterImages;
@@ -373,7 +373,6 @@ public class Weapon_AutomaticGun : Weapon
         else ExpandingCrossUpdate(0);
     }
 
-
     // 实现枪械射击
     public override void GunFire()
     {
@@ -434,12 +433,14 @@ public class Weapon_AutomaticGun : Weapon
                 if(hit.transform.tag == "Enemy")
                 {
                     // 对击中的敌人进行随机扣血
-                    hit.transform.GetComponent<Enemy>().Health(Random.Range(minDamgae, maxDamage));
+                    if(currentBullet > 2) hit.transform.GetComponent<Enemy>().Health(Random.Range(minDamgae, maxDamage));
+                    else hit.transform.GetComponent<Enemy>().Health(minDamgae * 2);
                 }
                 if(hit.transform.tag == "Collider")
                 {
                     // 对击中碰撞题的父级进行扣血
-                    hit.transform.GetComponentInParent<Enemy>().Health(Random.Range(minDamgae, maxDamage));
+                    if(currentBullet > 2) hit.transform.GetComponentInParent<Enemy>().Health(Random.Range(minDamgae, maxDamage));
+                    else hit.transform.GetComponentInParent<Enemy>().Health(minDamgae * 2);
                 }
             }
         }
@@ -630,13 +631,13 @@ public class Weapon_AutomaticGun : Weapon
     // 根据准心的大小，增减准心的开合度
     public override void ExpandingCrossUpdate(float expanDegree)
     {
-        if(currentExpanedDegree < expanDegree - 1)
+        if(currentExpanedDegree < expanDegree - 0.75f)
         {
-            ExpandCross(Time.deltaTime * 100);
+            ExpandCross(Time.deltaTime * 50);
         }
-        else if(currentExpanedDegree > expanDegree + 1)
+        else if(currentExpanedDegree > expanDegree + 0.75f)
         {
-            ExpandCross(Time.deltaTime * -300);
+            ExpandCross(Time.deltaTime * -200);
         } 
     }
 
