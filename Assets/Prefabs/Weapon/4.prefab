@@ -2662,6 +2662,7 @@ MonoBehaviour:
   ShootPoint: {fileID: 4980243858884516028}
   BulletShootPoint: {fileID: 4153281036380877247}
   CasingBulletSpawnPoint: {fileID: 4538994751218529299}
+  flashLight: {fileID: 0}
   gunCamera: {fileID: 1274822903849064303}
   bulletPrefab: {fileID: 4879702113200764, guid: 345edb73040244021b6c471bfaaa9296, type: 3}
   casingPrefab: {fileID: 4420745226056240, guid: 19193671b459943abb0b5dfac774e0b5, type: 3}
@@ -2688,6 +2689,7 @@ MonoBehaviour:
     reloadSoundAmmotLeft: {fileID: 0}
     reloadSoundOutOfAmmo: {fileID: 0}
     aimSound: {fileID: 8300000, guid: 36c1a6fd71bd84837a9a37bab11e1a5c, type: 3}
+  animator: {fileID: 0}
   crossQuarterImages:
   - {fileID: 5416356640243404308}
   - {fileID: 2248192593386411482}
@@ -2702,6 +2704,8 @@ MonoBehaviour:
   inspectInputName: 105
   GunShootModeInputName: 120
   throwWeaponInputName: 116
+  flashLightInputName: 99
+  knifeAttackInputName: 113
 --- !u!82 &2816989804028638480
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3181,7 +3185,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 20078678496667158, guid: cda49c1939dcc804a88b170c856fad12, type: 3}
       propertyPath: m_CullingMask.m_Bits
-      value: 119
+      value: 4294967295
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

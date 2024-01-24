@@ -11,9 +11,9 @@ TagManager:
   - Target
   - Enemy
   - Bullet
-  - Collider
-  - Trigger
   - Terrain
+  - EnemyCollider
+  - ObjectCollider
   layers:
   - Default
   - TransparentFX

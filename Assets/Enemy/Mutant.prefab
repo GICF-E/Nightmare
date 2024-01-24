@@ -1306,7 +1306,7 @@ GameObject:
   - component: {fileID: 5059364995729360906}
   m_Layer: 0
   m_Name: Mesh Collider
-  m_TagString: Collider
+  m_TagString: EnemyCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1391,7 +1391,7 @@ GameObject:
   - component: {fileID: 8382727579616970249}
   m_Layer: 0
   m_Name: HitPoint
-  m_TagString: Trigger
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

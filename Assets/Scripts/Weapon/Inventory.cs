@@ -142,7 +142,7 @@ public class Inventory : MonoBehaviour
         {
             // 生成这把枪械的实体
             // 根据是否是狙击枪使用不同的生成模式
-            Instantiate(gunsModel[itemID], GameObject.Find("Player").transform.position + GameObject.Find("Player").transform.forward * 2 + Vector3.down * 0.5f, Quaternion.Euler(GameObject.Find("Player").transform.eulerAngles.x, GameObject.Find("Player").transform.eulerAngles.y + 90, GameObject.Find("Player").transform.eulerAngles.z));
+            Instantiate(gunsModel[itemID], GameObject.Find("Player").transform.position + GameObject.Find("Player").transform.forward * 2, Quaternion.Euler(GameObject.Find("Player").transform.eulerAngles.x, GameObject.Find("Player").transform.eulerAngles.y + 90, GameObject.Find("Player").transform.eulerAngles.z));
             // 遍历武器库
             for (int i = 0; i < weapons.Count; i++)
             {

@@ -53,7 +53,7 @@ public class BulletScript : MonoBehaviour {
 		}
 
 		//If bullet collides with "Enemy" tag
-		if (collision.transform.tag == "Enemy" || collision.transform.tag == "Collider") 
+		if (collision.transform.tag == "Enemy" || collision.transform.tag == "EnemyCollider") 
 		{
 			//Instantiate random impact prefab from array
 			Instantiate (bloodImpactPrefabs [Random.Range 

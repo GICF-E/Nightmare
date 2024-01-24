@@ -92,7 +92,7 @@ public class ExplosiveBarrelScript : MonoBehaviour {
 			}
 
 			// 如果爆炸到了敌人的碰撞体，也对敌人扣血
-			if(hit.transform.tag == "Collider")
+			if(hit.transform.tag == "EnemyCollider")
 			{
                 hit.gameObject.GetComponentInParent<Enemy>().Health(hurtHealth);
             }

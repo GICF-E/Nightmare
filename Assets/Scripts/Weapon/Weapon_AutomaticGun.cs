@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using static Player;
-using static UnityEditor.Progress;
 
 /// <summary>
 /// 武器音效的内部类
@@ -436,7 +435,7 @@ public class Weapon_AutomaticGun : Weapon
                     if(currentBullet > 2) hit.transform.GetComponent<Enemy>().Health(Random.Range(minDamgae, maxDamage));
                     else hit.transform.GetComponent<Enemy>().Health(minDamgae * 2);
                 }
-                if(hit.transform.tag == "Collider")
+                if(hit.transform.tag == "EnemyCollider")
                 {
                     // 对击中碰撞题的父级进行扣血
                     if(currentBullet > 2) hit.transform.GetComponentInParent<Enemy>().Health(Random.Range(minDamgae, maxDamage));

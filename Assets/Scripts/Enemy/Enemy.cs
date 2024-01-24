@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.AI;
 
-
 /// <summary>
 /// 用于状态切换即加载敌人的巡逻路线的类
 /// </summary>
