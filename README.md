@@ -28,7 +28,7 @@ If you are using MacOS, you can directly move the downloaded software to `Finder
 #### Windows
 If you are using Windows, you will typically receive a folder. If you want to launch the program directly, you can enter the folder and open `FPS-Demo.exe`. For a better launch experience, you can manually move the folder to the default download folder or a custom path, i.e., `C:\Program Files\`, and add a shortcut to the desktop.
 
-<h2 id="section2">Control Modes</h2>
+<h2 id="section2">Operation Mode</h2>
 
 ### Observer Mode
 In Observer Mode, use `WASD` for planar movement, and move the mouse to change the viewpoint (with a maximum angle limit for up and down angles). The movement of `WASD` is only affected by the rotation caused by the left and right movement of the mouse, meaning WASD can only achieve planar movement and cannot move on the Y-axis. You can operate the observer camera with the following keys:
@@ -60,6 +60,9 @@ In FPS-Demo, if you want to pick up weapons or interactable objects, you need to
    - Press `[T]` to drop objects  
 
 **Note: The weapon inventory is limited to 3, meaning if you already have 3 weapons, you will not be able to pick up a new one.**
+
+### Health Regeneration
+In the FPS-Demo, the only way to regenerate health currently is by consuming food. If you want to regenerate health through food, you need to pick up the food (for the method, please refer to `/Operation Mode - Object Dropping and Picking Up/`). The character will automatically consume the food after you pick it up. During the consumption of the food, you will hear sound cues, and the health will continuously increase. Currently, the FPS-Demo supports a variety of foods, each with different amounts of health regeneration and chewing times.
 
 ### Attacking Enemies
 In FPS-Demo, you can attack enemies with weapons and interactive objects in the scene. The judgment for causing damage to enemies with firearms uses Raycast based on physics. Different models and types of firearms cause different damage to enemies. Similarly, most interactive objects in the scene, such as oil drums and gas cylinders, can also damage enemies. Bullets or melee can cause them to explode. Different types of objects cause different damage and have different damage ranges to enemies. For interactive objects in the scene, see `/Scene - Interactive Objects/`.
@@ -107,9 +110,13 @@ Enemies will stop and initiate attack routines when they enter the attack range.
 <h2 id="section5">Scenes</h2>
 
 ### Interactive Objects
-Only oil drums and gas cylinders in the FPS-Demo scene can interact with bullets and players. Oil drums and gas cylinders can be pushed by players. The explosion judgment of interactive objects is executed by physically launched bullets. When a bullet collides with an oil drum, the drum will explode instantly, releasing a large amount of damage over a large area. When a bullet collides with a gas cylinder, the cylinder will leak gas from the top, and when the internal pressure reaches a threshold, it will explode, releasing a certain amount of damage over a relatively small area.  
+#### Food
+In the FPS-Demo, the mechanism of picking up food is similar to that of firearms, judged by a trigger collision box based on geometry nodes, determining the collision with the player's arm. When the player's viewpoint is facing the food, it judges whether the corresponding key is pressed by the player. If the player presses the pick-up key, the food will self-destruct after calling the player's audio source to play the pick-up sound and the health regeneration coroutine. The player's coroutine will continue to play chewing sound effects after the food is destroyed and will continue for different chewing durations based on the data of the food picked up, restoring different amounts of health.
+
+#### Oil Drums and Gas Cylinders
+In the FPS-Demo scene, oil drums and gas cylinders can interact with bullets and the player. Oil drums and gas cylinders can be pushed by the player, and the explosion judgment of interactive objects is executed by physically fired bullets. Among them, when a bullet collides with an oil drum, the oil drum will instantly explode and release a large amount of damage within a wide range; when a bullet collides with a gas cylinder, the gas cylinder will leak gas from the top, and when the internal pressure reaches a threshold, it will explode, releasing a certain amount of damage within a relatively small range.  
   
-**Note: The destruction of interactive objects in the scene will not affect the terrain.**
+***Note: The destruction of interactive objects in the scene does not affect the terrain.**
 
 ### Special Scenes
 Some specific scenes in FPS-Demo will have certain effects on the player. For example, in water, players will be forced to crouch, cannot jump, and will play the sound of moving in water when moving. For all scenes entered by the player and at this time the height of the ceiling is less than the standing height of the player, the player will be forced to crouch. Even if the user releases `[Control]`, as long as the user does not press `[Control]` after leaving the scene, the player will automatically re-enter the standing state.

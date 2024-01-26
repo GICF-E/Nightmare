@@ -22,6 +22,8 @@ public class WeaponSoundClips
     public AudioClip reloadSoundOutOfAmmo;
     // 瞄准音效
     public AudioClip aimSound;
+    // 近战音效
+    public AudioClip knifeAttackSound;
 }
 
 /// <summary>
@@ -80,14 +82,19 @@ public class Weapon_AutomaticGun : Weapon
     [Tooltip("火星的最小随机分布值")] public int minSparkEmission;
     [Tooltip("火星的最大随机分布值")] public int maxSparkEmission;
 
+
     [Header("音效")]
     [Tooltip("主音源")] public AudioSource mainAudioSource;
     [Tooltip("声音对象")] public WeaponSoundClips soundClips;
 
+
     [Header("动画")]
     [Tooltip("动画状态机")] public Animator animator;
 
+
     [Header("UI")]
+    [Tooltip("是否显示子弹剩余")] public bool isDisplayAmmo;
+    [Tooltip("是否显示枪械状态")] public bool isDisplayShootMode;
     [Tooltip("准心")] public Image[] crossQuarterImages;
     [Tooltip("当前准心的开合度")] private float currentExpanedDegree;
     [Tooltip("最大开合度")] private float maxCrossDegree = 100f;
@@ -95,10 +102,12 @@ public class Weapon_AutomaticGun : Weapon
     [Tooltip("枪械的剩余子弹量文本")] public TextMeshProUGUI ammoTextUI;
     [Tooltip("枪械的射击模式文本")] public TextMeshProUGUI shootModeTextUI;
 
+
     [Header("狙击镜")]
     [Tooltip("狙击镜材质")] public Material scopeRenderMaterial;
     [Tooltip("没有进行瞄准时狙击镜的颜色")] public Color fadeColor;
     [Tooltip("瞄准时狙击镜的颜色")] public Color defaultColor;
+
 
     [Header("键位设置")]
     [SerializeField][Tooltip("填充子弹的按键")] private KeyCode reloadInputName = KeyCode.R;
@@ -140,6 +149,11 @@ public class Weapon_AutomaticGun : Weapon
 
         // 定义UI属性
         maxCrossDegree = 15f;
+        // 显示或隐藏UI
+        if(isDisplayAmmo) ammoTextUI.gameObject.SetActive(true);
+        else ammoTextUI.gameObject.SetActive(false);
+        if(isDisplayShootMode) shootModeTextUI.gameObject.SetActive(true);
+        else shootModeTextUI.gameObject.SetActive(false);
 
         // 如果是全自动武器
         if (IS_AUTORIFLE)
@@ -224,7 +238,12 @@ public class Weapon_AutomaticGun : Weapon
         // 判断玩家是否按下攻击键
         if(Input.GetKeyDown(knifeAttackInputName))
         {
+            // 播放近战动画
             animator.SetTrigger("KnifeAttack");
+            // 播放近战声音
+            mainAudioSource.clip = soundClips.knifeAttackSound;
+            // 播放声音
+            mainAudioSource.Play();
         }
 
         // 如果是狙击枪，隐藏准心
@@ -237,11 +256,11 @@ public class Weapon_AutomaticGun : Weapon
         }
 
         // 如果按下了切换手电筒开关的按键
-        if(Input.GetKeyDown(flashLightInputName) && !flashLight.active)
+        if(Input.GetKeyDown(flashLightInputName) && !flashLight.activeSelf)
         {
             flashLight.SetActive(true);
         }
-        else if(Input.GetKeyDown(flashLightInputName) && flashLight.active)
+        else if(Input.GetKeyDown(flashLightInputName) && flashLight.activeSelf)
         {
             flashLight.SetActive(false);
         }

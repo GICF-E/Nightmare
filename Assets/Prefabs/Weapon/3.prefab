@@ -1132,8 +1132,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 125, y: 75}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 62.5, y: 50}
+  m_SizeDelta: {x: 100, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &543021337810864182
 CanvasRenderer:
@@ -1190,8 +1190,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 15
+  m_fontSizeBase: 15
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2846,6 +2846,7 @@ MonoBehaviour:
   ShootPoint: {fileID: 2965647625423785536}
   BulletShootPoint: {fileID: 4364208465940938278}
   CasingBulletSpawnPoint: {fileID: 445896393941955270}
+  flashLight: {fileID: 0}
   gunCamera: {fileID: 1435808333406762584}
   bulletPrefab: {fileID: 4879702113200764, guid: 345edb73040244021b6c471bfaaa9296, type: 3}
   casingPrefab: {fileID: 4599815396279600, guid: b40a7522d286446768fcb85ea2edb8ab, type: 3}
@@ -2872,6 +2873,10 @@ MonoBehaviour:
     reloadSoundAmmotLeft: {fileID: 0}
     reloadSoundOutOfAmmo: {fileID: 0}
     aimSound: {fileID: 8300000, guid: 36c1a6fd71bd84837a9a37bab11e1a5c, type: 3}
+    knifeAttackSound: {fileID: 8300000, guid: 5a4f9664cf53a4428ae69241371de8e4, type: 3}
+  animator: {fileID: 0}
+  isDisplayAmmo: 0
+  isDisplayShootMode: 0
   crossQuarterImages:
   - {fileID: 995907298169610941}
   - {fileID: 4972920223841376921}
@@ -2886,6 +2891,8 @@ MonoBehaviour:
   inspectInputName: 105
   GunShootModeInputName: 120
   throwWeaponInputName: 116
+  flashLightInputName: 99
+  knifeAttackInputName: 113
 --- !u!82 &5785513130543939594
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3131,8 +3138,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 100, y: 50}
-  m_SizeDelta: {x: 150, y: 30}
+  m_AnchoredPosition: {x: 50, y: 25}
+  m_SizeDelta: {x: 75, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1785150773777795043
 CanvasRenderer:
@@ -3189,8 +3196,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 15
+  m_fontSizeBase: 15
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

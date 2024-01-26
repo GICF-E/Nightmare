@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 33956013492418462}
   - component: {fileID: 23055741742906218}
   - component: {fileID: 866586742905108055}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Assault_Rifle_01_Mag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 33029372708599344}
   - component: {fileID: 23903626206078244}
   - component: {fileID: 172964206677658933}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Assault_Rifle_01_Iron_Sights
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 4688580131535408}
   - component: {fileID: 33200716571164942}
   - component: {fileID: 23187835727001738}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Assault_Rifle_01_Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -315,7 +315,7 @@ GameObject:
   - component: {fileID: 6967050516458883725}
   - component: {fileID: 6365245686146070295}
   - component: {fileID: 8270597013273241425}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Assault_Rifle_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -434,6 +434,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemID: 0
+  pickUpSound: {fileID: 8300000, guid: bc1fb63ddabf045fc8b666267a7f5953, type: 3}
 --- !u!64 &8270597013273241425
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -469,7 +470,7 @@ GameObject:
   - component: {fileID: 1123867388194104083}
   - component: {fileID: 6011526506837800397}
   - component: {fileID: 533456035260444594}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -571,7 +572,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31f2cbd43492b454485d54527a8c7410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAddX: 1
   isAddY: 0
+  isAddZ: 0
   defaultPosition: 0.05
 --- !u!1 &2205297551189570909
 GameObject:
@@ -584,7 +587,7 @@ GameObject:
   - component: {fileID: 2110044699329052559}
   - component: {fileID: 3690053123875746661}
   - component: {fileID: 3200613391219087022}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Interactive_Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}

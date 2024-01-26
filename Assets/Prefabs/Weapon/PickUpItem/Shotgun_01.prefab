@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4074490193702126}
   - component: {fileID: 33037923959493700}
   - component: {fileID: 23091334350815670}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Shotgun_01_Iron_Sights
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 4064546788063774856}
   - component: {fileID: -8406135515319387700}
   - component: {fileID: 8051825652997925573}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Shotgun_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -240,6 +240,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemID: 3
+  pickUpSound: {fileID: 8300000, guid: bc1fb63ddabf045fc8b666267a7f5953, type: 3}
 --- !u!1 &1315869177456228
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,7 +252,7 @@ GameObject:
   - component: {fileID: 4140556257002818}
   - component: {fileID: 33628498248905428}
   - component: {fileID: 23469397889501548}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Shotgun_01_Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -337,7 +338,7 @@ GameObject:
   - component: {fileID: 33738907923704214}
   - component: {fileID: 23771779842285110}
   - component: {fileID: 8000611030044501698}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Shotgun_01_Grip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -444,7 +445,7 @@ GameObject:
   - component: {fileID: 6557511700763393201}
   - component: {fileID: 7465543734329512296}
   - component: {fileID: 4591414270753100800}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Interactive_Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -521,7 +522,7 @@ GameObject:
   - component: {fileID: 1609165592781108310}
   - component: {fileID: 5620032895441093681}
   - component: {fileID: 6277990644498113675}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -623,7 +624,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31f2cbd43492b454485d54527a8c7410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAddX: 1
   isAddY: 0
+  isAddZ: 0
   defaultPosition: 0.05
 --- !u!1 &5465222887278467146
 GameObject:

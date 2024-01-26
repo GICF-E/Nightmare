@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -8040407032130974418}
   - component: {fileID: 6495930134226045097}
   - component: {fileID: 5474196395639195588}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Sniper_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -156,6 +156,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemID: 4
+  pickUpSound: {fileID: 8300000, guid: bc1fb63ddabf045fc8b666267a7f5953, type: 3}
 --- !u!1 &1057201629371776
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,7 +169,7 @@ GameObject:
   - component: {fileID: 33228294296399494}
   - component: {fileID: 23510787049548988}
   - component: {fileID: 9056432163875141377}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Sniper_01_Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -276,7 +277,7 @@ GameObject:
   - component: {fileID: 33280602235087026}
   - component: {fileID: 23270920958324336}
   - component: {fileID: 8369228127564622116}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Sniper_01_Bipod_Leg_Left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -384,7 +385,7 @@ GameObject:
   - component: {fileID: 33369075829002022}
   - component: {fileID: 23143987856911036}
   - component: {fileID: 2246701642295623109}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Sniper_01_Scope
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -492,7 +493,7 @@ GameObject:
   - component: {fileID: 33949781108235188}
   - component: {fileID: 23920958784364200}
   - component: {fileID: 3871852640381212280}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Sniper_01_Bipod_Leg_Right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -654,7 +655,7 @@ GameObject:
   - component: {fileID: 2164800026902792398}
   - component: {fileID: 2268484980768955088}
   - component: {fileID: 8653760162845632689}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -756,7 +757,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31f2cbd43492b454485d54527a8c7410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAddX: 0
   isAddY: 1
+  isAddZ: 0
   defaultPosition: 0.15
 --- !u!1 &8669899659451966030
 GameObject:
@@ -769,7 +772,7 @@ GameObject:
   - component: {fileID: 2729432898770223727}
   - component: {fileID: 6092246956165997273}
   - component: {fileID: 4061846266637474678}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Interactive_Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}

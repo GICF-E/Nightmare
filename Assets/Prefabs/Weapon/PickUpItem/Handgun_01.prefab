@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4347226976299302}
   - component: {fileID: 33666515589048406}
   - component: {fileID: 23835158718552662}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Handgun_01_Iron_Sights
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 33832857500582034}
   - component: {fileID: 23092561933669128}
   - component: {fileID: 2782168493465216029}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Handgun_01_Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -208,7 +208,7 @@ GameObject:
   - component: {fileID: -7492936888156978905}
   - component: {fileID: 7741449496742743079}
   - component: {fileID: -1148695490259371756}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Handgun_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -299,6 +299,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemID: 2
+  pickUpSound: {fileID: 8300000, guid: bc1fb63ddabf045fc8b666267a7f5953, type: 3}
 --- !u!64 &7741449496742743079
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -359,7 +360,7 @@ GameObject:
   - component: {fileID: 4404546223509156}
   - component: {fileID: 33127433654760796}
   - component: {fileID: 23961955901227076}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Handgun_01_Mag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -497,7 +498,7 @@ GameObject:
   - component: {fileID: 8548145217182476869}
   - component: {fileID: 679066363619963214}
   - component: {fileID: 8701792399796910282}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Interactive_Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -574,7 +575,7 @@ GameObject:
   - component: {fileID: 9000942156755563273}
   - component: {fileID: 658030445764412495}
   - component: {fileID: 710616859734113485}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -676,5 +677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31f2cbd43492b454485d54527a8c7410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isAddX: 1
   isAddY: 0
+  isAddZ: 0
   defaultPosition: 0.05

@@ -448,8 +448,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 125, y: 75}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 62.5, y: 50}
+  m_SizeDelta: {x: 100, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6822433318438125489
 CanvasRenderer:
@@ -506,8 +506,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 15
+  m_fontSizeBase: 15
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -809,8 +809,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 100, y: 50}
-  m_SizeDelta: {x: 150, y: 30}
+  m_AnchoredPosition: {x: 50, y: 25}
+  m_SizeDelta: {x: 75, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8771164888657454566
 CanvasRenderer:
@@ -867,8 +867,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 15
+  m_fontSizeBase: 15
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1798,8 +1798,9 @@ MonoBehaviour:
   ShootPoint: {fileID: 3053664442885386852}
   BulletShootPoint: {fileID: 1647870277516960036}
   CasingBulletSpawnPoint: {fileID: 2826255505536751978}
+  flashLight: {fileID: 0}
   gunCamera: {fileID: 704969013474274669}
-  bulletPrefab: {fileID: 4879702113200764, guid: 5953171a59c27394e9ad5cbb564affa8, type: 3}
+  bulletPrefab: {fileID: 4879702113200764, guid: 345edb73040244021b6c471bfaaa9296, type: 3}
   casingPrefab: {fileID: 4924048156253418, guid: 68090e3c3c75f42298f91a66e6f5cc7d, type: 3}
   fireRate: 0.1
   bulletMag: 20
@@ -1824,6 +1825,10 @@ MonoBehaviour:
     reloadSoundAmmotLeft: {fileID: 8300000, guid: a8eada02013934ebf89dead5f74aa5c2, type: 3}
     reloadSoundOutOfAmmo: {fileID: 8300000, guid: efe029de8814d42af869fc05ac6e9b9e, type: 3}
     aimSound: {fileID: 8300000, guid: 36c1a6fd71bd84837a9a37bab11e1a5c, type: 3}
+    knifeAttackSound: {fileID: 8300000, guid: 5a4f9664cf53a4428ae69241371de8e4, type: 3}
+  animator: {fileID: 0}
+  isDisplayAmmo: 0
+  isDisplayShootMode: 0
   crossQuarterImages:
   - {fileID: 4404910681061850779}
   - {fileID: 4161168280241295931}
@@ -1838,6 +1843,8 @@ MonoBehaviour:
   inspectInputName: 105
   GunShootModeInputName: 120
   throwWeaponInputName: 116
+  flashLightInputName: 99
+  knifeAttackInputName: 113
 --- !u!1 &4422629853673021030
 GameObject:
   m_ObjectHideFlags: 0

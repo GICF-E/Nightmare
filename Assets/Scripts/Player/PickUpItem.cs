@@ -10,6 +10,8 @@ public class PickUpItem : MonoBehaviour
     [Tooltip("武器编号")] public int itemID;
     [Tooltip("提示UI")] private GameObject canvas;
     [Tooltip("武器编号")] private GameObject weaponModel;
+    [Tooltip("拾取物体的声音")] public AudioClip pickUpSound;
+    [Tooltip("玩家代码")] private Player player;
 
     private void Awake() {
         // 遍历所有子物体
@@ -23,6 +25,7 @@ public class PickUpItem : MonoBehaviour
     }
 
     private void Start() {
+        player = GameObject.Find("Player").GetComponent<Player>();
         canvas.SetActive(false);
     }
 
@@ -43,6 +46,10 @@ public class PickUpItem : MonoBehaviour
     {
         // 判断是否是玩家接触并且按下F按键
         if(Input.GetKeyDown(KeyCode.F) && other.tag == "ObjectCollider"){
+            // 播放拾取声音
+            player.auxiliaryAudioSource.clip = pickUpSound;
+            player.auxiliaryAudioSource.loop = false;
+            player.auxiliaryAudioSource.Play();
             // 获取武器库下的对应武器对象
             weaponModel = GameObject.Find("Player/Main Camera/Inventory/").gameObject.transform.GetChild(itemID).gameObject;
             // 拾取武器

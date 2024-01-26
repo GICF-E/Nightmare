@@ -204,7 +204,7 @@ public class Enemy : MonoBehaviour
         if (Vector3.Distance(hitPoint.position, attackList[0].transform.position) <= attackRange)
         {
             // 执行扣血
-            player.PlayerHealth(Random.Range(minAttackDamage, maxAttackDamage));
+            player.PlayerDamageHealth(Random.Range(minAttackDamage, maxAttackDamage));
         }
     }
 }

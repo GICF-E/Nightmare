@@ -100,7 +100,7 @@ public class ExplosiveBarrelScript : MonoBehaviour {
             // 如果爆炸到了玩家，玩家人扣血
             if (hit.transform.tag == "Player")
             {
-                hit.gameObject.GetComponent<Player>().PlayerHealth(hurtHealth);
+                hit.gameObject.GetComponent<Player>().PlayerDamageHealth(hurtHealth);
             }
         }
 
