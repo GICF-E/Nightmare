@@ -21,7 +21,7 @@ If you only want to experience the project simply, you can refer to the first an
 ### Download
 Generally, we recommend users to directly go to the `Releases` page to download the packaged game software corresponding to the operating version, instead of directly downloading the source code in `Code - DownloadZip`.
 
-### aunch
+### Launch
 FPS-Demo has different installation methods on different operating systems. Please follow the instructions below after downloading the software for your architecture:
 #### MacOS
 If you are using MacOS, you can directly move the downloaded software to `Finder-Sidebar-Applications` or `Users/(Your Username)/Application`. If all goes well, you will see it in the Launchpad. Clicking the left mouse button will open it, and you can force exit the game by clicking `Esc - Quit Game` in the game or pressing `[LeftCommand] + [Q]` on any interface.
