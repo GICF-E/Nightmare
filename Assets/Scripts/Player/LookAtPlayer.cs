@@ -25,14 +25,14 @@ public class LookAtPlayer : MonoBehaviour
         // 根据朝向判断UI显示位置
         if(zAngle > 0 && zAngle < 180) {
             // 如果物体朝上，使用正高度
-            if(isAddX) transform.localPosition = new Vector3(defaultPosition, 0, 0);
-            else if(isAddY) transform.localPosition = new Vector3(0, defaultPosition, 0);
-            else if(isAddZ) transform.localPosition = new Vector3(0, 0, -defaultPosition);
+            if(isAddX) transform.localPosition = new Vector3(defaultPosition, transform.localPosition.y, transform.localPosition.z);
+            else if(isAddY) transform.localPosition = new Vector3(transform.localPosition.x, defaultPosition, transform.localPosition.z);
+            else if(isAddZ) transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, -defaultPosition);
         } else {
             // 如果物体朝下，使用负高度\
-            if(isAddX) transform.localPosition = new Vector3(-defaultPosition, 0, 0);
-            else if(isAddY) transform.localPosition = new Vector3(0, -defaultPosition, 0);
-            else if(isAddZ) transform.localPosition = new Vector3(0, 0, defaultPosition);
+            if(isAddX) transform.localPosition = new Vector3(-defaultPosition, transform.localPosition.y, transform.localPosition.z);
+            else if(isAddY) transform.localPosition = new Vector3(transform.localPosition.x, -defaultPosition, transform.localPosition.z);
+            else if(isAddZ) transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, defaultPosition);
         }
     }
 }

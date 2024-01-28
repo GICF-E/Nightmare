@@ -6,15 +6,15 @@ This is a simple horror FPS game based on Low Poly style models. It provides sev
 
 ## Language
 The default README language for FPS-Demo projects is English, if you want to choose another language, please select it below:
-- [FPS-Demo中文文档](README_ZH.md)
+   - [FPS-Demo中文文档](README_ZH.md)
 
 ## Table of Contents
 If you only want to experience the project simply, you can refer to the first and second parts without understanding the underlying principles. If you are learning C# or Unity, we recommend reading our entire documentation to familiarize yourself with the operation logic and mechanisms of FPS-Demo for reference and learning.
 #### Part One - [Download and Usage](#section1)
-#### Part Two - [Control Modes](#section2)
+#### Part Two - [Operation Mode](#section2)
 #### Part Three - [Implementation of Firearms](#section3)
 #### Part Four - [Implementation of Enemies](#section4)
-#### Part Five - [Scenes](#section5)
+#### Part Five - [Scene Implementation](#section5)
 
 <h2 id="section1">Download and Usage</h2>
 
@@ -35,7 +35,7 @@ In Observer Mode, use `WASD` for planar movement, and move the mouse to change t
    - Use the `[E]` key for positive movement on the Y-axis.
    - Use the `[Q]` key for negative movement on the Y-axis.  
  
-**Note: The observer camera has no collision and is not affected by gravity, so it is not influenced by scene collision objects.**
+***Note: The observer camera has no collision and is not affected by gravity, so it is not influenced by scene collision objects.**
 
 ### Character Movement
 FPS-Demo uses the classic WASD for planar movement. The following keys perform operations on the player:
@@ -59,13 +59,22 @@ In FPS-Demo, if you want to pick up weapons or interactable objects, you need to
    - Press `[F]` to pick up/interact with objects
    - Press `[T]` to drop objects  
 
-**Note: The weapon inventory is limited to 3, meaning if you already have 3 weapons, you will not be able to pick up a new one.**
+***Note: The weapon inventory is limited to 3, meaning if you already have 3 weapons, you will not be able to pick up a new one.**
 
 ### Health Regeneration
-In the FPS-Demo, the only way to regenerate health currently is by consuming food. If you want to regenerate health through food, you need to pick up the food (for the method, please refer to `/Operation Mode - Object Dropping and Picking Up/`). The character will automatically consume the food after you pick it up. During the consumption of the food, you will hear sound cues, and the health will continuously increase. Currently, the FPS-Demo supports a variety of foods, each with different amounts of health regeneration and chewing times.
+In the FPS-Demo, the only way to regenerate health currently is by consuming food. If you want to regenerate health through food, you need to pick up the food (for the method, please refer to `/Operation Mode - Object Dropping and Picking Up/`). The character will automatically consume the food after you pick it up. During the consumption of the food, you will hear sound cues, and the health will continuously increase. Currently, the FPS-Demo supports a variety of foods, each with different amounts of health regeneration and chewing times.  
+  
+***Note: Note: Only one food item can be consumed at a time.**
 
 ### Attacking Enemies
-In FPS-Demo, you can attack enemies with weapons and interactive objects in the scene. The judgment for causing damage to enemies with firearms uses Raycast based on physics. Different models and types of firearms cause different damage to enemies. Similarly, most interactive objects in the scene, such as oil drums and gas cylinders, can also damage enemies. Bullets or melee can cause them to explode. Different types of objects cause different damage and have different damage ranges to enemies. For interactive objects in the scene, see `/Scene - Interactive Objects/`.
+In FPS-Demo, you can attack enemies with weapons and interactive objects in the scene. The judgment for causing damage to enemies with firearms uses Raycast based on physics. Different models and types of firearms cause different damage to enemies. Similarly, most interactive objects in the scene, such as oil drums and gas cylinders, can also damage enemies. Bullets or melee can cause them to explode. Different types of objects cause different damage and have different damage ranges to enemies. For interactive objects in the scene, see `/Scene Implementation - Interactive Objects/`.
+
+### Viewing Notes
+In the FPS-Demo scene, there are many notes scattered around, left by ~~predecessors~~, which might guide you when you're lost or help you piece together a story from the past. To view a note, you need to approach and pick it up (see `/Operation Mode - Object Discarding and Picking Up/` for details). After picking up a note, an interface for viewing the note's content will automatically pop up. In this interface, the mouse will be automatically released, allowing you to view the content by dragging or scrolling the mouse wheel. To close the interface, you can click the `X` button at the top right corner of the screen or press the corresponding key on the keyboard: 
+   - Press `[F]` to view the note
+   - Press `Return/Enter` to close the viewing interface  
+
+***Note: You cannot control the character or weapons while viewing a note, but enemies can move normally. Therefore, ensure the environment is safe before viewing a note.**
 
 <h2 id="section3">Implementation of Firearms</h2>
 
@@ -102,16 +111,19 @@ if(player enters the enemy's detection range){
 }
 
 ``` 
-**Note: Different enemies have different detection ranges and absolute detection thresholds.**
+***Note: Different enemies have different detection ranges and absolute detection thresholds.**
 
 ### Enemy Attacks
 Enemies will stop and initiate attack routines when they enter the attack range. Different types of enemies have different attack damages and cooldowns. For zombies, the enemy will have a shorter cooldown and lesser damage; for mutants, the enemy will have a longer cooldown and significantly more damage, and mutants will have explosive particle effects when attacking. Players in the enemy's attack range and when the enemy is on cooldown will perform an Idle animation.
 
-<h2 id="section5">Scenes</h2>
+<h2 id="section5">Scene Implementation</h2>
 
 ### Interactive Objects
 #### Food
 In the FPS-Demo, the mechanism of picking up food is similar to that of firearms, judged by a trigger collision box based on geometry nodes, determining the collision with the player's arm. When the player's viewpoint is facing the food, it judges whether the corresponding key is pressed by the player. If the player presses the pick-up key, the food will self-destruct after calling the player's audio source to play the pick-up sound and the health regeneration coroutine. The player's coroutine will continue to play chewing sound effects after the food is destroyed and will continue for different chewing durations based on the data of the food picked up, restoring different amounts of health.
+
+#### Notes
+In FPS-Demo, all note scripts inherit from the same base class. This base class contains the content of all notes in the scene, while each individual note only contains the text ID. The viewing interface for the note is triggered when the collision box of the geometric node's Trigger detects a collision with the player's arm and the player presses the pickup key. This unlocks the cursor and displays the viewing view. The viewing interface of the note consists of a pinned `X` button and a Scroll View with a hidden scrollbar, allowing the player to naturally scroll or drag with the mouse to view the interface. During the note viewing process, all player movement is locked, and player input is constantly monitored, until the player presses `Return/Enter` or clicks the `X` button, at which point the operation state is restored.
 
 #### Oil Drums and Gas Cylinders
 In the FPS-Demo scene, oil drums and gas cylinders can interact with bullets and the player. Oil drums and gas cylinders can be pushed by the player, and the explosion judgment of interactive objects is executed by physically fired bullets. Among them, when a bullet collides with an oil drum, the oil drum will instantly explode and release a large amount of damage within a wide range; when a bullet collides with a gas cylinder, the gas cylinder will leak gas from the top, and when the internal pressure reaches a threshold, it will explode, releasing a certain amount of damage within a relatively small range.  

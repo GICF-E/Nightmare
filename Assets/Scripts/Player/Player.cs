@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     [Tooltip("移动音源")] [SerializeField] public AudioSource movementAudioSource;
     [Tooltip("辅助音源")] [SerializeField] public AudioSource auxiliaryAudioSource;
     [Tooltip("摄像机的位置")] public Transform cemara;
-    [Tooltip("对回血协程的引用")] private Coroutine addHealthCoroutine;
+    [Tooltip("对回血协程的引用")] public Coroutine addHealthCoroutine;
 
 
     [Header("玩家的下蹲属性")]
@@ -47,6 +47,7 @@ public class Player : MonoBehaviour
 
 
     [Header("玩家状态")]
+    [Tooltip("是否允许移动")] public bool canMove;
     [Tooltip("是否在奔跑")] public bool isRunning;
     [Tooltip("是否在跳跃")] public bool isJumping;
     [Tooltip("是否正在蹲下")] public bool isCrouching = false;
@@ -95,6 +96,7 @@ public class Player : MonoBehaviour
         // 重置玩家生命值
         playerHealth = 100f;
         // 重置玩家速度
+        canMove = true;
         if (!isSonicMode)
         {
             walkSpeed = 6;
@@ -142,8 +144,8 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        // 当角色站在地面上时执行以下逻辑
-        if (controller.isGrounded)
+        // 当角色站在地面上且可以移动时执行以下逻辑
+        if (controller.isGrounded && canMove)
         {
             // 根据玩家输入计算移动方向
             moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
@@ -222,10 +224,10 @@ public class Player : MonoBehaviour
             }
         }
 
-        // 移动角色控制器
-        controller.Move(moveDirection * Time.deltaTime);
+        // 可以移动的情况下移动角色控制器
+        if(canMove) controller.Move(moveDirection * Time.deltaTime);
         // 播放声音
-        PlayerSound();
+        if(canMove) PlayerSound();
     }
 
     // 判断玩家是否可以下蹲
@@ -450,6 +452,9 @@ public class Player : MonoBehaviour
             int colorIndex = Mathf.Clamp((int)(playerHealth * (healthImageColor.Length - 1) / 100f), 0, healthImageColor.Length - 1);
             // 根据血量百分比更新血量提示灯的颜色
             healthImage.color = healthImageColor[colorIndex];
+            // 保持咀嚼音效
+            auxiliaryAudioSource.clip = chewSound;
+            if(!auxiliaryAudioSource.isPlaying) auxiliaryAudioSource.Play();
             // 等待下一次恢复时间
             yield return new WaitForSeconds(restoringTimeBetween);
         }

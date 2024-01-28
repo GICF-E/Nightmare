@@ -16,5 +16,6 @@ public class ReloadAmmoState : StateMachineBehaviour
                 animator.GetComponent<Weapon_AutomaticGun>().ShootGunReload();
             }
         }
+        
     }
 }

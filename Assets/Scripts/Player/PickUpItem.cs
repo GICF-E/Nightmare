@@ -17,9 +17,10 @@ public class PickUpItem : MonoBehaviour
         // 遍历所有子物体
         foreach (Transform child in transform) {
             if (child.name == "Canvas") {
-                // 找到名为 "UI" 的子物体并赋值给 UI 变量
+                // 找到名为 "Canvas" 的子物体并赋值给 UI 变量
                 canvas = child.gameObject;
-                break; // 找到后停止遍历
+                // 找到后停止遍历
+                break;
             }
         }
     }

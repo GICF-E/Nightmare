@@ -187,65 +187,6 @@ public class Weapon_AutomaticGun : Weapon
 
     private void Update()
     {
-        // 如果是全自动枪械
-        if (IS_AUTORIFLE)
-        {
-            // 切换射击模式
-            if (Input.GetKeyDown(GunShootModeInputName) && modeNum != 1)
-            {
-                // 切换射击模式的枚举值
-                modeNum = 1;
-                shootingMode = ShootMode.AutoRifle;
-                // 更新UI
-                shootModeName = "Auto";
-                UpdateAmmoUI();
-            }else if(Input.GetKeyDown(GunShootModeInputName) && modeNum != 0)
-            {
-                // 切换射击模式的枚举值
-                modeNum = 2;
-                shootingMode = ShootMode.SemiGun;
-                // 更新UI
-                shootModeName = "Semi";
-                UpdateAmmoUI();
-            }
-            // 根据射击模式判断射击
-            switch (shootingMode)
-            {
-                case ShootMode.AutoRifle:
-                    GunShootInput = Input.GetMouseButton(0);
-                    fireRate = originRate;
-                    break;
-                case ShootMode.SemiGun:
-                    GunShootInput = Input.GetMouseButtonDown(0);
-                    fireRate = 0.2f;
-                    break;
-            }
-        }
-        else
-        {
-            // 切换射击模式的枚举值
-            modeNum = 2;
-            shootingMode = ShootMode.SemiGun;
-            // 更新射速和触发方法
-            GunShootInput = Input.GetMouseButtonDown(0);
-            // 非全自动枪械使用默认射速
-            fireRate = originRate;
-            // 更新UI
-            shootModeName = "Semi";
-            UpdateAmmoUI();
-        }
-
-        // 判断玩家是否按下攻击键
-        if(Input.GetKeyDown(knifeAttackInputName))
-        {
-            // 播放近战动画
-            animator.SetTrigger("KnifeAttack");
-            // 播放近战声音
-            mainAudioSource.clip = soundClips.knifeAttackSound;
-            // 播放声音
-            mainAudioSource.Play();
-        }
-
         // 如果是狙击枪，隐藏准心
         if (IS_SNIPER)
         {
@@ -255,140 +196,217 @@ public class Weapon_AutomaticGun : Weapon
             }
         }
 
-        // 如果按下了切换手电筒开关的按键
-        if(Input.GetKeyDown(flashLightInputName) && !flashLight.activeSelf)
+        // 特殊情况隐藏准心
+        if (!player.canMove)
         {
-            flashLight.SetActive(true);
-        }
-        else if(Input.GetKeyDown(flashLightInputName) && flashLight.activeSelf)
-        {
-            flashLight.SetActive(false);
-        }
-
-        // 判断换弹动画的状态
-        if ((animator.GetCurrentAnimatorStateInfo(0).IsName("reload_ammo_left") ||
-            animator.GetCurrentAnimatorStateInfo(0).IsName("reload_out_of_ammo") ||
-            animator.GetCurrentAnimatorStateInfo(0).IsName("reload_open") ||
-            animator.GetCurrentAnimatorStateInfo(0).IsName("reload_close") ||
-            animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 1") ||
-            animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 2") ||
-            animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 3") ||
-            animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 4") ||
-            animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 5") ||
-            animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 6")))
-        {
-            isReloading = true;
-        }
-        else {
-            isReloading = false;
-        }
-        // 对于霰弹枪或狙击枪的结束换弹判定
-        if((animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 1") ||
-            animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 2") ||
-            animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 3") ||
-            animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 4") ||
-            animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 5") ||
-            animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 6")) && (currentBullet == bulletMag || bulletLeft <= 0))
-        {
-            isReloading = false;
-            animator.Play("reload_close");
-        }
-        // 播放行走、跑步动画
-        animator.SetBool("Walk", state == MovementState.walking);
-        if(state == MovementState.running)
-        {
-            animator.SetBool("Run", true);
-            // 退出瞄准状态
-            isAiming = false;
-            // 设置动画机状态
-            animator.SetBool("Aim", isAiming);
-        }
-        else
-        {
-            animator.SetBool("Run", false);
-        }
-        // 播放检视动画
-        if (Input.GetKeyDown(inspectInputName))
-        {
-            animator.SetTrigger("Inspect");
-        }
-
-        // 计时器
-        if (fireTimer < fireRate) fireTimer += Time.deltaTime;
-
-        // 判断玩家鼠标左键射击
-        if (GunShootInput)
-        {
-            // 根据条件判定射线检测的次数
-            if (IS_SHOTGUN) gunFragment = 8;
-            else gunFragment = 1;
-            // 开枪射击
-            GunFire();
-        }
-        // 腰射和瞄准状态的射击精度
-        SpreadFactor = isAiming ? 0f : 0.05f;
-
-        // 判断玩家鼠标右键进入瞄准
-        if(Input.GetMouseButtonDown(1) && mouseBottonNumber == 0 && !isReloading && !animator.GetCurrentAnimatorStateInfo(0).IsName("run"))
-        {
-            // 更改开镜状态
-            isAiming = true;
-            // 设置动画机状态
-            animator.SetBool("Aim", isAiming);
-            // 记录鼠标按下次数
-            mouseBottonNumber = 1;
-        }
-        else if(Input.GetMouseButtonDown(1) && mouseBottonNumber == 1)
-        {
-            // 更改开镜状态
-            isAiming = false;
-            // 设置动画机状态
-            animator.SetBool("Aim", isAiming);
-            // 记录鼠标按下次数
-            mouseBottonNumber = 0;
-        }
-
-        // 判断是否按下换弹按键
-        if (Input.GetKeyDown(reloadInputName) && !isReloading)
-        {
-            // 执行换弹
-            DoReloadAnimation();
-            // 退出瞄准状态
-            isAiming = false;
-            // 显示准心
+            for (int i = 0; i < crossQuarterImages.Length; i++)
+            {
+                crossQuarterImages[i].gameObject.SetActive(false);
+            }
+        }else if(!isAiming){
             for (int i = 0; i < crossQuarterImages.Length; i++)
             {
                 crossQuarterImages[i].gameObject.SetActive(true);
             }
-
-            // 狙击枪瞄准时，改回GunCamera视野和瞄准镜的颜色
-            if (IS_SNIPER)
-            {
-                // 改变瞄准镜颜色
-                scopeRenderMaterial.color = fadeColor;
-                // 改变GunCamera视野
-                StartCoroutine(CameraView(gunCamera, 50));
-            }
-            // 摄像机视野变远
-            StartCoroutine(CameraView(mainCamera, 60));
-            // 设置动画机状态
-            animator.SetBool("Aim", isAiming);
         }
 
-        // 判断玩家是否按下丢弃武器的按键
-        if (Input.GetKeyDown(throwWeaponInputName))
+        // 判断是否可以被移动
+        if(player.canMove){
+        // 如果是全自动枪械
+        if (IS_AUTORIFLE)
         {
-            // 丢弃武器
-            GameObject.Find("Inventory").GetComponent<Inventory>().ThrowWeapon(int.Parse(gameObject.name), gameObject);
+                // 切换射击模式
+                if (Input.GetKeyDown(GunShootModeInputName) && modeNum != 1)
+                {
+                    // 切换射击模式的枚举值
+                    modeNum = 1;
+                    shootingMode = ShootMode.AutoRifle;
+                    // 更新UI
+                    shootModeName = "Auto";
+                    UpdateAmmoUI();
+                }else if(Input.GetKeyDown(GunShootModeInputName) && modeNum != 0)
+                {
+                    // 切换射击模式的枚举值
+                    modeNum = 2;
+                    shootingMode = ShootMode.SemiGun;
+                    // 更新UI
+                    shootModeName = "Semi";
+                    UpdateAmmoUI();
+                }
+                // 根据射击模式判断射击
+                switch (shootingMode)
+                {
+                    case ShootMode.AutoRifle:
+                        GunShootInput = Input.GetMouseButton(0);
+                        fireRate = originRate;
+                        break;
+                    case ShootMode.SemiGun:
+                        GunShootInput = Input.GetMouseButtonDown(0);
+                        fireRate = 0.2f;
+                        break;
+                }
+            }
+            else
+            {
+                // 切换射击模式的枚举值
+                modeNum = 2;
+                shootingMode = ShootMode.SemiGun;
+                // 更新射速和触发方法
+                GunShootInput = Input.GetMouseButtonDown(0);
+                // 非全自动枪械使用默认射速
+                fireRate = originRate;
+                // 更新UI
+                shootModeName = "Semi";
+                UpdateAmmoUI();
+            }
+
+            // 判断玩家是否按下攻击键
+            if(Input.GetKeyDown(knifeAttackInputName))
+            {
+                // 播放近战动画
+                animator.SetTrigger("KnifeAttack");
+                // 播放近战声音
+                mainAudioSource.clip = soundClips.knifeAttackSound;
+                // 播放声音
+                mainAudioSource.Play();
+            }
+
+            // 如果按下了切换手电筒开关的按键
+            if(Input.GetKeyDown(flashLightInputName) && !flashLight.activeSelf)
+            {
+                flashLight.SetActive(true);
+            }
+            else if(Input.GetKeyDown(flashLightInputName) && flashLight.activeSelf)
+            {
+                flashLight.SetActive(false);
+            }
+
+            // 判断换弹动画的状态
+            if ((animator.GetCurrentAnimatorStateInfo(0).IsName("reload_ammo_left") ||
+                animator.GetCurrentAnimatorStateInfo(0).IsName("reload_out_of_ammo") ||
+                animator.GetCurrentAnimatorStateInfo(0).IsName("reload_open") ||
+                animator.GetCurrentAnimatorStateInfo(0).IsName("reload_close") ||
+                animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 1") ||
+                animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 2") ||
+                animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 3") ||
+                animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 4") ||
+                animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 5") ||
+                animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 6")))
+            {
+                isReloading = true;
+            }
+            else {
+                isReloading = false;
+            }
+        // 对于霰弹枪或狙击枪的结束换弹判定
+            if((animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 1") ||
+                animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 2") ||
+                animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 3") ||
+                animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 4") ||
+                animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 5") ||
+                animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 6")) && (currentBullet == bulletMag || bulletLeft <= 0))
+            {
+                isReloading = false;
+                animator.Play("reload_close");
+            }
+            // 播放行走、跑步动画
+            animator.SetBool("Walk", state == MovementState.walking);
+            if(state == MovementState.running)
+            {
+                animator.SetBool("Run", true);
+                // 退出瞄准状态
+                isAiming = false;
+                // 设置动画机状态
+                animator.SetBool("Aim", isAiming);
+            }
+            else
+            {
+                animator.SetBool("Run", false);
+            }
+            // 播放检视动画
+            if (Input.GetKeyDown(inspectInputName))
+            {
+                animator.SetTrigger("Inspect");
+            }
+
+            // 计时器
+            if (fireTimer < fireRate) fireTimer += Time.deltaTime;
+
+            // 判断玩家鼠标左键射击
+            if (GunShootInput)
+            {
+                // 根据条件判定射线检测的次数
+                if (IS_SHOTGUN) gunFragment = 8;
+                else gunFragment = 1;
+                // 开枪射击
+                GunFire();
+            }
+
+            // 腰射和瞄准状态的射击精度
+            SpreadFactor = isAiming ? 0f : 0.05f;
+
+            // 判断玩家鼠标右键进入瞄准
+            if(Input.GetMouseButtonDown(1) && mouseBottonNumber == 0 && !isReloading && !animator.GetCurrentAnimatorStateInfo(0).IsName("run"))
+            {
+                // 更改开镜状态
+                isAiming = true;
+                // 设置动画机状态
+                animator.SetBool("Aim", isAiming);
+                // 记录鼠标按下次数
+                mouseBottonNumber = 1;
+            }
+            else if(Input.GetMouseButtonDown(1) && mouseBottonNumber == 1)
+            {
+                // 更改开镜状态
+                isAiming = false;
+                // 设置动画机状态
+                animator.SetBool("Aim", isAiming);
+                // 记录鼠标按下次数
+                mouseBottonNumber = 0;
+            }
+
+            // 判断是否按下换弹按键
+            if (Input.GetKeyDown(reloadInputName) && !isReloading)
+            {
+                // 执行换弹
+                DoReloadAnimation();
+                // 退出瞄准状态
+                isAiming = false;
+                // 显示准心
+                for (int i = 0; i < crossQuarterImages.Length; i++)
+                {
+                    crossQuarterImages[i].gameObject.SetActive(true);
+                }
+
+                // 狙击枪瞄准时，改回GunCamera视野和瞄准镜的颜色
+                if (IS_SNIPER)
+                {
+                    // 改变瞄准镜颜色
+                    scopeRenderMaterial.color = fadeColor;
+                    // 改变GunCamera视野
+                    StartCoroutine(CameraView(gunCamera, 50));
+                }
+                // 摄像机视野变远
+                StartCoroutine(CameraView(mainCamera, 60));
+                // 设置动画机状态
+                animator.SetBool("Aim", isAiming);
+            }
+
+            // 判断玩家是否按下丢弃武器的按键
+            if (Input.GetKeyDown(throwWeaponInputName))
+            {
+                // 丢弃武器
+                GameObject.Find("Inventory").GetComponent<Inventory>().ThrowWeapon(int.Parse(gameObject.name), gameObject);
+            }
+
+            // 实时获取玩家的移动状态
+            state = player.state;
+
+            // 根据玩家的状态调整准心的开合度
+            if (state == MovementState.walking) ExpandingCrossUpdate(3);
+            else if (state == MovementState.running) ExpandingCrossUpdate(8);
+            else ExpandingCrossUpdate(0);
         }
-
-        // 实时获取玩家的移动状态
-        state = player.state;
-
-        // 根据玩家的状态调整准心的开合度
-        if (state == MovementState.walking) ExpandingCrossUpdate(3);
-        else if (state == MovementState.running) ExpandingCrossUpdate(8);
-        else ExpandingCrossUpdate(0);
     }
 
     // 实现枪械射击

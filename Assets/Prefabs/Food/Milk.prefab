@@ -273,7 +273,7 @@ MonoBehaviour:
   restoringTimeBetween: 4
   restroingTimes: 5
   pickUpSound: {fileID: 8300000, guid: bc1fb63ddabf045fc8b666267a7f5953, type: 3}
-  chewSound: {fileID: 8300000, guid: 43658dda544eb43059aadc68412454a3, type: 3}
+  chewSound: {fileID: 8300000, guid: 7e347fd8d4c5c4fa6aad11820c347f6d, type: 3}
 --- !u!1 &8546788934110794296
 GameObject:
   m_ObjectHideFlags: 0
