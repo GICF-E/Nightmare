@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public abstract class Notes : MonoBehaviour
 {
     [Header("属性")]
-    [Tooltip("文本内容")] protected string[] texts = {"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"};
+    [Tooltip("文本文件")] public TextAsset textFile;
+    [Tooltip("文本内容")] protected string[] texts;
     [Tooltip("是否有纸条被查看")] private bool isViewNotes;
 
     [Header("音效")]
@@ -19,6 +20,8 @@ public abstract class Notes : MonoBehaviour
     [Tooltip("拾取提示UI")] public GameObject notesCanvas;
 
     private void Awake() {
+        // 从文件中提取文本
+        texts = textFile.text.Split(new string[] { "----------" }, System.StringSplitOptions.RemoveEmptyEntries);
         // 寻找玩家代码和UI
         player = GameObject.Find("Player").GetComponent<Player>();
         playerNotesUI = GameObject.Find("Player/Canvas/Notes");

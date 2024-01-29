@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     [Tooltip("跳跃速度")] public float jumpSpeed = 4.0f;
     [Tooltip("重力加速度")] public float gravity = 9.8f;
     [Tooltip("推动物体力的大小")] public float pushPower = 4f;
+    [Tooltip("使用单击鼠标右键来控制开镜")] public bool isClickAiming;
     [Tooltip("角色移动向量")] public Vector3 moveDirection = Vector3.zero;
 
 

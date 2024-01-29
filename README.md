@@ -44,7 +44,7 @@ FPS-Demo uses the classic WASD for planar movement. The following keys perform o
    - Use the `[Control]` key to crouch, reducing movement noise and speed.
 
 ### Weapon Operation
-All weapons in FPS-Demo use the same operation logic. Shooting is achieved by clicking the left mouse button. For automatic weapons, holding down the left mouse button allows continuous shooting. Zooming in with the weapon is done by clicking the right mouse button; click once to zoom in, click again to zoom out. The following keys control the weapon:
+All weapons in FPS-Demo use a unified operating logic. Shooting is achieved through the left mouse button, and for fully automatic weapons, holding down the left mouse button allows for continuous firing. Aiming in FPS-Demo can be done by either clicking or holding down the right mouse button, and you can switch control methods in the settings. Control the weapons with the following keys:
    - Press `[I]` to inspect.
    - Press `[R]` to reload.
    - Press `[C]` to toggle the flashlight on and off.
@@ -67,7 +67,9 @@ In the FPS-Demo, the only way to regenerate health currently is by consuming foo
 ***Note: Note: Only one food item can be consumed at a time.**
 
 ### Attacking Enemies
-In FPS-Demo, you can attack enemies with weapons and interactive objects in the scene. The judgment for causing damage to enemies with firearms uses Raycast based on physics. Different models and types of firearms cause different damage to enemies. Similarly, most interactive objects in the scene, such as oil drums and gas cylinders, can also damage enemies. Bullets or melee can cause them to explode. Different types of objects cause different damage and have different damage ranges to enemies. For interactive objects in the scene, see `/Scene Implementation - Interactive Objects/`.
+In FPS-Demo, you can attack enemies with weapons and interactive objects in the scene. The judgment for causing damage to enemies with firearms uses Raycast based on physics. Different models and types of firearms cause different damage to enemies. Similarly, most interactive objects in the scene, such as oil drums and gas cylinders, can also damage enemies. Bullets or melee can cause them to explode. Different types of objects cause different damage and have different damage ranges to enemies. For interactive objects in the scene, see `/Scene Implementation - Interactive Objects/`.  
+  
+***Note: A bullet hitting the head can significantly increase damage.**
 
 ### Viewing Notes
 In the FPS-Demo scene, there are many notes scattered around, left by ~~predecessors~~, which might guide you when you're lost or help you piece together a story from the past. To view a note, you need to approach and pick it up (see `/Operation Mode - Object Discarding and Picking Up/` for details). After picking up a note, an interface for viewing the note's content will automatically pop up. In this interface, the mouse will be automatically released, allowing you to view the content by dragging or scrolling the mouse wheel. To close the interface, you can click the `X` button at the top right corner of the screen or press the corresponding key on the keyboard: 
@@ -113,8 +115,14 @@ if(player enters the enemy's detection range){
 ``` 
 ***Note: Different enemies have different detection ranges and absolute detection thresholds.**
 
+### Enemy Movement
+In the FPS-Demo, the movement of all enemies is based on an optimized `A*` pathfinding algorithm using a `Navigation Mesh Agent`. During patrol, the enemies in the scene use the `Navigation Mesh Agent` to automatically move to their assigned patrol points. When an enemy is sufficiently close to a patrol point, the movement target automatically switches to the next patrol point, and this process repeats. When an enemy detects the player, the movement target switches to the player's real-time position. Once the player enters the enemy's attack range, which means the player is sufficiently close to the enemy, the enemy stops moving and initiates the attack logic.
+
 ### Enemy Attacks
 Enemies will stop and initiate attack routines when they enter the attack range. Different types of enemies have different attack damages and cooldowns. For zombies, the enemy will have a shorter cooldown and lesser damage; for mutants, the enemy will have a longer cooldown and significantly more damage, and mutants will have explosive particle effects when attacking. Players in the enemy's attack range and when the enemy is on cooldown will perform an Idle animation.
+
+### Enemy Damage Determination
+In the FPS-Demo, shooting at an enemy's head or body results in different damage. For determination, the enemy's body includes a `Mesh Collider` that is real-time baked at interval frames. Additionally, there is a `Sphere Collider` on the enemy's head, which is larger than the `Mesh Collider`. This setup allows the player's firearm raycast to detect the `Sphere Collider` before the `Mesh Collider`, prioritizing the detection of a headshot on the enemy.
 
 <h2 id="section5">Scene Implementation</h2>
 

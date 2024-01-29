@@ -298,7 +298,7 @@ public class Weapon_AutomaticGun : Weapon
             else {
                 isReloading = false;
             }
-        // 对于霰弹枪或狙击枪的结束换弹判定
+            // 对于霰弹枪或狙击枪的结束换弹判定
             if((animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 1") ||
                 animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 2") ||
                 animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 3") ||
@@ -345,24 +345,40 @@ public class Weapon_AutomaticGun : Weapon
             // 腰射和瞄准状态的射击精度
             SpreadFactor = isAiming ? 0f : 0.05f;
 
-            // 判断玩家鼠标右键进入瞄准
-            if(Input.GetMouseButtonDown(1) && mouseBottonNumber == 0 && !isReloading && !animator.GetCurrentAnimatorStateInfo(0).IsName("run"))
-            {
-                // 更改开镜状态
-                isAiming = true;
-                // 设置动画机状态
-                animator.SetBool("Aim", isAiming);
-                // 记录鼠标按下次数
-                mouseBottonNumber = 1;
-            }
-            else if(Input.GetMouseButtonDown(1) && mouseBottonNumber == 1)
-            {
-                // 更改开镜状态
-                isAiming = false;
-                // 设置动画机状态
-                animator.SetBool("Aim", isAiming);
-                // 记录鼠标按下次数
-                mouseBottonNumber = 0;
+            // 判断玩家使用单击或长按
+            if(player.isClickAiming){
+                // 判断玩家鼠标右键进入瞄准
+                if(Input.GetMouseButtonDown(1) && mouseBottonNumber == 0 && !isReloading && !animator.GetCurrentAnimatorStateInfo(0).IsName("run"))
+                {
+                    // 更改开镜状态
+                    isAiming = true;
+                    // 设置动画机状态
+                    animator.SetBool("Aim", isAiming);
+                    // 记录鼠标按下次数
+                    mouseBottonNumber = 1;
+                }
+                else if(Input.GetMouseButtonDown(1) && mouseBottonNumber == 1)
+                {
+                    // 更改开镜状态
+                    isAiming = false;
+                    // 设置动画机状态
+                    animator.SetBool("Aim", isAiming);
+                    // 记录鼠标按下次数
+                    mouseBottonNumber = 0;
+                }
+            }else{
+                // 判断玩家按下鼠标永健
+                if(Input.GetMouseButtonDown(1) & !isReloading && !animator.GetCurrentAnimatorStateInfo(0).IsName("run")){
+                    // 更改开镜状态
+                    isAiming = true;
+                    // 设置动画机状态
+                    animator.SetBool("Aim", isAiming);
+                }else if(Input.GetMouseButtonUp(1)){
+                    // 更改开镜状态
+                    isAiming = false;
+                    // 设置动画机状态
+                    animator.SetBool("Aim", isAiming);
+                }
             }
 
             // 判断是否按下换弹按键
@@ -464,6 +480,13 @@ public class Weapon_AutomaticGun : Weapon
                     bullet = Instantiate(bulletPrefab, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
                     // 为子弹添加一个带有偏移值的向前的力
                     bullet.GetComponent<Rigidbody>().velocity = (bullet.transform.forward + shootDirection) * bulletForce;
+                }
+                // 击中头部判断
+                if(hit.transform.tag == "HeadCollider"){
+                    Debug.Log("Head");
+                    // 对击中碰撞题的父级进行两倍扣血
+                    if(currentBullet > 2) hit.transform.GetComponentInParent<Enemy>().Health(Random.Range(minDamgae, maxDamage) * 2);
+                    else hit.transform.GetComponentInParent<Enemy>().Health(minDamgae * 4);
                 }
                 // 击中敌人判断
                 if(hit.transform.tag == "Enemy")

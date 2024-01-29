@@ -154,12 +154,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53af4ab34598046f5b44f81db8285741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textFile: {fileID: 4900000, guid: f93b37b87c9fc4a66aaba0cd73cc3a79, type: 3}
   viewSound: {fileID: 8300000, guid: bc1fb63ddabf045fc8b666267a7f5953, type: 3}
   playerNotesUI: {fileID: 0}
   playerNotesText: {fileID: 0}
   notesCanvas: {fileID: 0}
   ID: 0
-  previewText: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  previewText: 
 --- !u!54 &6936547925723312142
 Rigidbody:
   m_ObjectHideFlags: 0

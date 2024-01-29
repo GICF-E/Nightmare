@@ -1000,6 +1000,59 @@ Transform:
   - {fileID: 4037240803087498503}
   m_Father: {fileID: 4415229102229116988}
   m_LocalEulerAnglesHint: {x: -77.295395, y: 168.21, z: -169.855}
+--- !u!1 &6236321613342888884
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2148828524633033286}
+  - component: {fileID: 8435946801366373518}
+  m_Layer: 0
+  m_Name: HeadCollider
+  m_TagString: HeadCollider
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2148828524633033286
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6236321613342888884}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.000000007450581, y: 0.000000061794665, z: 0.000000052329142, w: 1}
+  m_LocalPosition: {x: -0, y: 0.025, z: 0.02}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1849896720580871183}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &8435946801366373518
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6236321613342888884}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6240562237367970822
 GameObject:
   m_ObjectHideFlags: 0
@@ -1752,6 +1805,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2434313300373094726}
+  - {fileID: 2148828524633033286}
   m_Father: {fileID: 409206638397338284}
   m_LocalEulerAnglesHint: {x: -23.447186, y: 10.543606, z: -9.406184}
 --- !u!1 &8845901790752797546
