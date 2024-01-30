@@ -30,34 +30,35 @@ If you are using Windows, you will typically receive a folder. If you want to la
 
 <h2 id="section2">Operation Mode</h2>
 
-### Observer Mode
-In Observer Mode, use `WASD` for planar movement, and move the mouse to change the viewpoint (with a maximum angle limit for up and down angles). The movement of `WASD` is only affected by the rotation caused by the left and right movement of the mouse, meaning WASD can only achieve planar movement and cannot move on the Y-axis. You can operate the observer camera with the following keys:
-   - Use the `[E]` key for positive movement on the Y-axis.
-   - Use the `[Q]` key for negative movement on the Y-axis.  
+### Input Devices
+FPS-Demo supports most keyboards and gamepads. Generally, as long as the keyboard and mouse work normally within the system, the game can automatically recognize all supported input devices. FPS-Demo has the following requirements for input devices:
+   - Keyboard: At least 60 keys, including basic function and auxiliary keys
+   - Gamepad: It's recommended to use Xbox or PlayStation controllers. Layouts of other controllers have not been tested, and their feasibility and usability are not guaranteed.
  
-***Note: The observer camera has no collision and is not affected by gravity, so it is not influenced by scene collision objects.**
+***Note: FPS-Demo can connect multiple gamepads and keyboards simultaneously and supports simultaneous input. Once a gamepads is recognized, the game will automatically adjust the input sensitivity and aiming mode. Therefore, we do not recommend using a keyboard to play the game when a gamepad is connected.**
 
 ### Character Movement
-FPS-Demo uses the classic WASD for planar movement. The following keys perform operations on the player:
-   - Use the `[SPACE]` key to jump.
-   - Use the `[LeftShift]` key to run and increase speed.
-   - Use the `[Control]` key to crouch, reducing movement noise and speed.
+FPS-Demo utilizes universally common and logical input key bindings. You can perform actions for the player using the following keys:
+   - Use `[WASD]/[Left Stick]` for planar movement.
+   - Press `[SPACE]/[Button West]` to jump.
+   - Press `[Shift]/[Right Shoulder]` to run and increase speed.
+   - Press `[Control]/[Left Shoulder]` to crouch, reducing movement noise and speed.
 
 ### Weapon Operation
 All weapons in FPS-Demo use a unified operating logic. Shooting is achieved through the left mouse button, and for fully automatic weapons, holding down the left mouse button allows for continuous firing. Aiming in FPS-Demo can be done by either clicking or holding down the right mouse button, and you can switch control methods in the settings. Control the weapons with the following keys:
-   - Press `[I]` to inspect.
-   - Press `[R]` to reload.
-   - Press `[C]` to toggle the flashlight on and off.
-   - Press `[Q]` for melee attack.
-   - Press `[X]` to switch firing mode (only effective for automatic weapons).
+   - Press `[I]/[Button North]` to inspect.
+   - Press `[R]/[Button East]` to reload.
+   - Press `[C]/[D-Pad Left]` to toggle the flashlight on and off.
+   - Press `[Q]/[Button Sourth]` for melee attack.
+   - Press `[X]/[D-Pad Right]` to switch firing mode (only effective for automatic weapons).
 
 ### Weapon Switching
 In the FPS-Demo, the arsenal is managed through the mouse scroll wheel or the numeric keypad to change weapons. If using the mouse scroll wheel, you can switch to the next/previous weapon by scrolling down/up. If it's already the last weapon, the next scroll will switch to a bare-handed state, and scrolling again will switch back to the first weapon. Similarly, using the numeric keypad, you can directly switch to the weapon corresponding to the pressed key. If the input is out of range or zero, meaning the number does not correspond to any existing weapon, it will switch to the bare-handed state. The bare-handed state does not allow for melee attacks.
 
 ### Object Dropping and Picking Up
 In FPS-Demo, if you want to pick up weapons or interactable objects, you need to move the player close to the object and move the view to the object you want to pick up/interact with. If the object can be interacted with, a semi-transparent circle will appear above it, indicating that you can perform the pickup operation. For firearms, if you don't already have the weapon, picking it up will automatically switch to it. If you already have the weapon, picking it up again will automatically refill the corresponding weapon's ammunition and switch to the current weapon. If you want to drop an object, you need to switch to the firearm you wish to discard and press the drop key. The object will be generated in front of you and fall naturally. You can interact with objects by pressing the following keys:
-   - Press `[F]` to pick up/interact with objects
-   - Press `[T]` to drop objects  
+   - Press `[F]/[D-Pad Up]` to pick up/interact with objects
+   - Press `[T]/[D-Pad Down]` to drop objects  
 
 ***Note: The weapon inventory is limited to 3, meaning if you already have 3 weapons, you will not be able to pick up a new one.**
 
@@ -73,8 +74,8 @@ In FPS-Demo, you can attack enemies with weapons and interactive objects in the 
 
 ### Viewing Notes
 In the FPS-Demo scene, there are many notes scattered around, left by ~~predecessors~~, which might guide you when you're lost or help you piece together a story from the past. To view a note, you need to approach and pick it up (see `/Operation Mode - Object Discarding and Picking Up/` for details). After picking up a note, an interface for viewing the note's content will automatically pop up. In this interface, the mouse will be automatically released, allowing you to view the content by dragging or scrolling the mouse wheel. To close the interface, you can click the `X` button at the top right corner of the screen or press the corresponding key on the keyboard: 
-   - Press `[F]` to view the note
-   - Press `Return/Enter` to close the viewing interface  
+   - Press `[F]/[D-Pad Up]` to view the note
+   - Press `[Enter]/[D-Pad Down]` to close the viewing interface  
 
 ***Note: You cannot control the character or weapons while viewing a note, but enemies can move normally. Therefore, ensure the environment is safe before viewing a note.**
 
@@ -131,7 +132,7 @@ In the FPS-Demo, shooting at an enemy's head or body results in different damage
 In the FPS-Demo, the mechanism of picking up food is similar to that of firearms, judged by a trigger collision box based on geometry nodes, determining the collision with the player's arm. When the player's viewpoint is facing the food, it judges whether the corresponding key is pressed by the player. If the player presses the pick-up key, the food will self-destruct after calling the player's audio source to play the pick-up sound and the health regeneration coroutine. The player's coroutine will continue to play chewing sound effects after the food is destroyed and will continue for different chewing durations based on the data of the food picked up, restoring different amounts of health.
 
 #### Notes
-In FPS-Demo, all note scripts inherit from the same base class. This base class contains the content of all notes in the scene, while each individual note only contains the text ID. The viewing interface for the note is triggered when the collision box of the geometric node's Trigger detects a collision with the player's arm and the player presses the pickup key. This unlocks the cursor and displays the viewing view. The viewing interface of the note consists of a pinned `X` button and a Scroll View with a hidden scrollbar, allowing the player to naturally scroll or drag with the mouse to view the interface. During the note viewing process, all player movement is locked, and player input is constantly monitored, until the player presses `Return/Enter` or clicks the `X` button, at which point the operation state is restored.
+In FPS-Demo, all note scripts inherit from the same base class. This base class contains the content of all notes in the scene, while each individual note only contains the text ID. The viewing interface for the note is triggered when the collision box of the geometric node's Trigger detects a collision with the player's arm and the player presses the pickup key. This unlocks the cursor and displays the viewing view. The viewing interface of the note consists of a pinned `X` button and a Scroll View with a hidden scrollbar, allowing the player to naturally scroll or drag with the mouse to view the interface. During the note viewing process, all player movement is locked, and player input is constantly monitored, until the player presses `[Enter]/[D-Pad Down]` or clicks the `X` button, at which point the operation state is restored.
 
 #### Oil Drums and Gas Cylinders
 In the FPS-Demo scene, oil drums and gas cylinders can interact with bullets and the player. Oil drums and gas cylinders can be pushed by the player, and the explosion judgment of interactive objects is executed by physically fired bullets. Among them, when a bullet collides with an oil drum, the oil drum will instantly explode and release a large amount of damage within a wide range; when a bullet collides with a gas cylinder, the gas cylinder will leak gas from the top, and when the internal pressure reaches a threshold, it will explode, releasing a certain amount of damage within a relatively small range.  
@@ -139,4 +140,4 @@ In the FPS-Demo scene, oil drums and gas cylinders can interact with bullets and
 ***Note: The destruction of interactive objects in the scene does not affect the terrain.**
 
 ### Special Scenes
-Some specific scenes in FPS-Demo will have certain effects on the player. For example, in water, players will be forced to crouch, cannot jump, and will play the sound of moving in water when moving. For all scenes entered by the player and at this time the height of the ceiling is less than the standing height of the player, the player will be forced to crouch. Even if the user releases `[Control]`, as long as the user does not press `[Control]` after leaving the scene, the player will automatically re-enter the standing state.
+Some specific scenes in FPS-Demo will have certain effects on the player. For example, in water, players will be forced to crouch, cannot jump, and will play the sound of moving in water when moving. For all scenes entered by the player and at this time the height of the ceiling is less than the standing height of the player, the player will be forced to crouch. Even if the user releases `[Control]/[Left Shoulder]`, as long as the user does not press `[Control]/[Left Shoulder]` after leaving the scene, the player will automatically re-enter the standing state.

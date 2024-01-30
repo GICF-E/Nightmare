@@ -1,7 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 using TMPro;
 
 /// <summary>
@@ -16,15 +16,15 @@ public class Player : MonoBehaviour
     [Tooltip("重力加速度")] public float gravity = 9.8f;
     [Tooltip("推动物体力的大小")] public float pushPower = 4f;
     [Tooltip("使用单击鼠标右键来控制开镜")] public bool isClickAiming;
-    [Tooltip("角色移动向量")] public Vector3 moveDirection = Vector3.zero;
+    [Tooltip("角色移动向量")][HideInInspector] public Vector3 moveDirection = Vector3.zero;
 
 
     [Header("玩家组件引用")]
     [Tooltip("角色控制器组件")] public CharacterController controller;
-    [Tooltip("移动音源")] [SerializeField] public AudioSource movementAudioSource;
-    [Tooltip("辅助音源")] [SerializeField] public AudioSource auxiliaryAudioSource;
+    [Tooltip("移动音源")] public AudioSource movementAudioSource;
+    [Tooltip("辅助音源")] public AudioSource auxiliaryAudioSource;
     [Tooltip("摄像机的位置")] public Transform cemara;
-    [Tooltip("对回血协程的引用")] public Coroutine addHealthCoroutine;
+    [Tooltip("对回血协程的引用")][HideInInspector] public Coroutine addHealthCoroutine;
 
 
     [Header("玩家的下蹲属性")]
@@ -39,44 +39,42 @@ public class Player : MonoBehaviour
     [Tooltip("玩家走斜坡时施加的力度")] private float slopeForce = 8.0f;
     [Tooltip("斜坡射线长度")] private float slopeRayLength = 2.5f;
 
-    
+
     [Header("玩家发出的音效")]
     [Tooltip("行走音效")] public AudioClip walkSound;
     [Tooltip("奔跑音效")] public AudioClip runSound;
     [Tooltip("在水中的移动音效")] public AudioClip waterSound;
-    
+
 
 
     [Header("玩家状态")]
-    [Tooltip("是否允许移动")] public bool canMove;
-    [Tooltip("是否在奔跑")] public bool isRunning;
-    [Tooltip("是否在跳跃")] public bool isJumping;
-    [Tooltip("是否正在蹲下")] public bool isCrouching = false;
-    [Tooltip("玩家是否可以下蹲")] public bool canCrouching = false;
-    [Tooltip("人物状态的枚举")] public enum MovementState { walking, running, idle};
-    [Tooltip("角色移动状态")] public MovementState state;
-    [Tooltip("实际移动速度")] public float currentSpeed;
+    [Tooltip("是否允许移动")][HideInInspector] public bool canMove;
+    [Tooltip("是否在奔跑")][HideInInspector] public bool isRunning;
+    [Tooltip("是否在跳跃")][HideInInspector] public bool isJumping;
+    [Tooltip("是否正在蹲下")][HideInInspector] public bool isCrouching;
+    [Tooltip("玩家是否可以下蹲")][HideInInspector] public bool canCrouching;
+    [Tooltip("人物状态的枚举")][HideInInspector] public enum MovementState { walking, running, idle };
+    [Tooltip("角色移动状态")][HideInInspector] public MovementState state;
+    [Tooltip("实际移动速度")][HideInInspector] public float currentSpeed;
 
-    
+
 
 
     [Header("玩家生命")]
     [Tooltip("玩家的生命值")] public float playerHealth = 100f;
-    [Tooltip("判断玩家是否死亡")] public bool isDead;
-    [Tooltip("判断玩家是否受到伤害")] public bool isDamage;
+    [Tooltip("判断玩家是否死亡")][HideInInspector] public bool isDead;
+    [Tooltip("判断玩家是否受到伤害")][HideInInspector] public bool isDamage;
 
 
     [Header("跌落伤害的判定")]
     [Tooltip("安全跌落距离")] public float safeFallDistance = 3.0F;
     [Tooltip("开始下落时的高度")] private float fallStartLevel;
     [Tooltip("是否正在下落")] private bool isFalling;
-    
+
 
 
     [Header("特殊模式")]
     [Tooltip("索尼克模式")] public bool isSonicMode;
-    [Tooltip("观察者模式")] public bool isObserverMode;
-    [Tooltip("观察者")] public GameObject Observer;
 
 
     [Header("UI")]
@@ -84,20 +82,30 @@ public class Player : MonoBehaviour
     [Tooltip("是否显示血量百分比")] public bool isDisplayHealthFigure;
     [Tooltip("玩家血量UI")] public TextMeshProUGUI playerHealthUI;
     [Tooltip("玩家血量提示灯")] public Image healthImage;
-    [Tooltip("玩家血量提示灯的颜色")] public Color[] healthImageColor; 
+    [Tooltip("玩家血量提示灯的颜色")] public Color[] healthImageColor;
     [Tooltip("玩家血雾效果")] public Image hurtImage;
     [Tooltip("血雾收到伤害颜色")] private Color flashColor;
     [Tooltip("血雾没有受到伤害的颜色")] private Color clearColor;
 
+    [Header("输入")]
+    [Tooltip("输入系统组件")] [HideInInspector] public PlayerInput playerInput;
+    [Tooltip("是否使用手柄输入")] public bool isGamepad;
+
     void Start()
     {
-        // 获取角色控制器组件并存储原始高度
+        // 获取组件并存储原始高度
         controller = GetComponent<CharacterController>();
+        playerInput = GetComponent<PlayerInput>();
         standHeight = controller.height;
+        
         // 重置玩家生命值
         playerHealth = 100f;
-        // 重置玩家速度
+
+        // 重置玩家速度和下蹲状态
+        isCrouching = false;
+        canCrouching = true;
         canMove = true;
+
         if (!isSonicMode)
         {
             walkSpeed = 6;
@@ -112,32 +120,31 @@ public class Player : MonoBehaviour
             jumpSpeed = 20f;
             crouchSpeed = 20f;
         }
-        // 判断观察者模式
-        if (isObserverMode)
-        {
-            // 生成观察者
-            Instantiate(Observer, transform.position, Quaternion.identity);
-            // 关闭玩家
-            gameObject.SetActive(false);
-        }
+
         // 更新UI
-        if(isDisplayHealthFigure){
+        if (isDisplayHealthFigure)
+        {
             playerHealthUI.gameObject.SetActive(true);
             healthImage.gameObject.SetActive(false);
         }
-        else{
+        else
+        {
             playerHealthUI.gameObject.SetActive(false);
             healthImage.gameObject.SetActive(true);
         }
+
         // 计算颜色索引
         int colorIndex = Mathf.Clamp((int)(playerHealth * (healthImageColor.Length - 1) / 100f), 0, healthImageColor.Length - 1);
         // 根据血量百分比更新血量提示灯的颜色
         healthImage.color = healthImageColor[colorIndex];
+
         // 更新血量百分比
         playerHealthUI.text = playerHealth + "%";
+
         // 更新血雾颜色
         flashColor = Color.red;
         clearColor = Color.clear;
+
         // 开关帧率显示
         if (isDisplayFPS) GetComponent<FPSDisplay>().enabled = true;
         else GetComponent<FPSDisplay>().enabled = false;
@@ -149,22 +156,21 @@ public class Player : MonoBehaviour
         if (controller.isGrounded && canMove)
         {
             // 根据玩家输入计算移动方向
-            moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            moveDirection = new Vector3(playerInput.actions["Move"].ReadValue<Vector2>().x, 0, playerInput.actions["Move"].ReadValue<Vector2>().y);
             moveDirection = transform.TransformDirection(moveDirection);
 
             // 检查玩家是否正在奔跑或跳跃
-            isRunning = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-            isJumping = Input.GetButton("Jump");
+            isRunning = playerInput.actions["Run"].IsPressed();
+            isJumping = playerInput.actions["Jump"].IsPressed();
 
             // 判断玩家是否可以下蹲
             CanCrouch();
             // 执行下蹲逻辑
             Crouch();
-
             // 根据是否蹲下、奔跑或正常行走来设置移动速度
             currentSpeed = isCrouching ? crouchSpeed : (isRunning ? runSpeed : walkSpeed);
             moveDirection *= currentSpeed;
-            
+
             // 如果玩家按下跳跃键，则设置跳跃速度
             if (isJumping && !isCrouching)
             {
@@ -188,7 +194,8 @@ public class Player : MonoBehaviour
             // 受到伤害时瞬间切换到红色
             hurtImage.color = flashColor;
         }
-        else {
+        else
+        {
             // 没有受到伤害时缓慢渐变到白色
             hurtImage.color = Color.Lerp(hurtImage.color, clearColor, Time.deltaTime * 3);
         }
@@ -226,9 +233,20 @@ public class Player : MonoBehaviour
         }
 
         // 可以移动的情况下移动角色控制器
-        if(canMove) controller.Move(moveDirection * Time.deltaTime);
+        if (canMove) controller.Move(moveDirection * Time.deltaTime);
         // 播放声音
-        if(canMove) PlayerSound();
+        if (canMove) PlayerSound();
+
+        // 遍历判断是否使用手柄
+        foreach (var device in InputSystem.devices)
+        {
+            if (device is Gamepad)
+            {
+                isGamepad = true;
+                // 如果找到手柄，跳出循环
+                break;
+            }
+        }
     }
 
     // 判断玩家是否可以下蹲
@@ -246,7 +264,7 @@ public class Player : MonoBehaviour
     public void Crouch()
     {
         // 判断是否站在水里
-        if(Physics.OverlapSphere(transform.position - new Vector3(0, 0.5f, 0) * standHeight, 0.1f, noCrouchLayerMask).Length != 0)
+        if (Physics.OverlapSphere(transform.position - new Vector3(0, 0.5f, 0) * standHeight, 0.1f, noCrouchLayerMask).Length != 0)
         {
             // 强制下蹲
             controller.height = crouchHeight;
@@ -256,13 +274,14 @@ public class Player : MonoBehaviour
             return;
         }
         // 判断是否可以下蹲或有没有按下对应按键
-        if ((Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) && canCrouching && !isCrouching)
+        if (playerInput.actions["Crouch"].IsPressed() && canCrouching && !isCrouching)
         {
             // 根据是否可以下蹲改变高度和中心
             StartCoroutine(ChangeHeightTo(crouchHeight));
             StartCoroutine(ChangeCenterTo(0.5f));
             isCrouching = true;
-        }else if(!(Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) && canCrouching && isCrouching)
+        }
+        else if (!playerInput.actions["Crouch"].IsPressed() && canCrouching && isCrouching)
         {
             // 根据是否可以下蹲改变高度和中心
             StartCoroutine(ChangeHeightTo(standHeight));
@@ -413,7 +432,7 @@ public class Player : MonoBehaviour
         // 根据血量百分比更新血量提示灯的颜色
         healthImage.color = healthImageColor[colorIndex];
         // 判断玩家是否死亡
-        if(playerHealth <= 0)
+        if (playerHealth <= 0)
         {
             isDead = true;
             // 游戏暂停
@@ -424,7 +443,8 @@ public class Player : MonoBehaviour
     /// <summary>
     /// 恢复玩家生命值，调用Player.AddHealth协程
     /// <summary>
-    public void RestoringHealth(float restoringTimes, float restoringTimeBetween, float restoringHealthforUnitTime, AudioClip chewSound){
+    public void RestoringHealth(float restoringTimes, float restoringTimeBetween, float restoringHealthforUnitTime, AudioClip chewSound)
+    {
         // 如果协程已经在运行，则停止它
         if (addHealthCoroutine != null) StopCoroutine(addHealthCoroutine);
         // 执行协程
@@ -433,7 +453,8 @@ public class Player : MonoBehaviour
 
 
     // 恢复玩家生命值
-    private IEnumerator AddHealth(float  restroingTimes, float restoringTimeBetween, float restoringHealthforUnitTime, AudioClip chewSound){
+    private IEnumerator AddHealth(float restroingTimes, float restoringTimeBetween, float restoringHealthforUnitTime, AudioClip chewSound)
+    {
         // 等待一段时间以播放拾取音效
         yield return new WaitForSeconds(1);
         // 更换咀嚼音效
@@ -442,7 +463,8 @@ public class Player : MonoBehaviour
         auxiliaryAudioSource.loop = true;
         auxiliaryAudioSource.Play();
         // 循环恢复次数
-        for(int i = 0; i < restroingTimes; i++){
+        for (int i = 0; i < restroingTimes; i++)
+        {
             // 增加玩家血量
             playerHealth += (int)restoringHealthforUnitTime;
             // 控制玩家血量
@@ -455,7 +477,7 @@ public class Player : MonoBehaviour
             healthImage.color = healthImageColor[colorIndex];
             // 保持咀嚼音效
             auxiliaryAudioSource.clip = chewSound;
-            if(!auxiliaryAudioSource.isPlaying) auxiliaryAudioSource.Play();
+            if (!auxiliaryAudioSource.isPlaying) auxiliaryAudioSource.Play();
             // 等待下一次恢复时间
             yield return new WaitForSeconds(restoringTimeBetween);
         }

@@ -49,7 +49,7 @@ public abstract class Notes : MonoBehaviour
 
     private void OnTriggerStay(Collider other){
         // 如果玩家朝向对象并按下拾取按键
-        if(Input.GetKeyDown(KeyCode.F) && other.tag == "ObjectCollider" && !isViewNotes){
+        if(player.playerInput.actions["Interaction"].triggered && other.tag == "ObjectCollider" && !isViewNotes){
             // 播放拾取声音
             player.auxiliaryAudioSource.clip = viewSound;
             player.auxiliaryAudioSource.loop = false;
@@ -66,7 +66,11 @@ public abstract class Notes : MonoBehaviour
             player.canMove = false;
         }
         // 如果玩家按下退出按键或窗口已经被关闭
-        if((Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter) || !playerNotesUI.activeSelf) && isViewNotes){
+        if((player.playerInput.actions["Submit"].triggered || !playerNotesUI.activeSelf) && isViewNotes){
+            // 播放拾取声音
+            player.auxiliaryAudioSource.clip = viewSound;
+            player.auxiliaryAudioSource.loop = false;
+            player.auxiliaryAudioSource.Play();
             // 禁用文本UI
             playerNotesUI.SetActive(false);
             // 恢复变量状态

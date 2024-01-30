@@ -12,6 +12,9 @@ public class KnifeAttack : StateMachineBehaviour
     {
         // 获取角色位置
         playerTransform = animator.transform;
+        // 播放攻击声音
+        playerTransform.gameObject.GetComponent<Weapon_AutomaticGun>().mainAudioSource.clip = playerTransform.gameObject.GetComponent<Weapon_AutomaticGun>().soundClips.knifeAttackSound;
+        playerTransform.gameObject.GetComponent<Weapon_AutomaticGun>().mainAudioSource.Play();
         // 获取球体内所有碰撞体
         Collider[] hitColliders = Physics.OverlapSphere(playerTransform.position + playerTransform.forward * 0.5f - Vector3.down * 0.5f, attackRange);
         foreach (var hitCollider in hitColliders)

@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// 用于拾取武器的类
@@ -46,7 +45,7 @@ public class PickUpItem : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         // 判断是否是玩家接触并且按下F按键
-        if(Input.GetKeyDown(KeyCode.F) && other.tag == "ObjectCollider"){
+        if(player.playerInput.actions["Interaction"].triggered && other.tag == "ObjectCollider"){
             // 播放拾取声音
             player.auxiliaryAudioSource.clip = pickUpSound;
             player.auxiliaryAudioSource.loop = false;

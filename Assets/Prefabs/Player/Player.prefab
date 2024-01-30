@@ -863,6 +863,7 @@ GameObject:
   - component: {fileID: 4479592160764324334}
   - component: {fileID: 8509618559586661147}
   - component: {fileID: 1283659002666276546}
+  - component: {fileID: 6790532767237891145}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -981,6 +982,8 @@ MonoBehaviour:
   - {r: 1, g: 1, b: 0, a: 1}
   - {r: 0, g: 1, b: 0, a: 1}
   hurtImage: {fileID: 6167370646219870829}
+  playerInput: {fileID: 0}
+  isGamepad: 0
 --- !u!82 &4479592160764324334
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1187,6 +1190,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54ad3e86c03a17243aeb93461e5fd054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6790532767237891145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6914522216117288573}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: b2e8e1a6f561848c2a9d27b56f5efd11, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8c0f5a98-0956-470f-aaf2-0484625bde88
+    m_ActionName: Movement/Move
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f6d5b890-462c-4db0-86b6-55a2765ec735
+    m_ActionName: 'Movement/Jump[/Keyboard/space]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e330cae2-f624-443a-8c60-91963888473b
+    m_ActionName: Movement/Run
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 755f783d-be9b-4f4c-a3cf-7263d8575d0a
+    m_ActionName: Movement/Crouch
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Movement
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &7345370600340814633
 GameObject:
   m_ObjectHideFlags: 0
@@ -1295,7 +1344,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ff9c3104bdea44c8a854f74f92d0447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensitivity: 200
+  mouseSensitivity: 50
   playerBody: {fileID: 3016821677540826954}
   player: {fileID: 6914522216117288573}
 --- !u!114 &3158875119326715332
@@ -1929,6 +1978,10 @@ PrefabInstance:
       propertyPath: flashLight
       value: 
       objectReference: {fileID: 8564669967156157634}
+    - target: {fileID: 5735707913464943994, guid: 972515a0d86b54777a30e6326cf42cc9, type: 3}
+      propertyPath: m_DefaultActionMap
+      value: Weapon
+      objectReference: {fileID: 0}
     - target: {fileID: 7824378885511032620, guid: 972515a0d86b54777a30e6326cf42cc9, type: 3}
       propertyPath: m_Name
       value: 4
@@ -2023,6 +2076,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6877972248006565448, guid: df867835f9e4f478da18cbc0430645c3, type: 3}
+      propertyPath: m_DefaultActionMap
+      value: Weapon
+      objectReference: {fileID: 0}
     - target: {fileID: 7913532313977944921, guid: df867835f9e4f478da18cbc0430645c3, type: 3}
       propertyPath: m_Name
       value: 0
@@ -2080,6 +2137,10 @@ PrefabInstance:
     - target: {fileID: 6456232676532059211, guid: b4c01c060641043f2a08a797a2fab458, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8206173511051484932, guid: b4c01c060641043f2a08a797a2fab458, type: 3}
+      propertyPath: m_DefaultActionMap
+      value: Weapon
       objectReference: {fileID: 0}
     - target: {fileID: 8279427498577649765, guid: b4c01c060641043f2a08a797a2fab458, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2196,6 +2257,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8766744573881047724, guid: b706efb30562548af836661b9e4b85ef, type: 3}
+      propertyPath: m_DefaultActionMap
+      value: Weapon
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -2273,6 +2338,10 @@ PrefabInstance:
     - target: {fileID: 4216954287273907857, guid: b63679264c6a8423baed80f8a7fba6a0, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5929755997403334431, guid: b63679264c6a8423baed80f8a7fba6a0, type: 3}
+      propertyPath: m_DefaultActionMap
+      value: Weapon
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

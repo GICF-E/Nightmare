@@ -2599,6 +2599,7 @@ GameObject:
   - component: {fileID: 1980061164462198968}
   - component: {fileID: 4718694654632938031}
   - component: {fileID: 2816989804028638480}
+  - component: {fileID: 5735707913464943994}
   m_Layer: 3
   m_Name: 4
   m_TagString: Untagged
@@ -2703,12 +2704,6 @@ MonoBehaviour:
   scopeRenderMaterial: {fileID: 2100000, guid: e42b5b324c3b7cf499d473a7f9762f64, type: 2}
   fadeColor: {r: 0.29411766, g: 0.29411766, b: 0.29411766, a: 0}
   defaultColor: {r: 1, g: 1, b: 1, a: 0}
-  reloadInputName: 114
-  inspectInputName: 105
-  GunShootModeInputName: 120
-  throwWeaponInputName: 116
-  flashLightInputName: 99
-  knifeAttackInputName: 113
 --- !u!82 &2816989804028638480
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2806,6 +2801,36 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5735707913464943994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7824378885511032620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: b2e8e1a6f561848c2a9d27b56f5efd11, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: 0f0e45ac-4ee6-462a-af61-312d2dfcd354
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &8202641713449047114
 GameObject:
   m_ObjectHideFlags: 0

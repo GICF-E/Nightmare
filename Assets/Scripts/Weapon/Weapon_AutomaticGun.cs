@@ -1,9 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 using TMPro;
 using static Player;
+using System.Runtime.Remoting.Contexts;
 
 /// <summary>
 /// 武器音效的内部类
@@ -108,14 +109,8 @@ public class Weapon_AutomaticGun : Weapon
     [Tooltip("没有进行瞄准时狙击镜的颜色")] public Color fadeColor;
     [Tooltip("瞄准时狙击镜的颜色")] public Color defaultColor;
 
-
-    [Header("键位设置")]
-    [SerializeField][Tooltip("填充子弹的按键")] private KeyCode reloadInputName = KeyCode.R;
-    [SerializeField][Tooltip("查看武器按键")] private KeyCode inspectInputName = KeyCode.I;
-    [SerializeField][Tooltip("半自动切换按键")] private KeyCode GunShootModeInputName = KeyCode.X;
-    [SerializeField][Tooltip("丢弃武器的按键")] private KeyCode throwWeaponInputName = KeyCode.T;
-    [SerializeField][Tooltip("开关手电筒的按键")] private KeyCode flashLightInputName = KeyCode.C;
-    [SerializeField][Tooltip("玩家用到攻击键")] private KeyCode knifeAttackInputName = KeyCode.Q;
+    [Header("输入")]
+    [Tooltip("输入系统组件")] private PlayerInput playerInput;
 
     private void Awake()
     {
@@ -125,6 +120,8 @@ public class Weapon_AutomaticGun : Weapon
         player = GetComponentInParent<Player>();
         // 定义动画状态机
         animator = GetComponent<Animator>();
+        // 定义输入系统
+        playerInput = GetComponent<PlayerInput>();
         // 赋值摄像机
         mainCamera = Camera.main;
     }
@@ -212,11 +209,11 @@ public class Weapon_AutomaticGun : Weapon
 
         // 判断是否可以被移动
         if(player.canMove){
-        // 如果是全自动枪械
-        if (IS_AUTORIFLE)
-        {
+            // 如果是全自动枪械
+            if (IS_AUTORIFLE)
+            {
                 // 切换射击模式
-                if (Input.GetKeyDown(GunShootModeInputName) && modeNum != 1)
+                if (playerInput.actions["Switch Shoot Mode"].triggered && modeNum != 1)
                 {
                     // 切换射击模式的枚举值
                     modeNum = 1;
@@ -224,7 +221,7 @@ public class Weapon_AutomaticGun : Weapon
                     // 更新UI
                     shootModeName = "Auto";
                     UpdateAmmoUI();
-                }else if(Input.GetKeyDown(GunShootModeInputName) && modeNum != 0)
+                }else if(playerInput.actions["Switch Shoot Mode"].triggered && modeNum != 0)
                 {
                     // 切换射击模式的枚举值
                     modeNum = 2;
@@ -237,11 +234,11 @@ public class Weapon_AutomaticGun : Weapon
                 switch (shootingMode)
                 {
                     case ShootMode.AutoRifle:
-                        GunShootInput = Input.GetMouseButton(0);
+                        GunShootInput = playerInput.actions["Shoot"].IsPressed();
                         fireRate = originRate;
                         break;
                     case ShootMode.SemiGun:
-                        GunShootInput = Input.GetMouseButtonDown(0);
+                        GunShootInput = playerInput.actions["Shoot"].triggered;
                         fireRate = 0.2f;
                         break;
                 }
@@ -261,22 +258,18 @@ public class Weapon_AutomaticGun : Weapon
             }
 
             // 判断玩家是否按下攻击键
-            if(Input.GetKeyDown(knifeAttackInputName))
+            if(playerInput.actions["Knife Attack"].triggered)
             {
                 // 播放近战动画
                 animator.SetTrigger("KnifeAttack");
-                // 播放近战声音
-                mainAudioSource.clip = soundClips.knifeAttackSound;
-                // 播放声音
-                mainAudioSource.Play();
             }
 
             // 如果按下了切换手电筒开关的按键
-            if(Input.GetKeyDown(flashLightInputName) && !flashLight.activeSelf)
+            if(playerInput.actions["Switch Light"].triggered && !flashLight.activeSelf)
             {
                 flashLight.SetActive(true);
             }
-            else if(Input.GetKeyDown(flashLightInputName) && flashLight.activeSelf)
+            else if(playerInput.actions["Switch Light"].triggered && flashLight.activeSelf)
             {
                 flashLight.SetActive(false);
             }
@@ -309,6 +302,7 @@ public class Weapon_AutomaticGun : Weapon
                 isReloading = false;
                 animator.Play("reload_close");
             }
+
             // 播放行走、跑步动画
             animator.SetBool("Walk", state == MovementState.walking);
             if(state == MovementState.running)
@@ -323,8 +317,9 @@ public class Weapon_AutomaticGun : Weapon
             {
                 animator.SetBool("Run", false);
             }
+            
             // 播放检视动画
-            if (Input.GetKeyDown(inspectInputName))
+            if (playerInput.actions["Inspect"].triggered)
             {
                 animator.SetTrigger("Inspect");
             }
@@ -332,23 +327,23 @@ public class Weapon_AutomaticGun : Weapon
             // 计时器
             if (fireTimer < fireRate) fireTimer += Time.deltaTime;
 
-            // 判断玩家鼠标左键射击
+            // 判断输入并执行射击
             if (GunShootInput)
             {
-                // 根据条件判定射线检测的次数
-                if (IS_SHOTGUN) gunFragment = 8;
-                else gunFragment = 1;
-                // 开枪射击
+                // 根据枪支类型确定子弹散布的数量
+                gunFragment = IS_SHOTGUN ? 8 : 1;
+                // 执行射击
                 GunFire();
             }
+
 
             // 腰射和瞄准状态的射击精度
             SpreadFactor = isAiming ? 0f : 0.05f;
 
-            // 判断玩家使用单击或长按
-            if(player.isClickAiming){
+            // 处理鼠标瞄准的逻辑，判断单击和长按
+            if(player.isClickAiming && !player.isGamepad){
                 // 判断玩家鼠标右键进入瞄准
-                if(Input.GetMouseButtonDown(1) && mouseBottonNumber == 0 && !isReloading && !animator.GetCurrentAnimatorStateInfo(0).IsName("run"))
+                if(playerInput.actions["Aim"].triggered && mouseBottonNumber == 0 && !isReloading && !animator.GetCurrentAnimatorStateInfo(0).IsName("run"))
                 {
                     // 更改开镜状态
                     isAiming = true;
@@ -357,7 +352,7 @@ public class Weapon_AutomaticGun : Weapon
                     // 记录鼠标按下次数
                     mouseBottonNumber = 1;
                 }
-                else if(Input.GetMouseButtonDown(1) && mouseBottonNumber == 1)
+                else if(playerInput.actions["Aim"].triggered && mouseBottonNumber == 1)
                 {
                     // 更改开镜状态
                     isAiming = false;
@@ -367,13 +362,13 @@ public class Weapon_AutomaticGun : Weapon
                     mouseBottonNumber = 0;
                 }
             }else{
-                // 判断玩家按下鼠标永健
-                if(Input.GetMouseButtonDown(1) & !isReloading && !animator.GetCurrentAnimatorStateInfo(0).IsName("run")){
+                // 判断玩家按下鼠标右键
+                if(playerInput.actions["Aim"].IsPressed() && !isReloading && !animator.GetCurrentAnimatorStateInfo(0).IsName("run")){
                     // 更改开镜状态
                     isAiming = true;
                     // 设置动画机状态
                     animator.SetBool("Aim", isAiming);
-                }else if(Input.GetMouseButtonUp(1)){
+                }else{
                     // 更改开镜状态
                     isAiming = false;
                     // 设置动画机状态
@@ -382,7 +377,7 @@ public class Weapon_AutomaticGun : Weapon
             }
 
             // 判断是否按下换弹按键
-            if (Input.GetKeyDown(reloadInputName) && !isReloading)
+            if (playerInput.actions["Reload"].triggered && !isReloading)
             {
                 // 执行换弹
                 DoReloadAnimation();
@@ -409,7 +404,7 @@ public class Weapon_AutomaticGun : Weapon
             }
 
             // 判断玩家是否按下丢弃武器的按键
-            if (Input.GetKeyDown(throwWeaponInputName))
+            if (playerInput.actions["Throw"].triggered)
             {
                 // 丢弃武器
                 GameObject.Find("Inventory").GetComponent<Inventory>().ThrowWeapon(int.Parse(gameObject.name), gameObject);
