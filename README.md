@@ -15,6 +15,7 @@ If you only want to experience the project simply, you can refer to the first an
 #### Part Three - [Implementation of Firearms](#section3)
 #### Part Four - [Implementation of Enemies](#section4)
 #### Part Five - [Scene Implementation](#section5)
+#### Part Six - [Material Usage](#section6)
 
 <h2 id="section1">Download and Usage</h2>
 
@@ -31,9 +32,10 @@ If you are using Windows, you will typically receive a folder. If you want to la
 <h2 id="section2">Operation Mode</h2>
 
 ### Input Devices
-FPS-Demo supports most keyboards and gamepads. Generally, as long as the keyboard and mouse work normally within the system, the game can automatically recognize all supported input devices. FPS-Demo has the following requirements for input devices:
-   - Keyboard: At least 60 keys, including basic function and auxiliary keys
-   - Gamepad: It's recommended to use Xbox or PlayStation controllers. Layouts of other controllers have not been tested, and their feasibility and usability are not guaranteed.
+The FPS-Demo supports most keyboards, mice, and gamepads. Generally speaking, as long as the keyboard, mouse, and gamepad can function normally within the system, the game can automatically recognize all supported input devices. The FPS-Demo has the following requirements for input devices:
+   - Keyboard: At least 60 keys, including basic function and auxiliary keys.
+   - Mouse: Must include at least a left and right button, along with a scroll wheel.
+   - Gamepad: It is recommended to use Xbox or PlayStation controllers. Other layouts have not been tested, and their feasibility and usability are not guaranteed.
  
 ***Note: FPS-Demo can connect multiple gamepads and keyboards simultaneously and supports simultaneous input. Once a gamepads is recognized, the game will automatically adjust the input sensitivity and aiming mode. Therefore, we do not recommend using a keyboard to play the game when a gamepad is connected.**
 
@@ -141,3 +143,11 @@ In the FPS-Demo scene, oil drums and gas cylinders can interact with bullets and
 
 ### Special Scenes
 Some specific scenes in FPS-Demo will have certain effects on the player. For example, in water, players will be forced to crouch, cannot jump, and will play the sound of moving in water when moving. For all scenes entered by the player and at this time the height of the ceiling is less than the standing height of the player, the player will be forced to crouch. Even if the user releases `[Control]/[Left Shoulder]`, as long as the user does not press `[Control]/[Left Shoulder]` after leaving the scene, the player will automatically re-enter the standing state.
+
+<h2 id="section6">Material Usage</h2>
+The FPS-Demo has utilized a certain amount of open-source materials, covering most of the modeling, animation, and a very small number of prefabs. We express our admiration for the selfless open-source spirit of these material creators. The project has utilized the following materials:
+
+   - Low Poly FPS Pack
+   - Flooded Grounds Map Model
+   - Zombie Character Sounds
+   - Legacy Particle Pack Effects

@@ -89,7 +89,7 @@ public class Player : MonoBehaviour
 
     [Header("输入")]
     [Tooltip("输入系统组件")] [HideInInspector] public PlayerInput playerInput;
-    [Tooltip("是否使用手柄输入")] public bool isGamepad;
+    [Tooltip("是否使用手柄输入")] [HideInInspector] public bool isGamepad;
 
     void Start()
     {
@@ -97,7 +97,7 @@ public class Player : MonoBehaviour
         controller = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
         standHeight = controller.height;
-        
+
         // 重置玩家生命值
         playerHealth = 100f;
 
