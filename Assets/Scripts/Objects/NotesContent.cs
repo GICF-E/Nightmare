@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
@@ -15,7 +13,7 @@ public class NotesContent : Notes
             // 显示提示UI
             notesCanvas.SetActive(true);
             // 更新玩家文本UI
-            playerNotesText.text = texts[ID];
+            playerNotesText.text = texts[ID - 1];
         }
     }
 
@@ -33,14 +31,16 @@ public class NotesContent : Notes
     #if UNITY_EDITOR
     void OnValidate()
     {
+        // 从文件中提取文本
+        texts = textFile.text.Split(new string[] { "----------" }, System.StringSplitOptions.RemoveEmptyEntries);
         // 确保textIndex不会超出texts数组的范围
-        if (texts != null && ID >= 0 && ID < texts.Length)
+        if (texts != null && ID > 0 && ID <= texts.Length)
         {
-            previewText = texts[ID];
+            previewText = texts[ID - 1];
         }
         else
         {
-            previewText = "";
+            previewText = "输入超限";
         }
 
         // 更新Inspector显示

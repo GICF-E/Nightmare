@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 using UnityEngine.AI;
 
 /// <summary>
@@ -55,8 +54,6 @@ public class Enemy : MonoBehaviour
     private float _unloadTimer;
     private float _interval;
 
-    private Vector3 targetPosition;
-
     // 存放敌人当前的状态
     public EnemyBaseState currentState;
     // 定义敌人巡逻状态声名对象
@@ -64,10 +61,9 @@ public class Enemy : MonoBehaviour
     // 定义敌人攻击状态声名对象
     public AttackState attackState;
     // 获取玩家对象代码
-    private Player player = new Player();
+    private Player player;
 
-    private void Awake()
-    {
+    private void Awake() {
         // 初始化变量
         agent = gameObject.GetComponent<NavMeshAgent>();
         animator = gameObject.GetComponent<Animator>();
@@ -76,13 +72,19 @@ public class Enemy : MonoBehaviour
         nextAttack = attackRate;
         _interval = FrameInterval;
         patrolIndex = 0;
-
         // 初始化血量条
         isDead = false;
         slider.minValue = 0;
         slider.maxValue = enemyHealth;
         slider.value = enemyHealth;
-        if(isEnableSlider) slider.gameObject.SetActive(true);
+
+        // 根据玩家设置更改变量
+        isEnableSlider = PlayerPrefs.GetInt("isEnableSlider") == 1 ? true : false;
+    }
+
+    private void Start()
+    {
+        if (isEnableSlider && !player.isMenuMode) slider.gameObject.SetActive(true);
         else slider.gameObject.SetActive(false);
 
         // 初始化状态对象
@@ -112,34 +114,37 @@ public class Enemy : MonoBehaviour
             // 如果死亡，停止移动
             agent.isStopped = true;
         }
+        // 判断玩家到敌人的距离
+        if (Vector3.Distance(transform.position, player.transform.position) < 200f)
+        {
+            // 更新Mesh Collider
+            if (_interval >= FrameInterval)
+            {
+                _interval = 0;
+                Mesh colliderMesh = new Mesh();
+                // 更新mesh
+                meshRenderer.BakeMesh(colliderMesh);
+                meshCollider.sharedMesh = null;
+                // 将新的mesh赋给meshcollider
+                meshCollider.sharedMesh = colliderMesh;
+                colliderMesh = null;
+            }
+            else
+            {
+                _interval += Time.deltaTime;
+            }
 
-        // 更新Mesh Collider
-        if (_interval >= FrameInterval)
-        {
-            _interval = 0;
-            Mesh colliderMesh = new Mesh();
-            // 更新mesh
-            meshRenderer.BakeMesh(colliderMesh);
-            meshCollider.sharedMesh = null;
-            // 将新的mesh赋给meshcollider
-            meshCollider.sharedMesh = colliderMesh;
-            colliderMesh = null;
-        }
-        else
-        {
-            _interval += Time.deltaTime;
-        }
+            // 定时释放资源，防止内存泄露
+            if (_unloadTimer < _unloadResouceTime)
+            {
+                _unloadTimer += Time.deltaTime;
+            }
+            else
+            {
+                Resources.UnloadUnusedAssets();
+                _unloadTimer = 0;
 
-        // 定时释放资源，防止内存泄露
-        if (_unloadTimer < _unloadResouceTime)
-        {
-            _unloadTimer += Time.deltaTime;
-        }
-        else
-        {
-            Resources.UnloadUnusedAssets();
-            _unloadTimer = 0;
-
+            }
         }
     }
 
@@ -166,7 +171,7 @@ public class Enemy : MonoBehaviour
         // 加载路线前清空List
         wayPoints.Clear();
         // 遍历路线的所有当航点位置信息并加载到wayPoints
-        foreach(Transform T in go.transform)
+        foreach (Transform T in go.transform)
         {
             wayPoints.Add(T.position);
         }
@@ -188,7 +193,7 @@ public class Enemy : MonoBehaviour
         enemyHealth -= damage;
         slider.value = enemyHealth;
         // 判断是否死亡
-        if(enemyHealth <= 0)
+        if (enemyHealth <= 0)
         {
             enemyHealth = 0;
             isDead = true;
@@ -200,7 +205,7 @@ public class Enemy : MonoBehaviour
     public void HurtPlayer()
     {
         // 生成粒子效果
-        if(isAttackEffect) Instantiate(attackEffect, hitPoint.position, Quaternion.identity);
+        if (isAttackEffect) Instantiate(attackEffect, hitPoint.position, Quaternion.identity);
         if (Vector3.Distance(hitPoint.position, attackList[0].transform.position) <= attackRange)
         {
             // 执行扣血

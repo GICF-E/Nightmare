@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,9 +14,9 @@ public abstract class Notes : MonoBehaviour
 
     [Header("引用")]
     [Tooltip("玩家代码")] protected Player player;
-    [Tooltip("玩家查看视图")] public GameObject playerNotesUI;
-    [Tooltip("玩家文本UI")] public Text playerNotesText;
-    [Tooltip("拾取提示UI")] public GameObject notesCanvas;
+    [Tooltip("玩家查看视图")] protected GameObject playerNotesUI;
+    [Tooltip("玩家文本UI")] protected Text playerNotesText;
+    [Tooltip("拾取提示UI")] protected GameObject notesCanvas;
 
     private void Awake() {
         // 从文件中提取文本

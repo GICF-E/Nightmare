@@ -15,7 +15,6 @@ public class Player : MonoBehaviour
     [Tooltip("跳跃速度")] public float jumpSpeed = 4.0f;
     [Tooltip("重力加速度")] public float gravity = 9.8f;
     [Tooltip("推动物体力的大小")] public float pushPower = 4f;
-    [Tooltip("使用单击鼠标右键来控制开镜")] public bool isClickAiming;
     [Tooltip("角色移动向量")][HideInInspector] public Vector3 moveDirection = Vector3.zero;
 
 
@@ -75,6 +74,7 @@ public class Player : MonoBehaviour
 
     [Header("特殊模式")]
     [Tooltip("索尼克模式")] public bool isSonicMode;
+    [Tooltip("菜单模式")] public bool isMenuMode;
 
 
     [Header("UI")]
@@ -86,26 +86,33 @@ public class Player : MonoBehaviour
     [Tooltip("玩家血雾效果")] public Image hurtImage;
     [Tooltip("血雾收到伤害颜色")] private Color flashColor;
     [Tooltip("血雾没有受到伤害的颜色")] private Color clearColor;
+    [Tooltip("帧间隔时间")] private float deltaTime = 0.0f;
+
 
     [Header("输入")]
-    [Tooltip("输入系统组件")] [HideInInspector] public PlayerInput playerInput;
-    [Tooltip("是否使用手柄输入")] [HideInInspector] public bool isGamepad;
+    [Tooltip("输入系统组件")][HideInInspector] public PlayerInput playerInput;
+    [Tooltip("使用单击鼠标右键来控制开镜")] public bool isClickAiming;
 
-    void Start()
-    {
+    private void Awake() {
         // 获取组件并存储原始高度
         controller = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
         standHeight = controller.height;
-
         // 重置玩家生命值
         playerHealth = 100f;
-
         // 重置玩家速度和下蹲状态
         isCrouching = false;
         canCrouching = true;
-        canMove = true;
+        canMove = isMenuMode ? false : true;
+        // 根据玩家设置更改变量
+        isDisplayFPS = PlayerPrefs.GetInt("isDisplayFPS") == 1;
+        isDisplayHealthFigure = PlayerPrefs.GetInt("isDisplayHealthFigure") == 1;
+        isSonicMode = PlayerPrefs.GetInt("isSonicMode") == 1;
+        isClickAiming = PlayerPrefs.GetInt("isClickAiming") == 1;
+    }
 
+    private void Start()
+    {
         if (!isSonicMode)
         {
             walkSpeed = 6;
@@ -122,7 +129,12 @@ public class Player : MonoBehaviour
         }
 
         // 更新UI
-        if (isDisplayHealthFigure)
+        if (isMenuMode)
+        {
+            playerHealthUI.gameObject.SetActive(false);
+            healthImage.gameObject.SetActive(false);
+        }
+        else if (isDisplayHealthFigure)
         {
             playerHealthUI.gameObject.SetActive(true);
             healthImage.gameObject.SetActive(false);
@@ -144,14 +156,13 @@ public class Player : MonoBehaviour
         // 更新血雾颜色
         flashColor = Color.red;
         clearColor = Color.clear;
-
-        // 开关帧率显示
-        if (isDisplayFPS) GetComponent<FPSDisplay>().enabled = true;
-        else GetComponent<FPSDisplay>().enabled = false;
     }
 
     void Update()
     {
+        // 更新帧间隔时间
+        deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
+
         // 当角色站在地面上且可以移动时执行以下逻辑
         if (controller.isGrounded && canMove)
         {
@@ -185,7 +196,7 @@ public class Player : MonoBehaviour
         else
         {
             // 应用重力效果
-            moveDirection.y -= gravity * Time.deltaTime;
+            if(!isMenuMode) moveDirection.y -= gravity * Time.deltaTime;
         }
 
         // 玩家受到伤害后屏幕产生红色渐变
@@ -236,17 +247,6 @@ public class Player : MonoBehaviour
         if (canMove) controller.Move(moveDirection * Time.deltaTime);
         // 播放声音
         if (canMove) PlayerSound();
-
-        // 遍历判断是否使用手柄
-        foreach (var device in InputSystem.devices)
-        {
-            if (device is Gamepad)
-            {
-                isGamepad = true;
-                // 如果找到手柄，跳出循环
-                break;
-            }
-        }
     }
 
     // 判断玩家是否可以下蹲
@@ -485,5 +485,27 @@ public class Player : MonoBehaviour
         auxiliaryAudioSource.Pause();
         // 在协程结束时重置引用
         addHealthCoroutine = null;
+    }
+
+    /// <summary>
+    /// 通过绘制GUI显示FPS
+    /// <summary>
+    private void OnGUI()
+    {
+        if (isDisplayFPS && !isMenuMode)
+        {
+            int w = Screen.width, h = Screen.height;
+
+            GUIStyle style = new GUIStyle();
+
+            Rect rect = new Rect(0, 0, w, h * 2 / 100);
+            style.alignment = TextAnchor.UpperLeft;
+            style.fontSize = h * 2 / 100;
+            style.normal.textColor = new Color(1, 1, 1, 1.0f);
+            float msec = deltaTime * 1000.0f;
+            float fps = 1.0f / deltaTime;
+            string text = string.Format(" {1:0.} fps", msec, fps);
+            GUI.Label(rect, text, style);
+        }
     }
 }

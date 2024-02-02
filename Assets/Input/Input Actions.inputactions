@@ -51,24 +51,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Mouse X",
-                    "type": "Value",
-                    "id": "4b816b88-a97a-4bd0-ac6c-d5491980f282",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
-                    "name": "Mouse Y",
-                    "type": "Value",
-                    "id": "9746951d-645c-40fe-9cf0-815809366f21",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "Submit",
                     "type": "Button",
                     "id": "e057a6e0-8a39-4fa8-a01b-dbe39022046a",
@@ -235,50 +217,6 @@
                 },
                 {
                     "name": "",
-                    "id": "9d02ce36-42f8-4515-90c6-fb29586e76e5",
-                    "path": "<Mouse>/delta/x",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Mouse X",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "bca6aaea-de58-4b2a-89bd-37399b75e918",
-                    "path": "<Gamepad>/rightStick/x",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Mouse X",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "521b09b4-3a07-442d-8947-fc4758b056bb",
-                    "path": "<Mouse>/delta/y",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Mouse Y",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "0bd0266b-49fa-45b9-b55f-91f38d6834be",
-                    "path": "<Gamepad>/rightStick/y",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Mouse Y",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "5f20143c-b940-42de-9888-ddc3bb1613c5",
                     "path": "<Keyboard>/enter",
                     "interactions": "",
@@ -315,7 +253,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Aim",
+                    "name": "Mouse Aim",
                     "type": "Button",
                     "id": "e3558365-df9e-4e97-8966-3ab7ba015d13",
                     "expectedControlType": "Button",
@@ -376,6 +314,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Gamepad Aim",
+                    "type": "Button",
+                    "id": "6c3914f2-90b5-481b-bd54-ce2d0b488440",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -408,18 +355,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Aim",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "ff0ea0ac-5525-43a9-81e0-d1427c8c63b1",
-                    "path": "<Gamepad>/leftTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Aim",
+                    "action": "Mouse Aim",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -552,6 +488,105 @@
                     "processors": "",
                     "groups": "",
                     "action": "Inspect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8a306ff3-2bbb-4602-ad0f-88f53fc2bfc1",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Gamepad Aim",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Camera",
+            "id": "4ec94dea-2fcb-42a5-b84c-3699bfb78355",
+            "actions": [
+                {
+                    "name": "Right Stick Y",
+                    "type": "Value",
+                    "id": "c8fa78b0-033c-44c8-ae65-29a21d8c1de9",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Mouse X",
+                    "type": "Value",
+                    "id": "1f444290-3eb0-40eb-bbb7-e09b066eee7f",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Mouse Y",
+                    "type": "Value",
+                    "id": "06bbbea7-c374-4eb7-b942-c5db4bc7d95f",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Right Stick X",
+                    "type": "Value",
+                    "id": "8c929794-e8c9-4c59-9825-c0551a2d4d1a",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "943cdcbb-631d-4ef9-a98a-a104f24a851e",
+                    "path": "<Gamepad>/rightStick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Right Stick X",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "06cfb9c8-7648-439f-9bf1-0a55116556ad",
+                    "path": "<Gamepad>/rightStick/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Right Stick Y",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "355f369d-894e-45eb-8f68-13f56f737bd8",
+                    "path": "<Mouse>/delta/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Mouse Y",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d2d4d090-b94d-4a91-b2ef-0fb33b3a5ed5",
+                    "path": "<Mouse>/delta/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Mouse X",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

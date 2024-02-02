@@ -4,7 +4,6 @@ using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using TMPro;
 using static Player;
-using System.Runtime.Remoting.Contexts;
 
 /// <summary>
 /// 武器音效的内部类
@@ -45,9 +44,11 @@ public class Weapon_AutomaticGun : Weapon
     [Tooltip("主摄像机")] private Camera mainCamera;
     [Tooltip("枪械摄像机")] public Camera gunCamera;
 
+
     [Header("子弹预制体和特效")]
     [Tooltip("子弹")] public Transform bulletPrefab;
     [Tooltip("子弹抛壳")] public Transform casingPrefab;
+
 
     [Header("枪械属性")]
     [Tooltip("武器射程")] private float range = 500f;
@@ -55,13 +56,13 @@ public class Weapon_AutomaticGun : Weapon
     [Tooltip("武器的弹夹子弹数")] public int bulletMag;
     [Tooltip("当前弹夹剩余子弹数")] public int currentBullet;
     [Tooltip("当前备弹数")] public int bulletLeft;
-    [Tooltip("原始射速")]  private float originRate;
-    [Tooltip("射击偏移量")]  private float SpreadFactor;
-    [Tooltip("武器射速计时器")]  private float fireTimer;
+    [Tooltip("原始射速")] private float originRate;
+    [Tooltip("射击偏移量")] private float SpreadFactor;
+    [Tooltip("武器射速计时器")] private float fireTimer;
     [Tooltip("枪械最小伤害")] public float minDamgae;
     [Tooltip("枪械最大伤害")] public float maxDamage;
     [Tooltip("子弹发射的力")] private float bulletForce = 150f;
-    [Tooltip("射击模式枚举")] public enum ShootMode {AutoRifle,SemiGun};
+    [Tooltip("射击模式枚举")] public enum ShootMode { AutoRifle, SemiGun };
     [Tooltip("射击模式枚举值")] public ShootMode shootingMode;
     [Tooltip("射击输入方法的变更")] private bool GunShootInput;
     [Tooltip("用来区分中间参数（1.Auto 2.Semi）")] private int modeNum;
@@ -99,7 +100,7 @@ public class Weapon_AutomaticGun : Weapon
     [Tooltip("准心")] public Image[] crossQuarterImages;
     [Tooltip("当前准心的开合度")] private float currentExpanedDegree;
     [Tooltip("最大开合度")] private float maxCrossDegree = 100f;
-    [Tooltip("武器的射击模式的名称")]private string shootModeName;
+    [Tooltip("武器的射击模式的名称")] private string shootModeName;
     [Tooltip("枪械的剩余子弹量文本")] public TextMeshProUGUI ammoTextUI;
     [Tooltip("枪械的射击模式文本")] public TextMeshProUGUI shootModeTextUI;
 
@@ -124,6 +125,10 @@ public class Weapon_AutomaticGun : Weapon
         playerInput = GetComponent<PlayerInput>();
         // 赋值摄像机
         mainCamera = Camera.main;
+
+        // 根据玩家设置更改变量
+        isDisplayAmmo = PlayerPrefs.GetInt("isDisplayAmmo") == 1;
+        isDisplayShootMode = PlayerPrefs.GetInt("isDisplayShootMode") == 1;
     }
 
     private void Start()
@@ -147,9 +152,9 @@ public class Weapon_AutomaticGun : Weapon
         // 定义UI属性
         maxCrossDegree = 15f;
         // 显示或隐藏UI
-        if(isDisplayAmmo) ammoTextUI.gameObject.SetActive(true);
+        if (isDisplayAmmo) ammoTextUI.gameObject.SetActive(true);
         else ammoTextUI.gameObject.SetActive(false);
-        if(isDisplayShootMode) shootModeTextUI.gameObject.SetActive(true);
+        if (isDisplayShootMode) shootModeTextUI.gameObject.SetActive(true);
         else shootModeTextUI.gameObject.SetActive(false);
 
         // 如果是全自动武器
@@ -200,7 +205,9 @@ public class Weapon_AutomaticGun : Weapon
             {
                 crossQuarterImages[i].gameObject.SetActive(false);
             }
-        }else if(!isAiming){
+        }
+        else if (!isAiming)
+        {
             for (int i = 0; i < crossQuarterImages.Length; i++)
             {
                 crossQuarterImages[i].gameObject.SetActive(true);
@@ -208,7 +215,8 @@ public class Weapon_AutomaticGun : Weapon
         }
 
         // 判断是否可以被移动
-        if(player.canMove){
+        if (player.canMove)
+        {
             // 如果是全自动枪械
             if (IS_AUTORIFLE)
             {
@@ -221,7 +229,8 @@ public class Weapon_AutomaticGun : Weapon
                     // 更新UI
                     shootModeName = "Auto";
                     UpdateAmmoUI();
-                }else if(playerInput.actions["Switch Shoot Mode"].triggered && modeNum != 0)
+                }
+                else if (playerInput.actions["Switch Shoot Mode"].triggered && modeNum != 0)
                 {
                     // 切换射击模式的枚举值
                     modeNum = 2;
@@ -258,24 +267,24 @@ public class Weapon_AutomaticGun : Weapon
             }
 
             // 判断玩家是否按下攻击键
-            if(playerInput.actions["Knife Attack"].triggered)
+            if (playerInput.actions["Knife Attack"].triggered)
             {
                 // 播放近战动画
                 animator.SetTrigger("KnifeAttack");
             }
 
             // 如果按下了切换手电筒开关的按键
-            if(playerInput.actions["Switch Light"].triggered && !flashLight.activeSelf)
+            if (playerInput.actions["Switch Light"].triggered && !flashLight.activeSelf)
             {
                 flashLight.SetActive(true);
             }
-            else if(playerInput.actions["Switch Light"].triggered && flashLight.activeSelf)
+            else if (playerInput.actions["Switch Light"].triggered && flashLight.activeSelf)
             {
                 flashLight.SetActive(false);
             }
 
             // 判断换弹动画的状态
-            if ((animator.GetCurrentAnimatorStateInfo(0).IsName("reload_ammo_left") ||
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("reload_ammo_left") ||
                 animator.GetCurrentAnimatorStateInfo(0).IsName("reload_out_of_ammo") ||
                 animator.GetCurrentAnimatorStateInfo(0).IsName("reload_open") ||
                 animator.GetCurrentAnimatorStateInfo(0).IsName("reload_close") ||
@@ -284,15 +293,16 @@ public class Weapon_AutomaticGun : Weapon
                 animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 3") ||
                 animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 4") ||
                 animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 5") ||
-                animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 6")))
+                animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 6"))
             {
                 isReloading = true;
             }
-            else {
+            else
+            {
                 isReloading = false;
             }
             // 对于霰弹枪或狙击枪的结束换弹判定
-            if((animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 1") ||
+            if ((animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 1") ||
                 animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 2") ||
                 animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 3") ||
                 animator.GetCurrentAnimatorStateInfo(0).IsName("reload_insert 4") ||
@@ -305,7 +315,7 @@ public class Weapon_AutomaticGun : Weapon
 
             // 播放行走、跑步动画
             animator.SetBool("Walk", state == MovementState.walking);
-            if(state == MovementState.running)
+            if (state == MovementState.running)
             {
                 animator.SetBool("Run", true);
                 // 退出瞄准状态
@@ -317,7 +327,7 @@ public class Weapon_AutomaticGun : Weapon
             {
                 animator.SetBool("Run", false);
             }
-            
+
             // 播放检视动画
             if (playerInput.actions["Inspect"].triggered)
             {
@@ -340,41 +350,39 @@ public class Weapon_AutomaticGun : Weapon
             // 腰射和瞄准状态的射击精度
             SpreadFactor = isAiming ? 0f : 0.05f;
 
-            // 处理鼠标瞄准的逻辑，判断单击和长按
-            if(player.isClickAiming && !player.isGamepad){
-                // 判断玩家鼠标右键进入瞄准
-                if(playerInput.actions["Aim"].triggered && mouseBottonNumber == 0 && !isReloading && !animator.GetCurrentAnimatorStateInfo(0).IsName("run"))
+            // 如果玩家不在换弹且不在跑动中，则可以进行瞄准操作
+            if (!isReloading && !animator.GetCurrentAnimatorStateInfo(0).IsName("run"))
+            {
+                // 处理鼠标瞄准逻辑
+                if (player.isClickAiming)
                 {
-                    // 更改开镜状态
-                    isAiming = true;
-                    // 设置动画机状态
-                    animator.SetBool("Aim", isAiming);
-                    // 记录鼠标按下次数
-                    mouseBottonNumber = 1;
+                    // 点击瞄准模式：鼠标单击切换瞄准状态
+                    if (playerInput.actions["Mouse Aim"].triggered)
+                    {
+                        isAiming = !isAiming;
+                        mouseBottonNumber = isAiming ? 1 : 0;
+                    }
                 }
-                else if(playerInput.actions["Aim"].triggered && mouseBottonNumber == 1)
+                else
                 {
-                    // 更改开镜状态
-                    isAiming = false;
-                    // 设置动画机状态
-                    animator.SetBool("Aim", isAiming);
-                    // 记录鼠标按下次数
-                    mouseBottonNumber = 0;
+                    // 长按瞄准模式
+                    isAiming = playerInput.actions["Mouse Aim"].IsPressed() || playerInput.actions["Gamepad Aim"].IsPressed();
                 }
-            }else{
-                // 判断玩家按下鼠标右键
-                if(playerInput.actions["Aim"].IsPressed() && !isReloading && !animator.GetCurrentAnimatorStateInfo(0).IsName("run")){
-                    // 更改开镜状态
-                    isAiming = true;
-                    // 设置动画机状态
-                    animator.SetBool("Aim", isAiming);
-                }else{
-                    // 更改开镜状态
+
+                // 判断手柄瞄准
+                if(playerInput.actions["Gamepad Aim"].IsPressed()) isAiming = true;
+
+                // 如果鼠标和手柄都未进行瞄准操作，并且未在点击瞄准模式下点击鼠标，则取消瞄准状态
+                if (!playerInput.actions["Mouse Aim"].IsPressed() && !playerInput.actions["Gamepad Aim"].IsPressed() && mouseBottonNumber == 0)
+                {
                     isAiming = false;
-                    // 设置动画机状态
-                    animator.SetBool("Aim", isAiming);
                 }
+
+                // 更新动画状态
+                animator.SetBool("Aim", isAiming);
             }
+
+
 
             // 判断是否按下换弹按键
             if (playerInput.actions["Reload"].triggered && !isReloading)
@@ -424,7 +432,7 @@ public class Weapon_AutomaticGun : Weapon
     public override void GunFire()
     {
         // 判断是否符合开火条件
-        if (fireTimer < fireRate || currentBullet <= 0 || animator.GetCurrentAnimatorStateInfo(0).IsName("take_out") || animator.GetCurrentAnimatorStateInfo(0).IsName("run") || animator.GetCurrentAnimatorStateInfo(0).IsName("inspect") || isReloading ) return;
+        if (fireTimer < fireRate || currentBullet <= 0 || animator.GetCurrentAnimatorStateInfo(0).IsName("take_out") || animator.GetCurrentAnimatorStateInfo(0).IsName("run") || animator.GetCurrentAnimatorStateInfo(0).IsName("inspect") || isReloading) return;
 
         // 开火灯光
         StartCoroutine(MuzzleFlashLight());
@@ -442,11 +450,11 @@ public class Weapon_AutomaticGun : Weapon
         else
         {
             // 播放瞄准开火动画
-            animator.Play("aim_fire",0,0);
+            animator.Play("aim_fire", 0, 0);
         }
 
         // 循环子弹的发射次数
-        for(int i = 0; i < gunFragment; i++)
+        for (int i = 0; i < gunFragment; i++)
         {
             // 定义射线击中的物体
             RaycastHit hit;
@@ -469,7 +477,7 @@ public class Weapon_AutomaticGun : Weapon
             {
                 Debug.Log(hit.transform.gameObject.name);
                 // 霰弹枪生成子弹
-                if(IS_SHOTGUN)
+                if (IS_SHOTGUN)
                 {
                     // 霰弹枪特殊处理在hit.point上生成子弹
                     bullet = Instantiate(bulletPrefab, hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
@@ -477,29 +485,30 @@ public class Weapon_AutomaticGun : Weapon
                     bullet.GetComponent<Rigidbody>().velocity = (bullet.transform.forward + shootDirection) * bulletForce;
                 }
                 // 击中头部判断
-                if(hit.transform.tag == "HeadCollider"){
+                if (hit.transform.tag == "HeadCollider")
+                {
                     Debug.Log("Head");
                     // 对击中碰撞题的父级进行两倍扣血
-                    if(currentBullet > 2) hit.transform.GetComponentInParent<Enemy>().Health(Random.Range(minDamgae, maxDamage) * 2);
+                    if (currentBullet > 2) hit.transform.GetComponentInParent<Enemy>().Health(Random.Range(minDamgae, maxDamage) * 2);
                     else hit.transform.GetComponentInParent<Enemy>().Health(minDamgae * 4);
                 }
                 // 击中敌人判断
-                if(hit.transform.tag == "Enemy")
+                if (hit.transform.tag == "Enemy")
                 {
                     // 对击中的敌人进行随机扣血
-                    if(currentBullet > 2) hit.transform.GetComponent<Enemy>().Health(Random.Range(minDamgae, maxDamage));
+                    if (currentBullet > 2) hit.transform.GetComponent<Enemy>().Health(Random.Range(minDamgae, maxDamage));
                     else hit.transform.GetComponent<Enemy>().Health(minDamgae * 2);
                 }
-                if(hit.transform.tag == "EnemyCollider")
+                if (hit.transform.tag == "EnemyCollider")
                 {
                     // 对击中碰撞题的父级进行扣血
-                    if(currentBullet > 2) hit.transform.GetComponentInParent<Enemy>().Health(Random.Range(minDamgae, maxDamage));
+                    if (currentBullet > 2) hit.transform.GetComponentInParent<Enemy>().Health(Random.Range(minDamgae, maxDamage));
                     else hit.transform.GetComponentInParent<Enemy>().Health(minDamgae * 2);
                 }
             }
         }
         // 抛壳
-        Instantiate(casingPrefab,CasingBulletSpawnPoint.transform.position,CasingBulletSpawnPoint.transform.rotation);
+        Instantiate(casingPrefab, CasingBulletSpawnPoint.transform.position, CasingBulletSpawnPoint.transform.rotation);
 
         // 根据是否装有消音器，播放不同的子弹发射音效
         mainAudioSource.clip = IS_SILENCER ? soundClips.silencerShootSound : soundClips.shootSound;
@@ -560,7 +569,7 @@ public class Weapon_AutomaticGun : Weapon
             mainAudioSource.Play();
         }
         // 弹夹中没有子弹的情况
-        else if(currentBullet == 0 && bulletLeft > 0)
+        else if (currentBullet == 0 && bulletLeft > 0)
         {
             // 播放动画
             animator.Play("reload_out_of_ammo", 0, 0);
@@ -577,7 +586,7 @@ public class Weapon_AutomaticGun : Weapon
         // 计算需要填充的子弹数
         int bulletToLoad = bulletMag - currentBullet;
         // 计算备弹扣除的子弹数
-        int bulletToReduce =  bulletLeft >= bulletToLoad ? bulletToLoad : bulletLeft;
+        int bulletToReduce = bulletLeft >= bulletToLoad ? bulletToLoad : bulletLeft;
         // 扣除备弹数
         bulletLeft -= bulletToReduce;
         // 增加弹夹中的子弹数
@@ -606,7 +615,7 @@ public class Weapon_AutomaticGun : Weapon
     public override void AimIn()
     {
         // 隐藏准心
-        for(int i = 0; i < crossQuarterImages.Length; i++)
+        for (int i = 0; i < crossQuarterImages.Length; i++)
         {
             crossQuarterImages[i].gameObject.SetActive(false);
         }
@@ -621,7 +630,7 @@ public class Weapon_AutomaticGun : Weapon
         }
 
         // 摄像机视野变近
-        StartCoroutine(CameraView(mainCamera,30));
+        StartCoroutine(CameraView(mainCamera, 30));
         // 播放瞄准声音
         mainAudioSource.clip = soundClips.aimSound;
         mainAudioSource.Play();
@@ -638,7 +647,8 @@ public class Weapon_AutomaticGun : Weapon
             // 改变GunCamera视野
             StartCoroutine(CameraView(gunCamera, 50));
         }
-        else {
+        else
+        {
             // 非狙击枪显示准心
             for (int i = 0; i < crossQuarterImages.Length; i++)
             {
@@ -654,7 +664,7 @@ public class Weapon_AutomaticGun : Weapon
     }
 
     // 调整摄像机视野
-    public IEnumerator CameraView(Camera camera,int targetView)
+    public IEnumerator CameraView(Camera camera, int targetView)
     {
         // 容差值
         const float tolerance = 5f;
@@ -685,14 +695,14 @@ public class Weapon_AutomaticGun : Weapon
     // 根据准心的大小，增减准心的开合度
     public override void ExpandingCrossUpdate(float expanDegree)
     {
-        if(currentExpanedDegree < expanDegree - 0.75f)
+        if (currentExpanedDegree < expanDegree - 0.75f)
         {
             ExpandCross(Time.deltaTime * 50);
         }
-        else if(currentExpanedDegree > expanDegree + 0.75f)
+        else if (currentExpanedDegree > expanDegree + 0.75f)
         {
             ExpandCross(Time.deltaTime * -200);
-        } 
+        }
     }
 
     // 改变并记录当前准心的开合度
@@ -718,7 +728,7 @@ public class Weapon_AutomaticGun : Weapon
     public IEnumerator ShootCross()
     {
         yield return null;
-        for(int i = 0; i < 5; i++)
+        for (int i = 0; i < 5; i++)
         {
             ExpandCross(Time.deltaTime * 200);
         }

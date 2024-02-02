@@ -1,6 +1,6 @@
 # FPS-Demo Documentation
 ## Project Overview
-This is a simple horror FPS game based on Low Poly style models. It provides several weapons that can be picked up and has designed shooting and enemy systems. It's created using the `C#` language and `Unity3D Build-In` rendering pipeline.  
+This is a simple horror FPS game. It provides several weapons that can be picked up and has designed shooting and enemy systems. It's created using the `C#` language and `Unity3D Build-In` rendering pipeline.  
 
 **Note: FPS-Demo is for learning and reference only. It may lack certain entertainment and fun elements and is not intended for commercial use. We do not take any responsibility for the stability and final results of the project.**
 
@@ -75,7 +75,7 @@ In FPS-Demo, you can attack enemies with weapons and interactive objects in the 
 ***Note: A bullet hitting the head can significantly increase damage.**
 
 ### Viewing Notes
-In the FPS-Demo scene, there are many notes scattered around, left by ~~predecessors~~, which might guide you when you're lost or help you piece together a story from the past. To view a note, you need to approach and pick it up (see `/Operation Mode - Object Discarding and Picking Up/` for details). After picking up a note, an interface for viewing the note's content will automatically pop up. In this interface, the mouse will be automatically released, allowing you to view the content by dragging or scrolling the mouse wheel. To close the interface, you can click the `X` button at the top right corner of the screen or press the corresponding key on the keyboard: 
+In the FPS-Demo scene, there are many notes scattered around, left by ~~iterations~~, which might guide you when you're lost or help you piece together a story from the past. To view a note, you need to approach and pick it up (see `/Operation Mode - Object Discarding and Picking Up/` for details). After picking up a note, an interface for viewing the note's content will automatically pop up. In this interface, the mouse will be automatically released, allowing you to view the content by dragging or scrolling the mouse wheel. To close the interface, you can click the `X` button at the top right corner of the screen or press the corresponding key on the keyboard: 
    - Press `[F]/[D-Pad Up]` to view the note
    - Press `[Enter]/[D-Pad Down]` to close the viewing interface  
 

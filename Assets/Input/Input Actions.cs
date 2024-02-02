@@ -73,24 +73,6 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Mouse X"",
-                    ""type"": ""Value"",
-                    ""id"": ""4b816b88-a97a-4bd0-ac6c-d5491980f282"",
-                    ""expectedControlType"": ""Axis"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
-                    ""name"": ""Mouse Y"",
-                    ""type"": ""Value"",
-                    ""id"": ""9746951d-645c-40fe-9cf0-815809366f21"",
-                    ""expectedControlType"": ""Axis"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
                     ""name"": ""Submit"",
                     ""type"": ""Button"",
                     ""id"": ""e057a6e0-8a39-4fa8-a01b-dbe39022046a"",
@@ -257,50 +239,6 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""9d02ce36-42f8-4515-90c6-fb29586e76e5"",
-                    ""path"": ""<Mouse>/delta/x"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Mouse X"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""bca6aaea-de58-4b2a-89bd-37399b75e918"",
-                    ""path"": ""<Gamepad>/rightStick/x"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Mouse X"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""521b09b4-3a07-442d-8947-fc4758b056bb"",
-                    ""path"": ""<Mouse>/delta/y"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Mouse Y"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""0bd0266b-49fa-45b9-b55f-91f38d6834be"",
-                    ""path"": ""<Gamepad>/rightStick/y"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Mouse Y"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""5f20143c-b940-42de-9888-ddc3bb1613c5"",
                     ""path"": ""<Keyboard>/enter"",
                     ""interactions"": """",
@@ -337,7 +275,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Aim"",
+                    ""name"": ""Mouse Aim"",
                     ""type"": ""Button"",
                     ""id"": ""e3558365-df9e-4e97-8966-3ab7ba015d13"",
                     ""expectedControlType"": ""Button"",
@@ -398,6 +336,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Gamepad Aim"",
+                    ""type"": ""Button"",
+                    ""id"": ""6c3914f2-90b5-481b-bd54-ce2d0b488440"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -430,18 +377,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Aim"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""ff0ea0ac-5525-43a9-81e0-d1427c8c63b1"",
-                    ""path"": ""<Gamepad>/leftTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Aim"",
+                    ""action"": ""Mouse Aim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -576,6 +512,105 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Inspect"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8a306ff3-2bbb-4602-ad0f-88f53fc2bfc1"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Gamepad Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Camera"",
+            ""id"": ""4ec94dea-2fcb-42a5-b84c-3699bfb78355"",
+            ""actions"": [
+                {
+                    ""name"": ""Right Stick Y"",
+                    ""type"": ""Value"",
+                    ""id"": ""c8fa78b0-033c-44c8-ae65-29a21d8c1de9"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Mouse X"",
+                    ""type"": ""Value"",
+                    ""id"": ""1f444290-3eb0-40eb-bbb7-e09b066eee7f"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Mouse Y"",
+                    ""type"": ""Value"",
+                    ""id"": ""06bbbea7-c374-4eb7-b942-c5db4bc7d95f"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Right Stick X"",
+                    ""type"": ""Value"",
+                    ""id"": ""8c929794-e8c9-4c59-9825-c0551a2d4d1a"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""943cdcbb-631d-4ef9-a98a-a104f24a851e"",
+                    ""path"": ""<Gamepad>/rightStick/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Right Stick X"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""06cfb9c8-7648-439f-9bf1-0a55116556ad"",
+                    ""path"": ""<Gamepad>/rightStick/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Right Stick Y"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""355f369d-894e-45eb-8f68-13f56f737bd8"",
+                    ""path"": ""<Mouse>/delta/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Mouse Y"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d2d4d090-b94d-4a91-b2ef-0fb33b3a5ed5"",
+                    ""path"": ""<Mouse>/delta/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Mouse X"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -589,19 +624,24 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Movement_Run = m_Movement.FindAction("Run", throwIfNotFound: true);
         m_Movement_Crouch = m_Movement.FindAction("Crouch", throwIfNotFound: true);
         m_Movement_Interaction = m_Movement.FindAction("Interaction", throwIfNotFound: true);
-        m_Movement_MouseX = m_Movement.FindAction("Mouse X", throwIfNotFound: true);
-        m_Movement_MouseY = m_Movement.FindAction("Mouse Y", throwIfNotFound: true);
         m_Movement_Submit = m_Movement.FindAction("Submit", throwIfNotFound: true);
         // Weapon
         m_Weapon = asset.FindActionMap("Weapon", throwIfNotFound: true);
         m_Weapon_Shoot = m_Weapon.FindAction("Shoot", throwIfNotFound: true);
-        m_Weapon_Aim = m_Weapon.FindAction("Aim", throwIfNotFound: true);
+        m_Weapon_MouseAim = m_Weapon.FindAction("Mouse Aim", throwIfNotFound: true);
         m_Weapon_Reload = m_Weapon.FindAction("Reload", throwIfNotFound: true);
         m_Weapon_SwitchShootMode = m_Weapon.FindAction("Switch Shoot Mode", throwIfNotFound: true);
         m_Weapon_SwitchLight = m_Weapon.FindAction("Switch Light", throwIfNotFound: true);
         m_Weapon_Throw = m_Weapon.FindAction("Throw", throwIfNotFound: true);
         m_Weapon_KnifeAttack = m_Weapon.FindAction("Knife Attack", throwIfNotFound: true);
         m_Weapon_Inspect = m_Weapon.FindAction("Inspect", throwIfNotFound: true);
+        m_Weapon_GamepadAim = m_Weapon.FindAction("Gamepad Aim", throwIfNotFound: true);
+        // Camera
+        m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
+        m_Camera_RightStickY = m_Camera.FindAction("Right Stick Y", throwIfNotFound: true);
+        m_Camera_MouseX = m_Camera.FindAction("Mouse X", throwIfNotFound: true);
+        m_Camera_MouseY = m_Camera.FindAction("Mouse Y", throwIfNotFound: true);
+        m_Camera_RightStickX = m_Camera.FindAction("Right Stick X", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -668,8 +708,6 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Movement_Run;
     private readonly InputAction m_Movement_Crouch;
     private readonly InputAction m_Movement_Interaction;
-    private readonly InputAction m_Movement_MouseX;
-    private readonly InputAction m_Movement_MouseY;
     private readonly InputAction m_Movement_Submit;
     public struct MovementActions
     {
@@ -680,8 +718,6 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         public InputAction @Run => m_Wrapper.m_Movement_Run;
         public InputAction @Crouch => m_Wrapper.m_Movement_Crouch;
         public InputAction @Interaction => m_Wrapper.m_Movement_Interaction;
-        public InputAction @MouseX => m_Wrapper.m_Movement_MouseX;
-        public InputAction @MouseY => m_Wrapper.m_Movement_MouseY;
         public InputAction @Submit => m_Wrapper.m_Movement_Submit;
         public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
@@ -707,12 +743,6 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Interaction.started += instance.OnInteraction;
             @Interaction.performed += instance.OnInteraction;
             @Interaction.canceled += instance.OnInteraction;
-            @MouseX.started += instance.OnMouseX;
-            @MouseX.performed += instance.OnMouseX;
-            @MouseX.canceled += instance.OnMouseX;
-            @MouseY.started += instance.OnMouseY;
-            @MouseY.performed += instance.OnMouseY;
-            @MouseY.canceled += instance.OnMouseY;
             @Submit.started += instance.OnSubmit;
             @Submit.performed += instance.OnSubmit;
             @Submit.canceled += instance.OnSubmit;
@@ -735,12 +765,6 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Interaction.started -= instance.OnInteraction;
             @Interaction.performed -= instance.OnInteraction;
             @Interaction.canceled -= instance.OnInteraction;
-            @MouseX.started -= instance.OnMouseX;
-            @MouseX.performed -= instance.OnMouseX;
-            @MouseX.canceled -= instance.OnMouseX;
-            @MouseY.started -= instance.OnMouseY;
-            @MouseY.performed -= instance.OnMouseY;
-            @MouseY.canceled -= instance.OnMouseY;
             @Submit.started -= instance.OnSubmit;
             @Submit.performed -= instance.OnSubmit;
             @Submit.canceled -= instance.OnSubmit;
@@ -766,25 +790,27 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Weapon;
     private List<IWeaponActions> m_WeaponActionsCallbackInterfaces = new List<IWeaponActions>();
     private readonly InputAction m_Weapon_Shoot;
-    private readonly InputAction m_Weapon_Aim;
+    private readonly InputAction m_Weapon_MouseAim;
     private readonly InputAction m_Weapon_Reload;
     private readonly InputAction m_Weapon_SwitchShootMode;
     private readonly InputAction m_Weapon_SwitchLight;
     private readonly InputAction m_Weapon_Throw;
     private readonly InputAction m_Weapon_KnifeAttack;
     private readonly InputAction m_Weapon_Inspect;
+    private readonly InputAction m_Weapon_GamepadAim;
     public struct WeaponActions
     {
         private @InputActions m_Wrapper;
         public WeaponActions(@InputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Shoot => m_Wrapper.m_Weapon_Shoot;
-        public InputAction @Aim => m_Wrapper.m_Weapon_Aim;
+        public InputAction @MouseAim => m_Wrapper.m_Weapon_MouseAim;
         public InputAction @Reload => m_Wrapper.m_Weapon_Reload;
         public InputAction @SwitchShootMode => m_Wrapper.m_Weapon_SwitchShootMode;
         public InputAction @SwitchLight => m_Wrapper.m_Weapon_SwitchLight;
         public InputAction @Throw => m_Wrapper.m_Weapon_Throw;
         public InputAction @KnifeAttack => m_Wrapper.m_Weapon_KnifeAttack;
         public InputAction @Inspect => m_Wrapper.m_Weapon_Inspect;
+        public InputAction @GamepadAim => m_Wrapper.m_Weapon_GamepadAim;
         public InputActionMap Get() { return m_Wrapper.m_Weapon; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -797,9 +823,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Shoot.started += instance.OnShoot;
             @Shoot.performed += instance.OnShoot;
             @Shoot.canceled += instance.OnShoot;
-            @Aim.started += instance.OnAim;
-            @Aim.performed += instance.OnAim;
-            @Aim.canceled += instance.OnAim;
+            @MouseAim.started += instance.OnMouseAim;
+            @MouseAim.performed += instance.OnMouseAim;
+            @MouseAim.canceled += instance.OnMouseAim;
             @Reload.started += instance.OnReload;
             @Reload.performed += instance.OnReload;
             @Reload.canceled += instance.OnReload;
@@ -818,6 +844,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Inspect.started += instance.OnInspect;
             @Inspect.performed += instance.OnInspect;
             @Inspect.canceled += instance.OnInspect;
+            @GamepadAim.started += instance.OnGamepadAim;
+            @GamepadAim.performed += instance.OnGamepadAim;
+            @GamepadAim.canceled += instance.OnGamepadAim;
         }
 
         private void UnregisterCallbacks(IWeaponActions instance)
@@ -825,9 +854,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Shoot.started -= instance.OnShoot;
             @Shoot.performed -= instance.OnShoot;
             @Shoot.canceled -= instance.OnShoot;
-            @Aim.started -= instance.OnAim;
-            @Aim.performed -= instance.OnAim;
-            @Aim.canceled -= instance.OnAim;
+            @MouseAim.started -= instance.OnMouseAim;
+            @MouseAim.performed -= instance.OnMouseAim;
+            @MouseAim.canceled -= instance.OnMouseAim;
             @Reload.started -= instance.OnReload;
             @Reload.performed -= instance.OnReload;
             @Reload.canceled -= instance.OnReload;
@@ -846,6 +875,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Inspect.started -= instance.OnInspect;
             @Inspect.performed -= instance.OnInspect;
             @Inspect.canceled -= instance.OnInspect;
+            @GamepadAim.started -= instance.OnGamepadAim;
+            @GamepadAim.performed -= instance.OnGamepadAim;
+            @GamepadAim.canceled -= instance.OnGamepadAim;
         }
 
         public void RemoveCallbacks(IWeaponActions instance)
@@ -863,6 +895,76 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         }
     }
     public WeaponActions @Weapon => new WeaponActions(this);
+
+    // Camera
+    private readonly InputActionMap m_Camera;
+    private List<ICameraActions> m_CameraActionsCallbackInterfaces = new List<ICameraActions>();
+    private readonly InputAction m_Camera_RightStickY;
+    private readonly InputAction m_Camera_MouseX;
+    private readonly InputAction m_Camera_MouseY;
+    private readonly InputAction m_Camera_RightStickX;
+    public struct CameraActions
+    {
+        private @InputActions m_Wrapper;
+        public CameraActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @RightStickY => m_Wrapper.m_Camera_RightStickY;
+        public InputAction @MouseX => m_Wrapper.m_Camera_MouseX;
+        public InputAction @MouseY => m_Wrapper.m_Camera_MouseY;
+        public InputAction @RightStickX => m_Wrapper.m_Camera_RightStickX;
+        public InputActionMap Get() { return m_Wrapper.m_Camera; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CameraActions set) { return set.Get(); }
+        public void AddCallbacks(ICameraActions instance)
+        {
+            if (instance == null || m_Wrapper.m_CameraActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_CameraActionsCallbackInterfaces.Add(instance);
+            @RightStickY.started += instance.OnRightStickY;
+            @RightStickY.performed += instance.OnRightStickY;
+            @RightStickY.canceled += instance.OnRightStickY;
+            @MouseX.started += instance.OnMouseX;
+            @MouseX.performed += instance.OnMouseX;
+            @MouseX.canceled += instance.OnMouseX;
+            @MouseY.started += instance.OnMouseY;
+            @MouseY.performed += instance.OnMouseY;
+            @MouseY.canceled += instance.OnMouseY;
+            @RightStickX.started += instance.OnRightStickX;
+            @RightStickX.performed += instance.OnRightStickX;
+            @RightStickX.canceled += instance.OnRightStickX;
+        }
+
+        private void UnregisterCallbacks(ICameraActions instance)
+        {
+            @RightStickY.started -= instance.OnRightStickY;
+            @RightStickY.performed -= instance.OnRightStickY;
+            @RightStickY.canceled -= instance.OnRightStickY;
+            @MouseX.started -= instance.OnMouseX;
+            @MouseX.performed -= instance.OnMouseX;
+            @MouseX.canceled -= instance.OnMouseX;
+            @MouseY.started -= instance.OnMouseY;
+            @MouseY.performed -= instance.OnMouseY;
+            @MouseY.canceled -= instance.OnMouseY;
+            @RightStickX.started -= instance.OnRightStickX;
+            @RightStickX.performed -= instance.OnRightStickX;
+            @RightStickX.canceled -= instance.OnRightStickX;
+        }
+
+        public void RemoveCallbacks(ICameraActions instance)
+        {
+            if (m_Wrapper.m_CameraActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ICameraActions instance)
+        {
+            foreach (var item in m_Wrapper.m_CameraActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_CameraActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public CameraActions @Camera => new CameraActions(this);
     public interface IMovementActions
     {
         void OnMove(InputAction.CallbackContext context);
@@ -870,19 +972,25 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         void OnRun(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
         void OnInteraction(InputAction.CallbackContext context);
-        void OnMouseX(InputAction.CallbackContext context);
-        void OnMouseY(InputAction.CallbackContext context);
         void OnSubmit(InputAction.CallbackContext context);
     }
     public interface IWeaponActions
     {
         void OnShoot(InputAction.CallbackContext context);
-        void OnAim(InputAction.CallbackContext context);
+        void OnMouseAim(InputAction.CallbackContext context);
         void OnReload(InputAction.CallbackContext context);
         void OnSwitchShootMode(InputAction.CallbackContext context);
         void OnSwitchLight(InputAction.CallbackContext context);
         void OnThrow(InputAction.CallbackContext context);
         void OnKnifeAttack(InputAction.CallbackContext context);
         void OnInspect(InputAction.CallbackContext context);
+        void OnGamepadAim(InputAction.CallbackContext context);
+    }
+    public interface ICameraActions
+    {
+        void OnRightStickY(InputAction.CallbackContext context);
+        void OnMouseX(InputAction.CallbackContext context);
+        void OnMouseY(InputAction.CallbackContext context);
+        void OnRightStickX(InputAction.CallbackContext context);
     }
 }

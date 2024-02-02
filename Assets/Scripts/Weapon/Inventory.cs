@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.UI;
 using UnityEngine;
 
 /// <summary>
@@ -20,6 +18,8 @@ public class Inventory : MonoBehaviour
     private float switchTime = 1f;
     // 切换计时器
     private float timer = 1f;
+    // 玩家代码
+    private Player player;
 
     private void Start()
     {
@@ -27,14 +27,18 @@ public class Inventory : MonoBehaviour
         currentWeaponID = -1;
         switchTime = 1f;
         timer = 1f;
+        player = GetComponentInParent<Player>();
     }
 
     private void Update()
     {
         // 进行计时操作
         timer += Time.deltaTime;
-        // 执行武器编号更新
-        ChangeCurrentWeaponID();
+        if (player.canMove)
+        {
+            // 执行武器编号更新
+            ChangeCurrentWeaponID();
+        }
     }
 
     // 更新武器编号
@@ -44,13 +48,13 @@ public class Inventory : MonoBehaviour
         if (timer < switchTime) return;
 
         // 鼠标的滚动实现武器切换（-0.1～0.1）
-        if(Input.GetAxis("Mouse ScrollWheel") < -0.05)
+        if (Input.GetAxis("Mouse ScrollWheel") < -0.05)
         {
             // 下一把武器
             ChangeWeapon(currentWeaponID + 1);
             isNumberSwitch = false;
         }
-        else if(Input.GetAxis("Mouse ScrollWheel") > 0.05)
+        else if (Input.GetAxis("Mouse ScrollWheel") > 0.05)
         {
             // 上一把武器
             ChangeWeapon(currentWeaponID - 1);
@@ -58,7 +62,7 @@ public class Inventory : MonoBehaviour
         }
 
         // 数字键盘实现武器切换
-        for(int i = 0; i < 10; i++)
+        for (int i = 0; i < 10; i++)
         {
             // 判断按下了第几个数字键
             if (Input.GetKeyDown(KeyCode.Alpha0 + i))
@@ -82,7 +86,8 @@ public class Inventory : MonoBehaviour
         timer = 0f;
 
         // 判断是否是第一个或最后一个武器，头尾相接
-        if (!isNumberSwitch) {
+        if (!isNumberSwitch)
+        {
             if (WeaponID > weapons.Count - 1) WeaponID = 0;
             else if (WeaponID <= -1) WeaponID = weapons.Count - 1;
         }
@@ -93,12 +98,12 @@ public class Inventory : MonoBehaviour
         // 更新武器索引
         currentWeaponID = WeaponID;
         // 遍历武器库
-        for(int i = 0; i < weapons.Count; i++)
+        for (int i = 0; i < weapons.Count; i++)
         {
             // 先隐藏武器，以便显示takeout动画
             weapons[i].gameObject.SetActive(false);
             // 根据武器编号显示对应的武器
-            if(WeaponID == i)
+            if (WeaponID == i)
             {
                 weapons[i].gameObject.SetActive(true);
             }
