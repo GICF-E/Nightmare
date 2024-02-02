@@ -2786,7 +2786,7 @@ GameObject:
   - component: {fileID: 8766744573881047724}
   m_Layer: 3
   m_Name: 3
-  m_TagString: Untagged
+  m_TagString: Weapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3012,7 +3012,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: 0f0e45ac-4ee6-462a-af61-312d2dfcd354
+  m_DefaultActionMap: Weapon
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!1 &8761343016719408472

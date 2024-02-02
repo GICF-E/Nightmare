@@ -2,6 +2,8 @@
 ## Project Overview
 This is a simple horror FPS game. It provides several weapons that can be picked up and has designed shooting and enemy systems. It's created using the `C#` language and `Unity3D Build-In` rendering pipeline.  
 
+**Note: The project is under development!**
+
 **Note: FPS-Demo is for learning and reference only. It may lack certain entertainment and fun elements and is not intended for commercial use. We do not take any responsibility for the stability and final results of the project.**
 
 ## Language
@@ -80,6 +82,14 @@ In the FPS-Demo scene, there are many notes scattered around, left by ~~iteratio
    - Press `[Enter]/[D-Pad Down]` to close the viewing interface  
 
 ***Note: You cannot control the character or weapons while viewing a note, but enemies can move normally. Therefore, ensure the environment is safe before viewing a note.**
+
+### Options Menu
+In the FPS-Demo, you can summon the options menu in-game by pressing a key. When this happens, the mouse will be unlocked, and the player won't be able to move. You can perform operations here. Notably, for the "Game Settings" option, clicking it will bring up a new settings menu where you can edit options. After closing this settings menu, the changes will be automatically applied.You can perform actions through the following keys:
+   - Press the `[Esc]` key to summon the options menu.
+   - Press both `[Left Stick]` and `[Right Stick]` keys simultaneously to summon the options menu.  
+
+***Note: Your changes will be stored and remembered when you launch the game next time.**
+
 
 <h2 id="section3">Implementation of Firearms</h2>
 

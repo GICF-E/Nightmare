@@ -127,8 +127,7 @@ public class Weapon_AutomaticGun : Weapon
         mainCamera = Camera.main;
 
         // 根据玩家设置更改变量
-        isDisplayAmmo = PlayerPrefs.GetInt("isDisplayAmmo") == 1;
-        isDisplayShootMode = PlayerPrefs.GetInt("isDisplayShootMode") == 1;
+        UpdateSettings();
     }
 
     private void Start()
@@ -189,6 +188,14 @@ public class Weapon_AutomaticGun : Weapon
 
     private void Update()
     {
+        // 判断是否不可以移动
+        if(!player.canMove){
+            // 设置动画速度为0
+            animator.speed = 0f;
+        }else{
+            animator.speed = 1f;
+        }
+
         // 如果是狙击枪，隐藏准心
         if (IS_SNIPER)
         {
@@ -732,5 +739,16 @@ public class Weapon_AutomaticGun : Weapon
         {
             ExpandCross(Time.deltaTime * 200);
         }
+    }
+
+    // 更新设置
+    public void UpdateSettings(){
+        isDisplayAmmo = PlayerPrefs.GetInt("isDisplayAmmo") == 1;
+        isDisplayShootMode = PlayerPrefs.GetInt("isDisplayShootMode") == 1;
+        // 显示或隐藏UI
+        if (isDisplayAmmo) ammoTextUI.gameObject.SetActive(true);
+        else ammoTextUI.gameObject.SetActive(false);
+        if (isDisplayShootMode) shootModeTextUI.gameObject.SetActive(true);
+        else shootModeTextUI.gameObject.SetActive(false);
     }
 }

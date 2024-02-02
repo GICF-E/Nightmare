@@ -29,7 +29,7 @@ public class Loading : MonoBehaviour
         // 渐变关闭面板
         StartCoroutine(ChangeColor(panel, Color.clear, 2));
         // 开始异步加载
-        AsyncOperation operation = SceneManager.LoadSceneAsync(2);
+        AsyncOperation operation = SceneManager.LoadSceneAsync("Main Scene");
         // 不允许自动跳转场景
         operation.allowSceneActivation = false;
         // 判断是否加载完成

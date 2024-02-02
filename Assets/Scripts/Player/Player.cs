@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 /// <summary>
@@ -83,6 +84,8 @@ public class Player : MonoBehaviour
     [Tooltip("玩家血量UI")] public TextMeshProUGUI playerHealthUI;
     [Tooltip("玩家血量提示灯")] public Image healthImage;
     [Tooltip("玩家血量提示灯的颜色")] public Color[] healthImageColor;
+    [Tooltip("玩家Esc面板")] public GameObject EscPanel;
+    [Tooltip("设置面板")] public GameObject settingPanel;
     [Tooltip("玩家血雾效果")] public Image hurtImage;
     [Tooltip("血雾收到伤害颜色")] private Color flashColor;
     [Tooltip("血雾没有受到伤害的颜色")] private Color clearColor;
@@ -93,11 +96,14 @@ public class Player : MonoBehaviour
     [Tooltip("输入系统组件")][HideInInspector] public PlayerInput playerInput;
     [Tooltip("使用单击鼠标右键来控制开镜")] public bool isClickAiming;
 
-    private void Awake() {
-        // 获取组件并存储原始高度
+    private void Awake()
+    {
+        // 初始化
         controller = GetComponent<CharacterController>();
         playerInput = GetComponent<PlayerInput>();
         standHeight = controller.height;
+        EscPanel.SetActive(false);
+        settingPanel.SetActive(false);
         // 重置玩家生命值
         playerHealth = 100f;
         // 重置玩家速度和下蹲状态
@@ -163,6 +169,9 @@ public class Player : MonoBehaviour
         // 更新帧间隔时间
         deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
 
+        // 判断是否可以移动
+        if(!canMove) movementAudioSource.Pause();
+
         // 当角色站在地面上且可以移动时执行以下逻辑
         if (controller.isGrounded && canMove)
         {
@@ -196,16 +205,16 @@ public class Player : MonoBehaviour
         else
         {
             // 应用重力效果
-            if(!isMenuMode) moveDirection.y -= gravity * Time.deltaTime;
+            if (!isMenuMode) moveDirection.y -= gravity * Time.deltaTime;
         }
 
         // 玩家受到伤害后屏幕产生红色渐变
-        if (isDamage)
+        if (isDamage && !isDead)
         {
             // 受到伤害时瞬间切换到红色
             hurtImage.color = flashColor;
         }
-        else
+        else if (!isDead)
         {
             // 没有受到伤害时缓慢渐变到白色
             hurtImage.color = Color.Lerp(hurtImage.color, clearColor, Time.deltaTime * 3);
@@ -213,12 +222,33 @@ public class Player : MonoBehaviour
         // 重置受到伤害的变量
         isDamage = false;
 
+        // 判断是否死亡
+        if (isDead)
+        {
+            // 面板切换为红色
+            hurtImage.color = flashColor;
+            // 停止移动
+            canMove = false;
+        }
 
         // 如果处在斜坡上移动
         if (OnSlope())
         {
             //给玩家施加一个向下的力
             controller.Move(Vector3.down * controller.height / 2 * slopeForce * Time.deltaTime);
+        }
+
+        // 判断玩家是否按下Esc
+        if (playerInput.actions["Esc"].triggered && !isMenuMode)
+        {
+            // 切换面板状态和玩家移动的状态
+            if (settingPanel.activeSelf) CloseSetting();
+            else{
+                EscPanel.SetActive(EscPanel.activeSelf ? false : true);
+                // 切换鼠标锁定状态
+                Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.None : CursorLockMode.Locked;
+                canMove = !canMove;
+            }
         }
 
         if (!isSonicMode)
@@ -435,8 +465,6 @@ public class Player : MonoBehaviour
         if (playerHealth <= 0)
         {
             isDead = true;
-            // 游戏暂停
-            Time.timeScale = 0;
         }
     }
 
@@ -485,6 +513,90 @@ public class Player : MonoBehaviour
         auxiliaryAudioSource.Pause();
         // 在协程结束时重置引用
         addHealthCoroutine = null;
+    }
+
+    // 继续游戏
+    public void ContinueGame()
+    {
+        // 锁定鼠标
+        Cursor.lockState = CursorLockMode.Locked;
+        // 关闭Esc面板并解锁玩家
+        EscPanel.SetActive(false);
+        canMove = !canMove;
+    }
+
+    // 显示设置界面
+    public void ShowSetting()
+    {
+        settingPanel.SetActive(true);
+    }
+
+    // 关闭设置界面
+    public void CloseSetting()
+    {
+        settingPanel.SetActive(false);
+        // 根据玩家设置更改变量
+        isDisplayFPS = PlayerPrefs.GetInt("isDisplayFPS") == 1;
+        isDisplayHealthFigure = PlayerPrefs.GetInt("isDisplayHealthFigure") == 1;
+        isSonicMode = PlayerPrefs.GetInt("isSonicMode") == 1;
+        isClickAiming = PlayerPrefs.GetInt("isClickAiming") == 1;
+        if (!isSonicMode)
+        {
+            walkSpeed = 6;
+            runSpeed = 10f;
+            jumpSpeed = 4f;
+            crouchSpeed = 3f;
+        }
+        else
+        {
+            walkSpeed = 8f;
+            runSpeed = 40f;
+            jumpSpeed = 20f;
+            crouchSpeed = 20f;
+        }
+        if (isDisplayHealthFigure)
+        {
+            playerHealthUI.gameObject.SetActive(true);
+            healthImage.gameObject.SetActive(false);
+        }
+        else
+        {
+            playerHealthUI.gameObject.SetActive(false);
+            healthImage.gameObject.SetActive(true);
+        }
+        // 遍历场景中所有Weapon和Enemy，更改设置
+        GameObject[] weapons = GameObject.FindGameObjectsWithTag("Weapon");
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        // 遍历武器
+        foreach (GameObject obj in weapons)
+        {
+            // 更新设置
+            if(obj.GetComponent<Weapon_AutomaticGun>() != null){
+                Debug.Log("1");
+                 obj.GetComponent<Weapon_AutomaticGun>().UpdateSettings();
+            }
+        }
+        // 遍历敌人
+        foreach (GameObject obj in enemies)
+        {
+            // 更新设置
+            if(obj.GetComponent<Enemy>() != null){
+                Debug.Log("2");
+                obj.GetComponent<Enemy>().UpdateSettings();
+            }
+        }
+    }
+
+    // 返回主页
+    public void BackHome()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
+    // 退出游戏
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
     /// <summary>

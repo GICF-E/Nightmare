@@ -79,7 +79,7 @@ public class Enemy : MonoBehaviour
         slider.value = enemyHealth;
 
         // 根据玩家设置更改变量
-        isEnableSlider = PlayerPrefs.GetInt("isEnableSlider") == 1 ? true : false;
+        UpdateSettings();
     }
 
     private void Start()
@@ -211,5 +211,12 @@ public class Enemy : MonoBehaviour
             // 执行扣血
             player.PlayerDamageHealth(Random.Range(minAttackDamage, maxAttackDamage));
         }
+    }
+
+    // 更新设置
+    public void UpdateSettings(){
+        isEnableSlider = PlayerPrefs.GetInt("isEnableSlider") == 1 ? true : false;
+        if (isEnableSlider && !player.isMenuMode) slider.gameObject.SetActive(true);
+        else slider.gameObject.SetActive(false);
     }
 }

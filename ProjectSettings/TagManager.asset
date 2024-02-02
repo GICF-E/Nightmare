@@ -15,6 +15,7 @@ TagManager:
   - EnemyCollider
   - ObjectCollider
   - HeadCollider
+  - Weapon
   layers:
   - Default
   - TransparentFX

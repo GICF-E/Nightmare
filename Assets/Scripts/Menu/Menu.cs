@@ -45,6 +45,12 @@ public class Menu : MonoBehaviour
         StartCoroutine(StartGame(panel.GetComponent<Graphic>(), Color.black, 2));
     }
 
+    // 退出游戏
+    public void QuitGame() {
+        // 退出游戏程序
+        Application.Quit();
+    }
+
     /// <summary>
     /// 渐变面板并开始游戏
     /// </summary>
@@ -66,6 +72,6 @@ public class Menu : MonoBehaviour
         // 更改后处理效果
         vignette.intensity.value = 0.125f;
         // 切换到加载场景
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("Loading");
     }
 }
