@@ -7,6 +7,7 @@ using UnityEngine;
 /// </summary>
 public class PatrolState : EnemyBaseState
 {
+
     public override void EnemyState(Enemy enemy)
     {
         enemy.animState = 0;
@@ -49,7 +50,7 @@ public class PatrolState : EnemyBaseState
                 // 播放行走动画
                 enemy.animState = 1;
                 // 调整移动速度
-                enemy.agent.speed = enemy.walkSpeed;
+                enemy.agent.speed = enemy.currentSpeed;
                 // 切换自动刹车状态
                 enemy.agent.autoBraking = false;
                 // 将敌人导航至巡航点
@@ -60,7 +61,7 @@ public class PatrolState : EnemyBaseState
                 // 播放行走动画
                 enemy.animState = 1;
                 // 调整移动速度
-                enemy.agent.speed = enemy.walkSpeed;
+                enemy.agent.speed = enemy.currentSpeed;
                 // 切换自动刹车状态
                 enemy.agent.autoBraking = true;
                 enemy.agent.SetDestination(enemy.originalPosition);
@@ -75,7 +76,7 @@ public class PatrolState : EnemyBaseState
                 // 切换自动刹车状态
                 enemy.agent.autoBraking = true;
                 // 调整移动速度
-                enemy.agent.speed = enemy.runSpeed;
+                enemy.agent.speed = enemy.currentSpeed;
                 // 将敌人导航至巡航点
                 enemy.MoveToTarget();
             }

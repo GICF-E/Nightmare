@@ -28,10 +28,12 @@ public class Enemy : MonoBehaviour
     [Tooltip("敌人血量")] public float enemyHealth;
     [Tooltip("敌人的行走速度")] public float walkSpeed;
     [Tooltip("敌人的跑步速度")] public float runSpeed;
+    [Tooltip("敌人实际移动速度")] public float currentSpeed;
     [Tooltip("敌人最小攻击的伤害值")] public float minAttackDamage;
     [Tooltip("敌人最大攻击的伤害值")] public float maxAttackDamage;
     [Tooltip("敌人是否死亡")] public bool isDead = false;
     [Tooltip("敌人是否巡逻")] public bool isPatrol = true;
+    [Tooltip("敌人是否受到伤害")] public bool isDamage;
     [Tooltip("玩家潜行状态下可以发现玩家的距离")] public float discoverCrouchPlayerDistance;
     [Tooltip("敌人原始位置")] public Vector3 originalPosition;
     [Tooltip("敌人的攻击目标（玩家）")] public List<Transform> attackList = new List<Transform>();
@@ -99,6 +101,28 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+        // 根据敌人受伤状态增减移动速度
+        if (isDamage)
+        {
+            // 确保减少后的速度大于等于0
+            if (currentSpeed - 0.5f >= runSpeed * 0.2f) currentSpeed -= 0.5f;
+            else currentSpeed = runSpeed * 0.2f;
+            // 重置变量
+            isDamage = false;
+        }
+        else
+        {
+            // 在没有收到增加的情况下增加移动速度
+            if ((animState == 1 && currentSpeed + Time.deltaTime * 2 <= walkSpeed) || (animState == 2 && currentSpeed + Time.deltaTime * 2 <= runSpeed))
+            {
+                currentSpeed += Time.deltaTime * 2.5f;
+            }
+            else
+            {
+                currentSpeed = animState == 2 ? runSpeed : walkSpeed;
+            }
+        }
+
         // 只有非死亡状态执行操作
         if (!isDead)
         {
@@ -193,6 +217,8 @@ public class Enemy : MonoBehaviour
         // 更新UI即血量
         enemyHealth -= damage;
         slider.value = enemyHealth;
+        // 更新变量
+        isDamage = true;
         // 判断是否死亡
         if (enemyHealth <= 0)
         {

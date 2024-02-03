@@ -81,6 +81,7 @@ public class Player : MonoBehaviour
     [Header("UI")]
     [Tooltip("是否显示FPS")] public bool isDisplayFPS;
     [Tooltip("是否显示血量百分比")] public bool isDisplayHealthFigure;
+    [Tooltip("是否在查看纸条")] public bool isViewNotes;
     [Tooltip("玩家血量UI")] public TextMeshProUGUI playerHealthUI;
     [Tooltip("玩家血量提示灯")] public Image healthImage;
     [Tooltip("玩家血量提示灯的颜色")] public Color[] healthImageColor;
@@ -239,7 +240,7 @@ public class Player : MonoBehaviour
         }
 
         // 判断玩家是否按下Esc
-        if (playerInput.actions["Esc"].triggered && !isMenuMode)
+        if (playerInput.actions["Esc"].triggered && !isMenuMode && !isViewNotes)
         {
             // 切换面板状态和玩家移动的状态
             if (settingPanel.activeSelf) CloseSetting();

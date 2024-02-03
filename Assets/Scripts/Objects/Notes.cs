@@ -79,5 +79,7 @@ public abstract class Notes : MonoBehaviour
             // 恢复玩家移动
             player.canMove = true;
         }
+        // 将查看状态同步给玩家
+        player.isViewNotes = isViewNotes;
     }
 }

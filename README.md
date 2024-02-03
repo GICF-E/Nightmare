@@ -74,7 +74,7 @@ In the FPS-Demo, the only way to regenerate health currently is by consuming foo
 ### Attacking Enemies
 In FPS-Demo, you can attack enemies with weapons and interactive objects in the scene. The judgment for causing damage to enemies with firearms uses Raycast based on physics. Different models and types of firearms cause different damage to enemies. Similarly, most interactive objects in the scene, such as oil drums and gas cylinders, can also damage enemies. Bullets or melee can cause them to explode. Different types of objects cause different damage and have different damage ranges to enemies. For interactive objects in the scene, see `/Scene Implementation - Interactive Objects/`.  
   
-***Note: A bullet hitting the head can significantly increase damage.**
+***Note: A bullet hitting the head can significantly increase damage，and bullets can push back enemies to some extent.**
 
 ### Viewing Notes
 In the FPS-Demo scene, there are many notes scattered around, left by ~~iterations~~, which might guide you when you're lost or help you piece together a story from the past. To view a note, you need to approach and pick it up (see `/Operation Mode - Object Discarding and Picking Up/` for details). After picking up a note, an interface for viewing the note's content will automatically pop up. In this interface, the mouse will be automatically released, allowing you to view the content by dragging or scrolling the mouse wheel. To close the interface, you can click the `X` button at the top right corner of the screen or press the corresponding key on the keyboard: 
