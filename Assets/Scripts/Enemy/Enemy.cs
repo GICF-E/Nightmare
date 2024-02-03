@@ -25,7 +25,8 @@ public class Enemy : MonoBehaviour
     [Tooltip("是否显示血条")] public bool isEnableSlider;
 
     [Header("敌人属性")]
-    [Tooltip("敌人血量")] public float enemyHealth;
+    [Tooltip("敌人原有血量")] public float enemyHealth;
+    [Tooltip("敌人实际血量")] public float currentHealth;
     [Tooltip("敌人的行走速度")] public float walkSpeed;
     [Tooltip("敌人的跑步速度")] public float runSpeed;
     [Tooltip("敌人实际移动速度")] public float currentSpeed;
@@ -80,6 +81,7 @@ public class Enemy : MonoBehaviour
         slider.minValue = 0;
         slider.maxValue = enemyHealth;
         slider.value = enemyHealth;
+        currentHealth = enemyHealth;
 
         // 根据玩家设置更改变量
         UpdateSettings();
@@ -139,6 +141,7 @@ public class Enemy : MonoBehaviour
             // 如果死亡，停止移动
             agent.isStopped = true;
         }
+
         // 判断玩家到敌人的距离
         if (Vector3.Distance(transform.position, player.transform.position) < 200f)
         {
@@ -215,14 +218,14 @@ public class Enemy : MonoBehaviour
         // 如果敌人已经死亡，不执行方法
         if (isDead) return;
         // 更新UI即血量
-        enemyHealth -= damage;
-        slider.value = enemyHealth;
+        currentHealth -= damage;
+        slider.value = currentHealth;
         // 更新变量
         isDamage = true;
         // 判断是否死亡
-        if (enemyHealth <= 0)
+        if (currentHealth <= 0)
         {
-            enemyHealth = 0;
+            currentHealth = 0;
             isDead = true;
             animator.SetTrigger("dying");
         }

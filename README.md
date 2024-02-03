@@ -117,11 +117,14 @@ There are currently only two types of enemies in FPS-Demo, Zombie and Mutant. Mu
 Enemies will only detect players under certain conditions, as follows:
 ```swift
 // Pseudocode
-if(player enters the enemy's detection range){
-    if(player is not crouching && player is moving) enemy detects player;
-    if(player uses a gun without a silencer to shoot) enemy detects player;
-    if(player reaches the enemy's absolute detection threshold) enemy detects player;
-}else{
+if (player enters the enemy's detection range)
+{
+    if (player is not crouching && player is moving) enemy detects player;
+    if (player uses a gun without a silencer to shoot) enemy detects player;
+    if (player has attacked enemy && enemy's health is less than 70%) enemy detects player;
+    if (player reaches the enemy's absolute detection threshold) enemy detects player;
+}else
+{
     the enemy will not detect the player;
 }
 

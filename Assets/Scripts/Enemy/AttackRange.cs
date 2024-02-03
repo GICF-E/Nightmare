@@ -16,7 +16,7 @@ public class AttackRange : MonoBehaviour
     // 敌人攻击范围判定
     public void OnTriggerStay(Collider other)
     {
-        // 攻击列表里剔除子弹
+        // 攻击列表里剔除其他物体
         if (!enemy.attackList.Contains(other.transform) && !enemy.isDead && other.tag == "Player")
         {
             // 如果玩家不在潜行且不在开枪，在很短的距离内才能发现
@@ -26,7 +26,7 @@ public class AttackRange : MonoBehaviour
             // 判断玩家是否持枪
             if (weapon == null)
             {
-                if (!player.isCrouching && (player.moveDirection.x != 0 || player.moveDirection.z != 0) || Vector3.Distance(transform.position, other.transform.position) <= enemy.discoverCrouchPlayerDistance)
+                if (!player.isCrouching && (player.moveDirection.x != 0 || player.moveDirection.z != 0) || Vector3.Distance(transform.position, other.transform.position) <= enemy.discoverCrouchPlayerDistance || (enemy.currentHealth <= enemy.enemyHealth * 0.7f && enemy.isDamage))
                 {
                     // 添加至攻击列表
                     enemy.attackList.Add(other.transform);
@@ -36,7 +36,7 @@ public class AttackRange : MonoBehaviour
             }
             else
             {
-                if (!player.isCrouching && (player.moveDirection.x != 0 || player.moveDirection.z != 0) || weapon.muzzleflashLight.enabled && !weapon.IS_SILENCER || Vector3.Distance(transform.position, other.transform.position) <= enemy.discoverCrouchPlayerDistance)
+                if (!player.isCrouching && (player.moveDirection.x != 0 || player.moveDirection.z != 0) || weapon.muzzleflashLight.enabled && !weapon.IS_SILENCER || Vector3.Distance(transform.position, other.transform.position) <= enemy.discoverCrouchPlayerDistance || (enemy.currentHealth <= enemy.enemyHealth * 0.7f && enemy.isDamage))
                 {
                     // 添加至攻击列表
                     enemy.attackList.Add(other.transform);
