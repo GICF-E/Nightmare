@@ -170,7 +170,7 @@ public class Player : MonoBehaviour
         deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
 
         // 判断是否可以移动
-        if(!canMove) movementAudioSource.Pause();
+        if (!canMove) movementAudioSource.Pause();
 
         // 当角色站在地面上且可以移动时执行以下逻辑
         if (controller.isGrounded && canMove)
@@ -243,7 +243,8 @@ public class Player : MonoBehaviour
         {
             // 切换面板状态和玩家移动的状态
             if (settingPanel.activeSelf) CloseSetting();
-            else{
+            else
+            {
                 EscPanel.SetActive(EscPanel.activeSelf ? false : true);
                 // 切换鼠标锁定状态
                 Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.None : CursorLockMode.Locked;
@@ -534,54 +535,38 @@ public class Player : MonoBehaviour
     // 关闭设置界面
     public void CloseSetting()
     {
+        // 关闭设置面板
         settingPanel.SetActive(false);
+
         // 根据玩家设置更改变量
         isDisplayFPS = PlayerPrefs.GetInt("isDisplayFPS") == 1;
         isDisplayHealthFigure = PlayerPrefs.GetInt("isDisplayHealthFigure") == 1;
         isSonicMode = PlayerPrefs.GetInt("isSonicMode") == 1;
         isClickAiming = PlayerPrefs.GetInt("isClickAiming") == 1;
-        if (!isSonicMode)
-        {
-            walkSpeed = 6;
-            runSpeed = 10f;
-            jumpSpeed = 4f;
-            crouchSpeed = 3f;
-        }
-        else
-        {
-            walkSpeed = 8f;
-            runSpeed = 40f;
-            jumpSpeed = 20f;
-            crouchSpeed = 20f;
-        }
-        if (isDisplayHealthFigure)
-        {
-            playerHealthUI.gameObject.SetActive(true);
-            healthImage.gameObject.SetActive(false);
-        }
-        else
-        {
-            playerHealthUI.gameObject.SetActive(false);
-            healthImage.gameObject.SetActive(true);
-        }
+
+        // 根据超音速模式设置角色速度
+        walkSpeed = isSonicMode ? 8f : 6f;
+        runSpeed = isSonicMode ? 40f : 10f;
+        jumpSpeed = isSonicMode ? 20f : 4f;
+        crouchSpeed = isSonicMode ? 20f : 3f;
+
+        // 根据玩家设置显示或隐藏健康状态
+        playerHealthUI.gameObject.SetActive(isDisplayHealthFigure);
+        healthImage.gameObject.SetActive(!isDisplayHealthFigure);
+
         // 遍历场景中所有Weapon和Enemy，更改设置
-        GameObject[] weapons = GameObject.FindGameObjectsWithTag("Weapon");
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        // 遍历武器
-        foreach (GameObject obj in weapons)
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Weapon"))
         {
-            // 更新设置
-            if(obj.GetComponent<Weapon_AutomaticGun>() != null){
-                Debug.Log("1");
-                 obj.GetComponent<Weapon_AutomaticGun>().UpdateSettings();
+            if (obj.GetComponent<Weapon_AutomaticGun>() != null)
+            {
+                obj.GetComponent<Weapon_AutomaticGun>().UpdateSettings();
             }
         }
-        // 遍历敌人
-        foreach (GameObject obj in enemies)
+
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Enemy"))
         {
-            // 更新设置
-            if(obj.GetComponent<Enemy>() != null){
-                Debug.Log("2");
+            if (obj.GetComponent<Enemy>() != null)
+            {
                 obj.GetComponent<Enemy>().UpdateSettings();
             }
         }

@@ -44,7 +44,7 @@ public class PickUpItem : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        // 判断是否是玩家接触并且按下F按键
+        // 判断是否是玩家接触并且按下交互按键
         if(player.playerInput.actions["Interaction"].triggered && other.tag == "ObjectCollider"){
             // 播放拾取声音
             player.auxiliaryAudioSource.clip = pickUpSound;

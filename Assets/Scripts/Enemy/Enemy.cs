@@ -63,7 +63,8 @@ public class Enemy : MonoBehaviour
     // 获取玩家对象代码
     private Player player;
 
-    private void Awake() {
+    private void Awake()
+    {
         // 初始化变量
         agent = gameObject.GetComponent<NavMeshAgent>();
         animator = gameObject.GetComponent<Animator>();
@@ -206,15 +207,19 @@ public class Enemy : MonoBehaviour
     {
         // 生成粒子效果
         if (isAttackEffect) Instantiate(attackEffect, hitPoint.position, Quaternion.identity);
-        if (Vector3.Distance(hitPoint.position, attackList[0].transform.position) <= attackRange)
+        if (attackList.Count > 0)
         {
-            // 执行扣血
-            player.PlayerDamageHealth(Random.Range(minAttackDamage, maxAttackDamage));
+            if (Vector3.Distance(hitPoint.position, attackList[0].transform.position) <= attackRange)
+            {
+                // 执行扣血
+                player.PlayerDamageHealth(Random.Range(minAttackDamage, maxAttackDamage));
+            }
         }
     }
 
     // 更新设置
-    public void UpdateSettings(){
+    public void UpdateSettings()
+    {
         isEnableSlider = PlayerPrefs.GetInt("isEnableSlider") == 1 ? true : false;
         if (isEnableSlider && !player.isMenuMode) slider.gameObject.SetActive(true);
         else slider.gameObject.SetActive(false);
