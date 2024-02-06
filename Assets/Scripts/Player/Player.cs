@@ -53,6 +53,7 @@ public class Player : MonoBehaviour
     [Tooltip("是否在跳跃")][HideInInspector] public bool isJumping;
     [Tooltip("是否正在蹲下")][HideInInspector] public bool isCrouching;
     [Tooltip("玩家是否可以下蹲")][HideInInspector] public bool canCrouching;
+    [Tooltip("玩家是否在翻滚")][HideInInspector] public bool isRowing;
     [Tooltip("人物状态的枚举")][HideInInspector] public enum MovementState { walking, running, idle };
     [Tooltip("角色移动状态")][HideInInspector] public MovementState state;
     [Tooltip("实际移动速度")][HideInInspector] public float currentSpeed;
@@ -110,6 +111,7 @@ public class Player : MonoBehaviour
         // 重置玩家速度和下蹲状态
         isCrouching = false;
         canCrouching = true;
+        isRowing = false;
         canMove = isMenuMode ? false : true;
         // 根据玩家设置更改变量
         isDisplayFPS = PlayerPrefs.GetInt("isDisplayFPS") == 1;
@@ -232,6 +234,12 @@ public class Player : MonoBehaviour
             canMove = false;
         }
 
+        // 判断玩家按下翻滚按键
+        if (playerInput.actions["Roll"].triggered && canMove)
+        {
+            StartCoroutine(Roll());
+        }
+
         // 如果处在斜坡上移动
         if (OnSlope())
         {
@@ -319,6 +327,44 @@ public class Player : MonoBehaviour
             StartCoroutine(ChangeHeightTo(standHeight));
             StartCoroutine(ChangeCenterTo(0));
             isCrouching = false;
+        }
+    }
+
+    // 玩家翻滚的逻辑
+    private IEnumerator Roll()
+    {
+        // 翻滚计时器
+        float rollTime = 0.9f;
+        float rollTimer = 0f;
+        // 翻滚方向
+        Vector3 rollDirection = transform.forward;
+        // 翻滚时是否在斜坡上
+        bool isOnSlope = OnSlope();
+        // 判断是否可以翻滚
+        if (canCrouching && !isCrouching && !isRowing)
+        {
+            // 翻滚下蹲
+            StartCoroutine(ChangeHeightTo(crouchHeight));
+            StartCoroutine(ChangeCenterTo(0.5f));
+            isRowing = true;
+            while (rollTimer < rollTime)
+            {
+                rollTimer += Time.deltaTime;
+                // 移动并应用旋转
+                controller.Move(rollDirection * 20 * Time.deltaTime);
+                transform.Rotate(Vector3.right * 400 * Time.deltaTime);
+                // 翻滚时施加下压力
+                if (isOnSlope) controller.Move(Vector3.down * 25 * Time.deltaTime);
+                else controller.Move(Vector3.down * 5 * Time.deltaTime);
+                yield return null;
+            }
+            // 锁定旋转
+            transform.rotation = Quaternion.Euler(new Vector3(0,transform.eulerAngles.y,0));
+            isRowing = false;
+            yield return new WaitForSeconds(0.1f);
+            // 站立
+            StartCoroutine(ChangeHeightTo(standHeight));
+            StartCoroutine(ChangeCenterTo(0));
         }
     }
 

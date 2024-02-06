@@ -39,10 +39,10 @@ public class CameraController : MonoBehaviour
         // 计算摄像机在X轴上的旋转角度
         xRotation -= mouseY;
         // 限制摄像机的上下旋转角度，防止过度旋转
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        if(!player.GetComponent<Player>().isRowing) xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
         // 确保移动视角是被允许的
-        if(player.GetComponent<Player>().canMove){
+        if(player.GetComponent<Player>().canMove && !player.GetComponent<Player>().isRowing){
             // 应用摄像机在X轴的旋转
             transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
             // 旋转玩家的身体，使其跟随鼠标的左右移动

@@ -47,6 +47,7 @@ Nightmare utilizes universally common and logical input key bindings. You can pe
    - Press `[SPACE]/[Button West]` to jump.
    - Press `[Shift]/[Right Shoulder]` to run and increase speed.
    - Press `[Control]/[Left Shoulder]` to crouch, reducing movement noise and speed.
+   - Press `[Tap]` or `[Left Shoulder] & [Right Shoulder]` to roll.
 
 ### Weapon Operation
 All weapons in Nightmare use a unified operating logic. Shooting is achieved through the left mouse button, and for fully automatic weapons, holding down the left mouse button allows for continuous firing. Aiming in FPS-Demo can be done by either clicking or holding down the right mouse button, and you can switch control methods in the settings. Control the weapons with the following keys:
@@ -86,7 +87,7 @@ In the Nightmare scene, there are many notes scattered around, left by ~~iterati
 ### Options Menu
 In Nightmare, you can summon the options menu in-game by pressing a key. When this happens, the mouse will be unlocked, and the player won't be able to move. You can perform operations here. Notably, for the "Game Settings" option, clicking it will bring up a new settings menu where you can edit options. After closing this settings menu, the changes will be automatically applied.You can perform actions through the following keys:
    - Press the `[Esc]` key to summon the options menu.
-   - Press both `[Left Stick]` and `[Right Stick]` keys simultaneously to summon the options menu.  
+   - Press both `[Left Stick] & [Right Stick]` keys simultaneously to summon the options menu.  
 
 ***Note: Your changes will be stored and remembered when you launch the game next time.**
 
@@ -162,5 +163,6 @@ The FPS-Demo has utilized a certain amount of open-source materials, covering mo
 
    - Low Poly FPS Pack
    - Flooded Grounds Map Model
+   - Mixamo Enemy models and animations
    - Zombie Character Sounds
    - Legacy Particle Pack Effects

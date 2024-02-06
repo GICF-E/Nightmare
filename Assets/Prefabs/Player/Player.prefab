@@ -32,7 +32,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 4005921527480207417}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.47287035}
+  m_AnchorMin: {x: 0, y: 0.52079123}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
@@ -487,8 +487,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 280}
-  m_SizeDelta: {x: -90, y: 500}
+  m_AnchoredPosition: {x: 0, y: 235}
+  m_SizeDelta: {x: -90, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8611430267223595695
 CanvasRenderer:
@@ -535,6 +535,7 @@ MonoBehaviour:
     \u6309 `[SPACE]/[Button West]` \u952E\u5B9E\u73B0\u8DF3\u8DC3\n\t- \u6309 `[Shift]/[Right
     Shoulder]` \u952E\u5B9E\u73B0\u5954\u8DD1\u4EE5\u589E\u52A0\u901F\u5EA6\n\t-
     \u6309 `[Control]/[Left Shoulder]` \u952E\u5B9E\u73B0\u4E0B\u8E72\u4EE5\u964D\u4F4E\u79FB\u52A8\u58F0\u97F3\u5E76\u51CF\u5C0F\u901F\u5EA6\n\t-
+    \u6309 `[Tap]` \u952E\u6216 `[Left Shoulder]&[Right Shoulder]` \u952E\u5B9E\u73B0\u7FFB\u6EDA\n\t-
     \u6309 `[I]/[Button North]` \u952E\u8FDB\u884C\u68C0\u89C6\n\t- \u6309 `[R]/[Button
     East]` \u952E\u8FDB\u884C\u6362\u5F39\n\t- \u6309 `[C]/[D-Pad Left]` \u952E\u53EF\u4EE5\u5F00\u5173\u5B89\u88C5\u5728\u67AA\u68B0\u4E0A\u7684\u624B\u7535\u7B52\n\t-
     \u6309 `[Q]/[Button Sourth]` \u53EF\u4EE5\u53D1\u52A8\u8FD1\u6218\n\t- \u6309
@@ -542,13 +543,11 @@ MonoBehaviour:
     \u901A\u8FC7\u5411\u4E0B/\u5411\u4E0A\u6ED1\u52A8\u5207\u6362\u81F3\u4E0B\u4E00\u628A/\u4E0A\u4E00\u628A\u6B66\u5668\n\t-
     \u901A\u8FC7\u6309\u4E0B\u6309\u952E\u53EF\u4EE5\u76F4\u63A5\u5207\u6362\u5230\u5BF9\u5E94\u7F16\u53F7\u7684\u6B66\u5668\n\t-
     \u6309 `[F]/[D-Pad Up]` \u952E\u62FE\u53D6/\u4EA4\u4E92\u7269\u4F53\n\t- \u6309
-    `[T]/[D-Pad Down]` \u952E\u4E22\u5F03\u7269\u4F53\n\t- \u901A\u8FC7\u4F7F\u7528\u98DF\u7269\u6765\u6062\u590D\u8840\u91CF\n\t-
-    \u901A\u8FC7\u5C04\u51FB\u6CB9\u6876\u548C\u6C14\u74F6\u6765\u4F24\u5BB3\u654C\u4EBA\n\t-
-    \u6309 `[F]/[D-Pad Up]` \u952E\u67E5\u770B\u7EB8\u6761\n\t- \u6309 `[Enter]/[D-Pad
-    Down]` \u952E\u4EE5\u5173\u95ED\u67E5\u770B\u754C\u9762  \n\t- \u6309 `[Esc]`
-    \u952E\u5524\u53D6\u9009\u9879\u83DC\u5355\n\t- \u540C\u65F6\u6309\u4E0B `[Left
-    Stick]` \u548C `[Right Stick]` \u952E\u5524\u53D6\u9009\u9879\u83DC\u5355  \n\t-
-    \u901A\u8FC7\u4F7F\u7528\u98DF\u7269\u6765\u6062\u590D\u8840\u91CF\n\t- \u901A\u8FC7\u5C04\u51FB\u6CB9\u6876\u548C\u6C14\u74F6\u6765\u4F24\u5BB3\u654C\u4EBA"
+    `[T]/[D-Pad Down]` \u952E\u4E22\u5F03\u7269\u4F53\n\t- \u6309 `[F]/[D-Pad Up]`
+    \u952E\u67E5\u770B\u7EB8\u6761\n\t- \u6309 `[Enter]/[D-Pad Down]` \u952E\u4EE5\u5173\u95ED\u67E5\u770B\u754C\u9762 
+    \n\t- \u6309 `[Esc]` \u952E\u5524\u53D6\u9009\u9879\u83DC\u5355\n\t- \u6309 `[Left
+    Stick] & [Right Stick]` \u952E\u5524\u53D6\u9009\u9879\u83DC\u5355  \n\t- \u901A\u8FC7\u4F7F\u7528\u98DF\u7269\u6765\u6062\u590D\u8840\u91CF\n\t-
+    \u901A\u8FC7\u5C04\u51FB\u6CB9\u6876\u548C\u6C14\u74F6\u6765\u4F24\u5BB3\u654C\u4EBA"
 --- !u!1 &3551009909572959589
 GameObject:
   m_ObjectHideFlags: 0
@@ -627,7 +626,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 1000}
+  m_SizeDelta: {x: 0, y: 1100}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &3666182492559020523
 GameObject:
@@ -840,7 +839,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8621344977376606425}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.52712965
+  m_Size: 0.47920877
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1480,6 +1479,7 @@ MonoBehaviour:
   isJumping: 0
   isCrouching: 0
   canCrouching: 0
+  isRowing: 0
   state: 2
   currentSpeed: 0
   playerHealth: 100
@@ -1490,6 +1490,7 @@ MonoBehaviour:
   isMenuMode: 0
   isDisplayFPS: 0
   isDisplayHealthFigure: 0
+  isViewNotes: 0
   playerHealthUI: {fileID: 2674907616689596417}
   healthImage: {fileID: 2222904687386986133}
   healthImageColor:

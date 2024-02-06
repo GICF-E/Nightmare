@@ -43,6 +43,7 @@ Nightmare 使用了通用广泛且符合逻辑的输入键位，您通过以下�
    - 按 `[SPACE]/[Button West]` 键实现跳跃
    - 按 `[Shift]/[Right Shoulder]` 键实现奔跑以增加速度
    - 按 `[Control]/[Left Shoulder]` 键实现下蹲以降低移动声音并减小速度
+   - 按 `[Tap]` 键或 `[Left Shoulder]&[Right Shoulder]` 键实现翻滚
 
 ### 武器操作
 Nightmare 的所有武器使用统一的操作逻辑。通过鼠标左键实现射击，对于全自动武器，按住鼠标左键可以连续射击。FPS-Demo的瞄准可以通过单击或长按鼠标右键实现，您可以在设置中切换控制方式。通过以下按键操控武器：
@@ -82,7 +83,7 @@ Nightmare 中可以用武器和场景中的可交互物体对敌人进行攻击�
 ### 选项菜单
 在 Nightmare 中，可以在游戏内按下按键的方式召唤出选项菜单，此时，鼠标将会解锁，玩家不能移动，您可以在这里进行操作。特别的，对于「游戏设置」选项，点击它将弹出一个新的设置菜单，您可以在这个菜单中编辑选项，关闭该设置菜单后设置将自动应用。您可以通过以下按键进行操作：
    - 按 `[Esc]` 键唤取选项菜单
-   - 同时按下 `[Left Stick]` 和 `[Right Stick]` 键唤取选项菜单  
+   - 按 `[Left Stick] & [Right Stick]` 键唤取选项菜单  
 
 ***注：您的更改将会被存储，在下次启动游戏后仍然会记住您的设置。**
 
@@ -153,5 +154,6 @@ Nightmare 使用了一定的开源素材，范围包括大部份的建模、动�
 
    - Low Poly FPS Pack 素材包
    - Flooded Grounds 地图模型
+   - Mixamo 敌人模型及动画
    - Zombie Character Sounds 声音素材
    - Legacy Particle Pack 粒子效果

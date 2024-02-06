@@ -89,6 +89,15 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Roll"",
+                    ""type"": ""Button"",
+                    ""id"": ""7655597b-aecc-4534-9442-7a76067fd1e3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -309,6 +318,50 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Esc"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""298de0ac-72cf-4a6b-bd13-96743e24a7ca"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Roll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Gamepad"",
+                    ""id"": ""07c45469-c0a2-4524-83a2-354317dd0d66"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Roll"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""f096d490-c829-4922-9869-52cac7c51a09"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Roll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""5e953961-3b55-46cc-b8da-36427f9292f8"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Roll"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 }
@@ -679,6 +732,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         m_Movement_Interaction = m_Movement.FindAction("Interaction", throwIfNotFound: true);
         m_Movement_Submit = m_Movement.FindAction("Submit", throwIfNotFound: true);
         m_Movement_Esc = m_Movement.FindAction("Esc", throwIfNotFound: true);
+        m_Movement_Roll = m_Movement.FindAction("Roll", throwIfNotFound: true);
         // Weapon
         m_Weapon = asset.FindActionMap("Weapon", throwIfNotFound: true);
         m_Weapon_Shoot = m_Weapon.FindAction("Shoot", throwIfNotFound: true);
@@ -764,6 +818,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Movement_Interaction;
     private readonly InputAction m_Movement_Submit;
     private readonly InputAction m_Movement_Esc;
+    private readonly InputAction m_Movement_Roll;
     public struct MovementActions
     {
         private @InputActions m_Wrapper;
@@ -775,6 +830,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         public InputAction @Interaction => m_Wrapper.m_Movement_Interaction;
         public InputAction @Submit => m_Wrapper.m_Movement_Submit;
         public InputAction @Esc => m_Wrapper.m_Movement_Esc;
+        public InputAction @Roll => m_Wrapper.m_Movement_Roll;
         public InputActionMap Get() { return m_Wrapper.m_Movement; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -805,6 +861,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Esc.started += instance.OnEsc;
             @Esc.performed += instance.OnEsc;
             @Esc.canceled += instance.OnEsc;
+            @Roll.started += instance.OnRoll;
+            @Roll.performed += instance.OnRoll;
+            @Roll.canceled += instance.OnRoll;
         }
 
         private void UnregisterCallbacks(IMovementActions instance)
@@ -830,6 +889,9 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
             @Esc.started -= instance.OnEsc;
             @Esc.performed -= instance.OnEsc;
             @Esc.canceled -= instance.OnEsc;
+            @Roll.started -= instance.OnRoll;
+            @Roll.performed -= instance.OnRoll;
+            @Roll.canceled -= instance.OnRoll;
         }
 
         public void RemoveCallbacks(IMovementActions instance)
@@ -1036,6 +1098,7 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
         void OnInteraction(InputAction.CallbackContext context);
         void OnSubmit(InputAction.CallbackContext context);
         void OnEsc(InputAction.CallbackContext context);
+        void OnRoll(InputAction.CallbackContext context);
     }
     public interface IWeaponActions
     {
