@@ -46,7 +46,7 @@ Nightmare utilizes universally common and logical input key bindings. You can pe
    - Use `[WASD]/[Left Stick]` for planar movement.
    - Press `[SPACE]/[Button West]` to jump.
    - Press `[Shift]/[Right Shoulder]` to run and increase speed.
-   - Press `[Control]/[Left Shoulder]` to crouch, reducing movement noise and speed.
+   - Press `[Control]/[Command]/[Left Shoulder]` to crouch, reducing movement noise and speed.
    - Press `[Tap]` or `[Left Shoulder] & [Right Shoulder]` to roll.
 
 ### Weapon Operation

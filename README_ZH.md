@@ -42,7 +42,7 @@ Nightmare 使用了通用广泛且符合逻辑的输入键位，您通过以下�
    - 使用 `[WASD]/[Left Stick]` 键实现平面移动
    - 按 `[SPACE]/[Button West]` 键实现跳跃
    - 按 `[Shift]/[Right Shoulder]` 键实现奔跑以增加速度
-   - 按 `[Control]/[Left Shoulder]` 键实现下蹲以降低移动声音并减小速度
+   - 按 `[Control]/[Command]/[Left Shoulder]` 键实现下蹲以降低移动声音并减小速度
    - 按 `[Tap]` 键或 `[Left Shoulder]&[Right Shoulder]` 键实现翻滚
 
 ### 武器操作
