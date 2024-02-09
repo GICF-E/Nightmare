@@ -8,7 +8,7 @@ This is a simple horror FPS game. It provides several weapons that can be picked
 
 ## Language
 The default README language for Nightmare projects is English, if you want to choose another language, please select it below:
-   - [FPS-Demo中文文档](README_ZH.md)
+   - [Nightmare 中文文档](README_ZH.md)
 
 ## Table of Contents
 If you only want to experience the project simply, you can refer to the first and second parts without understanding the underlying principles. If you are learning C# or Unity, we recommend reading our entire documentation to familiarize yourself with the operation logic and mechanisms of FPS-Demo for reference and learning.
@@ -29,7 +29,7 @@ FPS-Demo has different installation methods on different operating systems. Plea
 #### MacOS
 If you are using MacOS, you can directly move the downloaded software to `Finder-Sidebar-Applications` or `Users/(Your Username)/Application`. If all goes well, you will see it in the Launchpad. Clicking the left mouse button will open it, and you can force exit the game by clicking `Esc - Quit Game` in the game or pressing `[LeftCommand] + [Q]` on any interface.
 #### Windows
-If you are using Windows, you will typically receive a folder. If you want to launch the program directly, you can enter the folder and open `FPS-Demo.exe`. For a better launch experience, you can manually move the folder to the default download folder or a custom path, i.e., `C:\Program Files\`, and add a shortcut to the desktop.
+If you are using Windows, you will typically receive a folder. If you want to launch the program directly, you can enter the folder and open `Nightmare.exe`. For a better launch experience, you can manually move the folder to the default download folder or a custom path, i.e., `C:\Program Files\`, and add a shortcut to the desktop.
 
 <h2 id="section2">Operation Mode</h2>
 
