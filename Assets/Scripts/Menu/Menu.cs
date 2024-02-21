@@ -59,15 +59,21 @@ public class Menu : MonoBehaviour
     /// <param name="time">过渡时间</param>
     private IEnumerator StartGame(Graphic graphic, Color targetColor, float time)
     {
+        // 显示面板
         panel.SetActive(true);
+        // 初始化计时器
         float timer = 0;
         Color startColor = graphic.color;
+        // 循环渐变
         while (timer < time)
         {
+            // 更新计时器
             timer += Time.deltaTime;
+            // 更新颜色
             graphic.color = Color.Lerp(startColor, targetColor, timer / time);
             yield return null;
         }
+        // 确定最终颜色
         graphic.color = targetColor;
         // 更改后处理效果
         vignette.intensity.value = 0.125f;

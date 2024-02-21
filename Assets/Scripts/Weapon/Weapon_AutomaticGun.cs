@@ -213,7 +213,7 @@ public class Weapon_AutomaticGun : Weapon
                 crossQuarterImages[i].gameObject.SetActive(false);
             }
         }
-        else if (!isAiming)
+        else if (!isAiming && IS_SNIPER)
         {
             for (int i = 0; i < crossQuarterImages.Length; i++)
             {

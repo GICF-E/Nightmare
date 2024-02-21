@@ -68,7 +68,7 @@ GameObject:
   - component: {fileID: 434764}
   - component: {fileID: 3392324}
   - component: {fileID: 2304562}
-  - component: {fileID: 6569466}
+  - component: {fileID: 4060810695031189924}
   m_Layer: 8
   m_Name: lo_Prop_Bed_B_LOD1
   m_TagString: Untagged
@@ -143,8 +143,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6569466
-BoxCollider:
+--- !u!64 &4060810695031189924
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -161,9 +161,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.5117683, y: 3.2694201, z: 3.9434195}
-  m_Center: {x: -0.0784564, y: 1.623035, z: 1.9345281}
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300002, guid: e6d647b65c8b6b74090c58f977304baf, type: 3}
 --- !u!1 &190340
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,7 +176,7 @@ GameObject:
   - component: {fileID: 493780}
   - component: {fileID: 3399572}
   - component: {fileID: 2382000}
-  - component: {fileID: 6532486}
+  - component: {fileID: 2522827886346355789}
   m_Layer: 8
   m_Name: lo_Prop_Bed_B_LOD0
   m_TagString: Untagged
@@ -250,8 +251,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6532486
-BoxCollider:
+--- !u!64 &2522827886346355789
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -268,6 +269,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.5117683, y: 3.2891827, z: 3.9434195}
-  m_Center: {x: -0.0784564, y: 1.6329162, z: 1.9345281}
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300004, guid: e6d647b65c8b6b74090c58f977304baf, type: 3}

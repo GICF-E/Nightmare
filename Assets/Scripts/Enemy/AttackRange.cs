@@ -6,6 +6,8 @@ public class AttackRange : MonoBehaviour
 {
     // 声名敌人主程序
     private Enemy enemy;
+    // 玩家对象代码
+    private Player player;
 
     private void Awake()
     {
@@ -13,11 +15,29 @@ public class AttackRange : MonoBehaviour
         enemy = gameObject.GetComponentInParent<Enemy>();
     }
 
+    private void Start()
+    {
+        // 获取玩家对象代码
+        player = GameObject.Find("Player").GetComponent<Player>();
+    }
+
+    private void Update()
+    {
+        // 每帧判断玩家是否被全图标记
+        if (player.isMarked && enemy.attackList.Count == 0)
+        {
+            // 添加至攻击列表
+            enemy.attackList.Add(player.transform);
+            // 播放咆哮动画
+            enemy.animState = 4;
+        }
+    }
+
     // 敌人攻击范围判定
     public void OnTriggerStay(Collider other)
     {
         // 攻击列表里剔除其他物体
-        if (!enemy.attackList.Contains(other.transform) && !enemy.isDead && other.tag == "Player")
+        if (!enemy.attackList.Contains(other.transform) && !enemy.isDead && other.tag == "Player" && !player.isMarked)
         {
             // 如果玩家不在潜行且不在开枪，在很短的距离内才能发现
             Player player = other.GetComponent<Player>();
@@ -51,6 +71,6 @@ public class AttackRange : MonoBehaviour
     public void OnTriggerExit(Collider other)
     {
         // 移除物体
-        enemy.attackList.Remove(other.transform);
+        if(!player.isMarked) enemy.attackList.Remove(other.transform);
     }
 }

@@ -7,6 +7,7 @@ public abstract class Notes : MonoBehaviour
     [Header("属性")]
     [Tooltip("文本文件")] public TextAsset textFile;
     [Tooltip("文本内容")] protected string[] texts;
+    [Tooltip("是否是结束纸条")] public bool isEndNotes;
     [Tooltip("是否有纸条被查看")] private bool isViewNotes;
 
     [Header("音效")]
@@ -78,6 +79,11 @@ public abstract class Notes : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             // 恢复玩家移动
             player.canMove = true;
+            // 判断是否是最终纸条
+            if(isEndNotes){
+                // 全图标记
+                player.isMarked = true;
+            }
         }
         // 将查看状态同步给玩家
         player.isViewNotes = isViewNotes;

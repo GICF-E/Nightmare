@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9176b2d4d27a4486ca8fad333fa32532
+guid: 512b0a16367e848099f1064aae0e0350
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - AaWDXDNFAN (Non-Commercial Use)
+  - WoAiWanWeiWeiShouXieTi
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
