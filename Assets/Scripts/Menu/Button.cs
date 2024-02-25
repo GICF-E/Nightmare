@@ -41,9 +41,6 @@ public class Button : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     /// <summary>
     /// 渐变更改颜色
     /// </summary>
-    /// <param name="graphic">要更改颜色的Graphic组件</param>
-    /// <param name="color">目标颜色</param>
-    /// <param name="time">过渡时间</param>
     private IEnumerator ChangeColor(Graphic graphic, Color targetColor, float time)
     {
         // 初始化颜色

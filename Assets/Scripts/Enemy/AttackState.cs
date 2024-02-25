@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -7,7 +5,7 @@ using UnityEngine;
 /// </summary>
 public class AttackState : EnemyBaseState
 {
-    // 获取玩家对象代码
+    // 获取玩家对象脚本
     private Player player;
 
     public override void EnemyState(Enemy enemy)

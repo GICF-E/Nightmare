@@ -22,7 +22,7 @@ public class KnifeAttack : StateMachineBehaviour
             // 如果碰撞体标记为Enemy
             if (hitCollider.CompareTag("EnemyCollider"))
             {
-                // 敌人扣血的代码
+                // 敌人扣血的脚本
                 hitCollider.GetComponentInParent<Enemy>().Health(attackDamage);
                 // 生成喷血特效
 			    Instantiate (bloodImpactPrefabs [Random.Range (0, bloodImpactPrefabs.Length)], playerTransform.position + playerTransform.forward * 0.5f, Quaternion.LookRotation (playerTransform.position + Vector3.right * 5));

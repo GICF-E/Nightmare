@@ -78,6 +78,6 @@ public class Menu : MonoBehaviour
         // 更改后处理效果
         vignette.intensity.value = 0.125f;
         // 切换到加载场景
-        SceneManager.LoadScene("Loading");
+        SceneManager.LoadScene("Loading Game");
     }
 }

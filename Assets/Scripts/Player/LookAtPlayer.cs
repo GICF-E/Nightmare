@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class LookAtPlayer : MonoBehaviour
@@ -9,8 +7,6 @@ public class LookAtPlayer : MonoBehaviour
     [Tooltip("是否在Y轴增加")] public bool isAddY;
     [Tooltip("是否在Z轴增加")] public bool isAddZ;
     [Tooltip("默认位置X")] public float defaultPosition;
-    [Tooltip("自身的RectTransform组件")] private RectTransform rectTransform;
-    [Tooltip("切换阈值")] private float threshold = 0.1f;
 
     private void Start() {
         // 只在Start时查找，减少性能开销

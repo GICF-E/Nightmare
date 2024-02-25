@@ -6,7 +6,7 @@ public class AttackRange : MonoBehaviour
 {
     // 声名敌人主程序
     private Enemy enemy;
-    // 玩家对象代码
+    // 玩家对象脚本
     private Player player;
 
     private void Awake()
@@ -17,7 +17,7 @@ public class AttackRange : MonoBehaviour
 
     private void Start()
     {
-        // 获取玩家对象代码
+        // 获取玩家对象脚本
         player = GameObject.Find("Player").GetComponent<Player>();
     }
 

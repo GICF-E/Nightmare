@@ -63,7 +63,7 @@ public class Enemy : MonoBehaviour
     public PatrolState patrolState;
     // 定义敌人攻击状态声名对象
     public AttackState attackState;
-    // 获取玩家对象代码
+    // 获取玩家对象脚本
     private Player player;
 
     private void Awake()

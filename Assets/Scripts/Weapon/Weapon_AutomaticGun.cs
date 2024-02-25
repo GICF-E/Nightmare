@@ -31,7 +31,7 @@ public class WeaponSoundClips
 /// </summary>
 public class Weapon_AutomaticGun : Weapon
 {
-    // 玩家对象代码
+    // 玩家对象脚本
     private Player player;
     // 玩家移动状态
     public Player.MovementState state;
@@ -117,7 +117,7 @@ public class Weapon_AutomaticGun : Weapon
     {
         // 对音源进行赋值
         mainAudioSource = GetComponent<AudioSource>();
-        // 获取玩家代码
+        // 获取玩家脚本
         player = GetComponentInParent<Player>();
         // 定义动画状态机
         animator = GetComponent<Animator>();

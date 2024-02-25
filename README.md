@@ -91,6 +91,15 @@ In Nightmare, you can summon the options menu in-game by pressing a key. When th
 
 ***Note: Your changes will be stored and remembered when you launch the game next time.**
 
+### Interactive UI Elements
+In Nightmare, the interactive UI elements are divided into two types: buttons and checkboxes. Typically, buttons appear gray, and checkboxes display different colors according to their current state:
+   - Gray: The checkbox is not selected/not enabled.
+   - White: The checkbox is selected/enabled.
+
+When the mouse pointer enters the range, the button/checkbox turns white and plays a prompt sound. Clicking a button will directly perform the corresponding action, while clicking a checkbox will toggle its state.
+
+### Multiple Ending System
+Nightmare features multiple endings, where any action or choice made in the game can affect the final outcome. Including the normal death scenario, Nightmare has 4 regular endings and 2 secret endings, and we look forward to players exploring these endings on their own.
 
 <h2 id="section3">Implementation of Firearms</h2>
 

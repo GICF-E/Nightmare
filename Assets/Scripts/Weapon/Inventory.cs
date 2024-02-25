@@ -18,7 +18,7 @@ public class Inventory : MonoBehaviour
     private float switchTime = 1f;
     // 切换计时器
     private float timer = 1f;
-    // 玩家代码
+    // 玩家脚本
     private Player player;
 
     private void Start()
