@@ -5,11 +5,11 @@ public class LoopTimeline : MonoBehaviour
 {
     // 时间线
     private PlayableDirector director;
-    // 玩家代码
+    // 玩家脚本
     private Player player;
 
     private void Awake(){
-        // 获取组件和玩家代码
+        // 获取组件和玩家脚本
         director = GetComponent<PlayableDirector>();
         player = GameObject.Find("Player").GetComponent<Player>();
         // 启动玩家菜单模式

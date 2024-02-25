@@ -68,7 +68,7 @@ GameObject:
   - component: {fileID: 463672}
   - component: {fileID: 3314274}
   - component: {fileID: 2396590}
-  - component: {fileID: 6573684}
+  - component: {fileID: 8634929035801896940}
   m_Layer: 8
   m_Name: lo_Prop_Pulpit_A_LOD1
   m_TagString: Untagged
@@ -143,8 +143,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6573684
-BoxCollider:
+--- !u!64 &8634929035801896940
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -161,9 +161,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.15718, y: 2.1374326, z: 1.6449585}
-  m_Center: {x: -0.0030561686, y: 1.0679648, z: 0.1708428}
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300002, guid: 66fd8fa6e7800b44ca18b26738941dcf, type: 3}
 --- !u!1 &189966
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,7 +176,7 @@ GameObject:
   - component: {fileID: 474932}
   - component: {fileID: 3346806}
   - component: {fileID: 2367802}
-  - component: {fileID: 6519386}
+  - component: {fileID: 3590267837231563830}
   m_Layer: 8
   m_Name: lo_Prop_Pulpit_A_LOD0
   m_TagString: Untagged
@@ -250,8 +251,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6519386
-BoxCollider:
+--- !u!64 &3590267837231563830
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -268,6 +269,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.15718, y: 2.1379793, z: 1.6449585}
-  m_Center: {x: -0.0030561686, y: 1.0682381, z: 0.1708428}
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300004, guid: 66fd8fa6e7800b44ca18b26738941dcf, type: 3}

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using TMPro;
+using Unity.VisualScripting;
 
 /// <summary>
 /// 用于控制玩家行动的类
@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     [Tooltip("重力加速度")] public float gravity = 9.8f;
     [Tooltip("推动物体力的大小")] public float pushPower = 4f;
     [Tooltip("角色移动向量")][HideInInspector] public Vector3 moveDirection = Vector3.zero;
+    [Tooltip("正确PIN码哈希字段")] private string[] PIN = { "111001011011110010100000", "111001101000001010100000", "111010001011111010110000", "001100010011", "010000110011" };
 
 
     [Header("玩家组件引用")]
@@ -57,8 +58,8 @@ public class Player : MonoBehaviour
     [Tooltip("人物状态的枚举")][HideInInspector] public enum MovementState { walking, running, idle };
     [Tooltip("角色移动状态")][HideInInspector] public MovementState state;
     [Tooltip("实际移动速度")][HideInInspector] public float currentSpeed;
-
-
+    [Tooltip("是否被全图标记")][HideInInspector] public bool isMarked;
+    [Tooltip("场上是否还有敌人")][HideInInspector] public bool hasEnemy = true;
 
 
     [Header("玩家生命")]
@@ -83,7 +84,7 @@ public class Player : MonoBehaviour
     [Tooltip("是否显示FPS")] public bool isDisplayFPS;
     [Tooltip("是否显示血量百分比")] public bool isDisplayHealthFigure;
     [Tooltip("是否在查看纸条")] public bool isViewNotes;
-    [Tooltip("玩家血量UI")] public TextMeshProUGUI playerHealthUI;
+    [Tooltip("玩家血量UI")] public Text playerHealthUI;
     [Tooltip("玩家血量提示灯")] public Image healthImage;
     [Tooltip("玩家血量提示灯的颜色")] public Color[] healthImageColor;
     [Tooltip("玩家Esc面板")] public GameObject EscPanel;
@@ -91,6 +92,12 @@ public class Player : MonoBehaviour
     [Tooltip("玩家血雾效果")] public Image hurtImage;
     [Tooltip("血雾收到伤害颜色")] private Color flashColor;
     [Tooltip("血雾没有受到伤害的颜色")] private Color clearColor;
+    [Tooltip("结局面板")] public GameObject endingPanel;
+    [Tooltip("结局文本")] public Text endingText;
+    [Tooltip("结局内容")] public Text[] endingContent;
+    [Tooltip("输入面板")] public Image inputPanel;
+    [Tooltip("输入面板的内容（用于渐变）")] public Graphic[] inputPanelContent;
+    [Tooltip("输入的内容（用于输入检测）")] public Text[] inputText;
     [Tooltip("帧间隔时间")] private float deltaTime = 0.0f;
 
 
@@ -106,13 +113,19 @@ public class Player : MonoBehaviour
         standHeight = controller.height;
         EscPanel.SetActive(false);
         settingPanel.SetActive(false);
+        endingPanel.SetActive(false);
+        endingText.text = "";
+        inputPanel.gameObject.SetActive(false);
+        foreach (Text text in inputText) text.text = "";
         // 重置玩家生命值
         playerHealth = 100f;
-        // 重置玩家速度和下蹲状态
+        // 重置玩家状态
         isCrouching = false;
         canCrouching = true;
         isRowing = false;
         canMove = isMenuMode ? false : true;
+        isMarked = false;
+        hasEnemy = true;
         // 根据玩家设置更改变量
         isDisplayFPS = PlayerPrefs.GetInt("isDisplayFPS") == 1;
         isDisplayHealthFigure = PlayerPrefs.GetInt("isDisplayHealthFigure") == 1;
@@ -174,6 +187,19 @@ public class Player : MonoBehaviour
 
         // 判断是否可以移动
         if (!canMove) movementAudioSource.Pause();
+
+        // 判断场上是否还有敌人
+        if (!hasEnemy && canMove)
+        {
+            // 停止移动
+            canMove = false;
+            // 解锁鼠标
+            Cursor.lockState = CursorLockMode.None;
+            // 更新结局字样
+            endingText.text = isMarked ? "结局D: 迭代" : "结局C: 摇篮";
+            // 打开结局面板
+            StartCoroutine(OpenEndingPanel(endingPanel.GetComponent<Image>(), endingPanel.GetComponent<Image>().color, 1f, 1f));
+        }
 
         // 当角色站在地面上且可以移动时执行以下逻辑
         if (controller.isGrounded && canMove)
@@ -248,7 +274,7 @@ public class Player : MonoBehaviour
         }
 
         // 判断玩家是否按下Esc
-        if (playerInput.actions["Esc"].triggered && !isMenuMode && !isViewNotes)
+        if (playerInput.actions["Esc"].triggered && !isMenuMode && !isViewNotes && !isDead)
         {
             // 切换面板状态和玩家移动的状态
             if (settingPanel.activeSelf) CloseSetting();
@@ -359,7 +385,7 @@ public class Player : MonoBehaviour
                 yield return null;
             }
             // 锁定旋转
-            transform.rotation = Quaternion.Euler(new Vector3(0,transform.eulerAngles.y,0));
+            transform.rotation = Quaternion.Euler(new Vector3(0, transform.eulerAngles.y, 0));
             isRowing = false;
             yield return new WaitForSeconds(0.1f);
             // 站立
@@ -510,9 +536,20 @@ public class Player : MonoBehaviour
         // 根据血量百分比更新血量提示灯的颜色
         healthImage.color = healthImageColor[colorIndex];
         // 判断玩家是否死亡
-        if (playerHealth <= 0)
+        if (playerHealth <= 0 && !isDead)
         {
+            // 更改死亡状态
             isDead = true;
+            // 面板切换为红色
+            hurtImage.color = flashColor;
+            // 停止移动
+            canMove = false;
+            // 解锁鼠标
+            Cursor.lockState = CursorLockMode.None;
+            // 根据不同的状态显示不同的结局字样
+            endingText.text = isMarked ? "结局B: 梦魇" : "结局A: 陨落";
+            // 打开结局面板
+            StartCoroutine(OpenEndingPanel(endingPanel.GetComponent<Image>(), endingPanel.GetComponent<Image>().color, 1f, 1f));
         }
     }
 
@@ -622,13 +659,109 @@ public class Player : MonoBehaviour
     // 返回主页
     public void BackHome()
     {
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("Loading Menu");
     }
 
     // 退出游戏
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    // 隐藏结局，由输入面板的按钮调用
+    public void HideEnding()
+    {
+        // 是否输入正确
+        bool isInputCorrect = true;
+        for (int i = 0; i < inputText.Length; i++)
+        {
+            Debug.Log(inputText[i].text);
+            if (inputText[i].text != PIN[i]){isInputCorrect = false; Debug.Log("false: " + PIN[i]);}
+        }
+        // 停止移动
+        canMove = false;
+        // 根据不同的状态显示不同的结局字样
+        endingText.text = isInputCorrect ? "结局F: 解梦" : "结局E: 迷失";
+        // 打开结局面板
+        StartCoroutine(OpenEndingPanel(endingPanel.GetComponent<Image>(), endingPanel.GetComponent<Image>().color, 1f, 1f));
+    }
+
+    /// <summary>
+    /// 渐变更改结局面板颜色
+    /// </summary>
+    public IEnumerator OpenEndingPanel(Graphic graphic, Color targetColor, float time, float waitTime)
+    {
+        // 初始化颜色
+        graphic.color = Color.clear;
+        foreach (Text text in inputText)
+        {
+            text.color = Color.clear;
+        }
+        // 等待时间
+        yield return new WaitForSeconds(waitTime);
+        // 启用面板
+        graphic.gameObject.SetActive(true);
+        // 计时器和开始颜色
+        float timer = 0;
+        Color startColor = graphic.color;
+        // 循环渐变
+        while (timer < time)
+        {
+            // 更新计时器
+            timer += Time.deltaTime;
+            // 更新颜色
+            graphic.color = Color.Lerp(startColor, targetColor, timer / time);
+            endingText.color = Color.Lerp(startColor, Color.white, timer / time);
+            foreach (Text text in endingContent)
+            {
+                text.color = Color.Lerp(startColor, new Color(0.75f, 0.75f, 0.75f, 255), timer / time);
+            }
+            yield return null;
+        }
+        // 最终确定颜色
+        graphic.color = targetColor;
+        endingText.color = Color.white;
+        foreach (Text text in endingContent)
+        {
+            text.color = new Color(0.75f, 0.75f, 0.75f, 255);
+        }
+    }
+
+    /// <summary>
+    /// 渐变更改结局面板颜色
+    /// </summary>
+    public IEnumerator OpenInputPanel(float time)
+    {
+        // 使用数组来存储渐变开始之前的颜色
+        Color[] colors = new Color[inputPanelContent.Length];
+        for (int i = 0; i < inputPanelContent.Length; i++)
+        {
+            colors[i] = inputPanelContent[i].color;
+        }
+        // 初始化颜色
+        inputPanel.color = Color.clear;
+        foreach (Graphic graphic in inputPanelContent) graphic.color = Color.clear;
+        // 启用面板
+        inputPanel.gameObject.SetActive(true);
+        // 计时器和开始颜色
+        float timer = 0;
+        // 循环渐变
+        while (timer < time)
+        {
+            // 更新计时器
+            timer += Time.deltaTime;
+            // 更新颜色
+            for (int i = 0; i < inputPanelContent.Length; i++)
+            {
+                inputPanelContent[i].color = Color.Lerp(Color.clear, colors[i], timer / time);
+            }
+            yield return null;
+        }
+        // 最终确定颜色
+        for (int i = 0; i < inputPanelContent.Length; i++)
+        {
+            inputPanelContent[i].color = colors[i];
+        }
     }
 
     /// <summary>

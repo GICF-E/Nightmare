@@ -155,6 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textFile: {fileID: 4900000, guid: f93b37b87c9fc4a66aaba0cd73cc3a79, type: 3}
+  isEndNotes: 0
   viewSound: {fileID: 8300000, guid: bc1fb63ddabf045fc8b666267a7f5953, type: 3}
   ID: 0
   previewText: "\u8F93\u5165\u8D85\u9650"

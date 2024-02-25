@@ -12,16 +12,20 @@ public class NotesContent : Notes
         if (other.tag == "ObjectCollider"){
             // 显示提示UI
             notesCanvas.SetActive(true);
+            // 更改查看状态
+            isLookingAt = true;
             // 更新玩家文本UI
             playerNotesText.text = texts[ID - 1];
         }
     }
 
     private void OnTriggerExit(Collider other) {
-        // 关闭UI
-        notesCanvas.SetActive(false);
         // 判断是否是玩家接触
         if (other.tag == "ObjectCollider"){
+            // 关闭UI
+            notesCanvas.SetActive(false);
+            // 更改查看状态
+            isLookingAt = false;
             // 更新玩家文本UI
             playerNotesText.text = "";
         }

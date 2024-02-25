@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 477396}
   - component: {fileID: 3385130}
   - component: {fileID: 2364536}
-  - component: {fileID: 6595830}
+  - component: {fileID: 1834567486790133815}
   m_Layer: 0
   m_Name: lo_Prop_ChurchBench_A_LOD1
   m_TagString: Untagged
@@ -86,8 +86,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6595830
-BoxCollider:
+--- !u!64 &1834567486790133815
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -104,9 +104,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.8562033, y: 1.3, z: 1.1}
-  m_Center: {x: -1.3281018, y: 0.65, z: -0.35000008}
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300002, guid: 1aa9665178251df4bb03fb86ea2eb860, type: 3}
 --- !u!1 &132168
 GameObject:
   m_ObjectHideFlags: 0
@@ -118,7 +119,7 @@ GameObject:
   - component: {fileID: 449054}
   - component: {fileID: 3348206}
   - component: {fileID: 2314332}
-  - component: {fileID: 6522516}
+  - component: {fileID: 4121433449120814766}
   m_Layer: 0
   m_Name: lo_Prop_ChurchBench_A_LOD0
   m_TagString: Untagged
@@ -193,8 +194,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6522516
-BoxCollider:
+--- !u!64 &4121433449120814766
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -211,9 +212,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.8562033, y: 1.3, z: 1.1}
-  m_Center: {x: -1.3281018, y: 0.65, z: -0.35000008}
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300004, guid: 1aa9665178251df4bb03fb86ea2eb860, type: 3}
 --- !u!1 &144546
 GameObject:
   m_ObjectHideFlags: 0

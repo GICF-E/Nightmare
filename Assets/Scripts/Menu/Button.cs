@@ -41,19 +41,21 @@ public class Button : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     /// <summary>
     /// 渐变更改颜色
     /// </summary>
-    /// <param name="graphic">要更改颜色的Graphic组件</param>
-    /// <param name="color">目标颜色</param>
-    /// <param name="time">过渡时间</param>
     private IEnumerator ChangeColor(Graphic graphic, Color targetColor, float time)
     {
+        // 初始化颜色
         float timer = 0;
         Color startColor = graphic.color;
+        // 循环渐变
         while (timer < time)
         {
+            // 更新计时器
             timer += Time.deltaTime;
+            // 更新颜色
             graphic.color = Color.Lerp(startColor, targetColor, timer / time);
             yield return null;
         }
+        // 确定最终颜色
         graphic.color = targetColor;
     }
 }

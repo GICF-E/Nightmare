@@ -63,7 +63,7 @@ public class Enemy : MonoBehaviour
     public PatrolState patrolState;
     // 定义敌人攻击状态声名对象
     public AttackState attackState;
-    // 获取玩家对象代码
+    // 获取玩家对象脚本
     private Player player;
 
     private void Awake()
@@ -225,9 +225,20 @@ public class Enemy : MonoBehaviour
         // 判断是否死亡
         if (currentHealth <= 0)
         {
+            // 清零血量
             currentHealth = 0;
-            isDead = true;
+            // 播放死亡动画
             animator.SetTrigger("dying");
+            // 死亡
+            isDead = true;
+            // 检查场上是否还有其他敌人
+            Enemy[] enemies = FindObjectsByType<Enemy>(FindObjectsSortMode.None);
+            // 场上是否还有敌人生还
+            bool hasEnemy = false;
+            foreach(Enemy enemy in enemies){
+                if(enemy.isDead == false) hasEnemy = true;
+            }
+            if(!hasEnemy) player.hasEnemy = false;
         }
     }
 
