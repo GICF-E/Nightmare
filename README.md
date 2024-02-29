@@ -30,6 +30,19 @@ FPS-Demo has different installation methods on different operating systems. Plea
 If you are using MacOS, you can directly move the downloaded software to `Finder-Sidebar-Applications` or `Users/(Your Username)/Application`. If all goes well, you will see it in the Launchpad. Clicking the left mouse button will open it, and you can force exit the game by clicking `Esc - Quit Game` in the game or pressing `[LeftCommand] + [Q]` on any interface.
 #### Windows
 If you are using Windows, you will typically receive a folder. If you want to launch the program directly, you can enter the folder and open `Nightmare.exe`. For a better launch experience, you can manually move the folder to the default download folder or a custom path, i.e., `C:\Program Files\`, and add a shortcut to the desktop.
+#### Linux
+If you're using the Linux operating system, first ensure that the Unity game folder you've downloaded contains a Linux platform executable file. Typically, this file won't have a .exe extension but will be an executable file without any extension, and you might need to manually grant it execution permissions. Here's how to install and start the game: 
+1. Grant Execution Permission: Open the terminal and use the cd command to navigate to the game folder's location. Then, use the chmod command to grant the main game executable file execution permissions. Assuming the main executable file is named Nightmare, you can use the following command:
+   ```bash
+   chmod +x Nightmare.x86_64
+   ```
+2. Start the Game: Once execution permission has been granted, you can start the game directly from the terminal by entering:
+   ```bash
+   ./Nightmare.x86_64
+   ```
+   If the game is located in a directory within your `PATH` environment variable, you can also start it by simply entering the game's name.
+
+For convenience, you may also create a desktop shortcut or add the game to your application launcher, so you can start the game without going through the terminal. Different Linux distributions might have different methods for creating shortcuts, usually involving creating a `.desktop` file and specifying the appropriate game start command and path.
 
 <h2 id="section2">Operation Mode</h2>
 
