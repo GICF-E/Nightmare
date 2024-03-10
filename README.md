@@ -2,9 +2,7 @@
 ## Project Overview
 This is a simple horror FPS game. It provides several weapons that can be picked up and has designed shooting and enemy systems. It's created using the `C#` language and `Unity3D Build-In` rendering pipeline.  
 
-**Note: The project is under development!**
-
-**Note: FPS-Demo is for learning and reference only. It may lack certain entertainment and fun elements and is not intended for commercial use. We do not take any responsibility for the stability and final results of the project.**
+**Note: This project is for learning and reference only. It may lack certain entertainment and fun elements and is not intended for commercial use. We do not take any responsibility for the stability and final results of the project.**
 
 ## Language
 The default README language for Nightmare projects is English, if you want to choose another language, please select it below:

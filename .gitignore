@@ -4,5 +4,6 @@ obj/
 Temp/
 UserSettings/
 .vscode/
+Recordings/
 *.sln
 *.csproj
