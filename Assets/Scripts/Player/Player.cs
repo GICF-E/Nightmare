@@ -130,6 +130,32 @@ public class Player : MonoBehaviour
         isDisplayHealthFigure = PlayerPrefs.GetInt("isDisplayHealthFigure") == 1;
         isSonicMode = PlayerPrefs.GetInt("isSonicMode") == 1;
         isClickAiming = PlayerPrefs.GetInt("isClickAiming") == 1;
+        // 分割字符串来获取宽度和高度
+        string[] dimensions = PlayerPrefs.GetString("resolutionRatio").Split('x');
+        // 判断是否分割成功
+        if (dimensions.Length == 2)
+        {
+            // 尝试解析宽度和高度
+            int width, height;
+            bool widthParsed = int.TryParse(dimensions[0], out width);
+            bool heightParsed = int.TryParse(dimensions[1], out height);
+            // 如果宽度和高度成功解析，则设置分辨率
+            if (widthParsed && heightParsed)
+            {
+                // 设置分辨率并强制全屏
+                Screen.SetResolution(width, height, true);
+            }
+            else
+            {
+                // 解析失败，使用当前屏幕分辨率作为默认值
+                UseDefaultResolution();
+            }
+        }
+        else
+        {
+            // 格式不正确，使用默认分辨率
+            UseDefaultResolution();
+        }
     }
 
     private void Start()
@@ -653,6 +679,42 @@ public class Player : MonoBehaviour
                 obj.GetComponent<Enemy>().UpdateSettings();
             }
         }
+
+        // 分割字符串来获取宽度和高度
+        string[] dimensions = PlayerPrefs.GetString("resolutionRatio").Split('x');
+        // 判断是否分割成功
+        if (dimensions.Length == 2)
+        {
+            // 尝试解析宽度和高度
+            int width, height;
+            bool widthParsed = int.TryParse(dimensions[0], out width);
+            bool heightParsed = int.TryParse(dimensions[1], out height);
+            // 如果宽度和高度成功解析，则设置分辨率
+            if (widthParsed && heightParsed)
+            {
+                // 设置分辨率并强制全屏
+                Screen.SetResolution(width, height, true);
+            }
+            else
+            {
+                // 解析失败，使用当前屏幕分辨率作为默认值
+                UseDefaultResolution();
+            }
+        }
+        else
+        {
+            // 格式不正确，使用默认分辨率
+            UseDefaultResolution();
+        }
+    }
+
+    // 默认分辨率
+    private void UseDefaultResolution()
+    {
+        // 获取当前屏幕分辨率和刷新率
+        var currentResolution = Screen.currentResolution;
+        // 设置为当前屏幕分辨率，并强制全屏
+        Screen.SetResolution(currentResolution.width, currentResolution.height, true);
     }
 
     // 返回主页
