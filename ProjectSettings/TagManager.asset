@@ -16,6 +16,8 @@ TagManager:
   - ObjectCollider
   - HeadCollider
   - Weapon
+  - Food
+  - PickUpItem
   layers:
   - Default
   - TransparentFX

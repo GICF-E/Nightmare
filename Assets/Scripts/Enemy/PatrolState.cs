@@ -98,7 +98,7 @@ public class PatrolState : EnemyBaseState
         {
             // 计算敌人到原始位置的距离
             float patrolDistance = Vector3.Distance(enemy.transform.position, enemy.originalPosition);
-            // 当距离很小时标识已经走到了导航点
+            // 当距离很小时表明已经回到了原始位置
             if (patrolDistance <= 2f && enemy.attackList.Count == 0)
             {
                 // 停止移动并进入待机状态

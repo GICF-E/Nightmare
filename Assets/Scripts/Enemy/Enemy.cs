@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -82,6 +81,8 @@ public class Enemy : MonoBehaviour
         slider.maxValue = enemyHealth;
         slider.value = enemyHealth;
         currentHealth = enemyHealth;
+        if (isEnableSlider && !player.isMenuMode) slider.gameObject.SetActive(true);
+        else slider.gameObject.SetActive(false);
 
         // 根据玩家设置更改变量
         UpdateSettings();
@@ -89,15 +90,22 @@ public class Enemy : MonoBehaviour
 
     private void Start()
     {
-        if (isEnableSlider && !player.isMenuMode) slider.gameObject.SetActive(true);
-        else slider.gameObject.SetActive(false);
-
         // 初始化状态对象
         patrolState = new PatrolState();
         attackState = new AttackState();
 
         // 游戏一开始就进入巡逻状态
         TransitionToState(patrolState);
+
+        // 判断是否死亡
+        if(isDead){
+            // 隐藏血量条
+            slider.gameObject.SetActive(false);
+            // 如果死亡，停止移动
+            agent.isStopped = true;
+            // 播放死亡动画
+            animator.SetTrigger("dying");
+        }
     }
 
 
@@ -257,7 +265,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    // 更新设置
+    // 更新用户设置
     public void UpdateSettings()
     {
         isEnableSlider = PlayerPrefs.GetInt("isEnableSlider") == 1 ? true : false;

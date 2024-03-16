@@ -802,6 +802,8 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: 800x600
       m_Image: {fileID: 0}
+    - m_Text: 960x600
+      m_Image: {fileID: 0}
     - m_Text: 1024x768
       m_Image: {fileID: 0}
     - m_Text: 1280x720
@@ -818,11 +820,21 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: 2560x1440
       m_Image: {fileID: 0}
+    - m_Text: 2560x1660
+      m_Image: {fileID: 0}
+    - m_Text: 2880x1800
+      m_Image: {fileID: 0}
     - m_Text: 3440x1440
       m_Image: {fileID: 0}
     - m_Text: 3840x2160
       m_Image: {fileID: 0}
     - m_Text: 5120x2880
+      m_Image: {fileID: 0}
+    - m_Text: 5120x3200
+      m_Image: {fileID: 0}
+    - m_Text: 6000x3375
+      m_Image: {fileID: 0}
+    - m_Text: 6000x3750
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:

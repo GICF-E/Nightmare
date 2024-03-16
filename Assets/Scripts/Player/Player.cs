@@ -20,10 +20,9 @@ public class Player : MonoBehaviour
 
 
     [Header("玩家组件引用")]
-    [Tooltip("角色控制器组件")] public CharacterController controller;
+    [Tooltip("角色控制器组件")][HideInInspector] public CharacterController controller;
     [Tooltip("移动音源")] public AudioSource movementAudioSource;
     [Tooltip("辅助音源")] public AudioSource auxiliaryAudioSource;
-    [Tooltip("摄像机的位置")] public Transform cemara;
     [Tooltip("对回血协程的引用")][HideInInspector] public Coroutine addHealthCoroutine;
 
 
@@ -104,6 +103,14 @@ public class Player : MonoBehaviour
     [Tooltip("输入系统组件")][HideInInspector] public PlayerInput playerInput;
     [Tooltip("使用单击鼠标右键来控制开镜")] public bool isClickAiming;
 
+    [Header("场景")]
+    [Tooltip("敌人列表")] public GameObject[] enemies;
+    [Tooltip("武器列表")] public Weapon_AutomaticGun[] weapons;
+    [Tooltip("可拾取的武器的列表")] public GameObject[] pickUpItems;
+    [Tooltip("可拾取的食物列表")] public GameObject[] foods;
+    [Tooltip("可引爆的油桶列表")] public GameObject[] explosiveBarrels;
+    [Tooltip("可引爆的气瓶列表")] public GameObject[] gasTanks;
+
     private void Awake()
     {
         // 初始化
@@ -116,6 +123,12 @@ public class Player : MonoBehaviour
         endingText.text = "";
         inputPanel.gameObject.SetActive(false);
         foreach (Text text in inputText) text.text = "";
+        // 初始化场景列表
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        pickUpItems = GameObject.FindGameObjectsWithTag("PickUpItem");
+        foods = GameObject.FindGameObjectsWithTag("Food");
+        explosiveBarrels = GameObject.FindGameObjectsWithTag("ExplosiveBarrel");
+        gasTanks = GameObject.FindGameObjectsWithTag("GasTank");
         // 重置玩家生命值
         playerHealth = 100f;
         // 重置玩家状态
@@ -130,36 +143,14 @@ public class Player : MonoBehaviour
         isDisplayHealthFigure = PlayerPrefs.GetInt("isDisplayHealthFigure") == 1;
         isSonicMode = PlayerPrefs.GetInt("isSonicMode") == 1;
         isClickAiming = PlayerPrefs.GetInt("isClickAiming") == 1;
-        // 分割字符串来获取宽度和高度
-        string[] dimensions = PlayerPrefs.GetString("resolutionRatio").Split('x');
-        // 判断是否分割成功
-        if (dimensions.Length == 2)
-        {
-            // 尝试解析宽度和高度
-            int width, height;
-            bool widthParsed = int.TryParse(dimensions[0], out width);
-            bool heightParsed = int.TryParse(dimensions[1], out height);
-            // 如果宽度和高度成功解析，则设置分辨率
-            if (widthParsed && heightParsed)
-            {
-                // 设置分辨率并强制全屏
-                Screen.SetResolution(width, height, true);
-            }
-            else
-            {
-                // 解析失败，使用当前屏幕分辨率作为默认值
-                UseDefaultResolution();
-            }
-        }
-        else
-        {
-            // 格式不正确，使用默认分辨率
-            UseDefaultResolution();
-        }
     }
 
     private void Start()
     {
+        // 锁定光标
+        if(!isMenuMode) Cursor.lockState = CursorLockMode.Locked;
+        
+        // 根据索尼克模式设置角色速度
         if (!isSonicMode)
         {
             walkSpeed = 6;
@@ -203,6 +194,36 @@ public class Player : MonoBehaviour
         // 更新血雾颜色
         flashColor = Color.red;
         clearColor = Color.clear;
+
+        // 分割字符串来获取宽度和高度
+        string[] dimensions = PlayerPrefs.GetString("resolutionRatio").Split('x');
+        // 判断是否分割成功
+        if (dimensions.Length == 2)
+        {
+            // 尝试解析宽度和高度
+            int width, height;
+            bool widthParsed = int.TryParse(dimensions[0], out width);
+            bool heightParsed = int.TryParse(dimensions[1], out height);
+            // 如果宽度和高度成功解析，则设置分辨率
+            if (widthParsed && heightParsed)
+            {
+                // 设置分辨率并强制全屏
+                Screen.SetResolution(width, height, true);
+            }
+            else
+            {
+                // 解析失败，使用当前屏幕分辨率作为默认值
+                UseDefaultResolution();
+            }
+        }
+        else
+        {
+            // 格式不正确，使用默认分辨率
+            UseDefaultResolution();
+        }
+
+        // 读取存档
+        LoadGame();
     }
 
     void Update()
@@ -309,6 +330,8 @@ public class Player : MonoBehaviour
                 // 切换鼠标锁定状态
                 Cursor.lockState = Cursor.lockState == CursorLockMode.Locked ? CursorLockMode.None : CursorLockMode.Locked;
                 canMove = !canMove;
+                // 存档
+                SaveGame();
             }
         }
 
@@ -711,15 +734,25 @@ public class Player : MonoBehaviour
     // 默认分辨率
     private void UseDefaultResolution()
     {
-        // 获取当前屏幕分辨率和刷新率
-        var currentResolution = Screen.currentResolution;
-        // 设置为当前屏幕分辨率，并强制全屏
-        Screen.SetResolution(currentResolution.width, currentResolution.height, true);
+        //获取设置当前屏幕分辩率
+        Resolution[] resolutions = Screen.resolutions;
+
+        //设置当前分辨率
+        Screen.SetResolution(resolutions[resolutions.Length - 1].width, resolutions[resolutions.Length - 1].height, true);
     }
 
     // 返回主页
     public void BackHome()
     {
+        SceneManager.LoadScene("Loading Menu");
+    }
+
+    // 清除存档并返回主页
+    public void ClearGame()
+    {
+        // 清除数据
+        SaveSystem.ClearData();
+        // 加载主页
         SceneManager.LoadScene("Loading Menu");
     }
 
@@ -736,8 +769,7 @@ public class Player : MonoBehaviour
         bool isInputCorrect = true;
         for (int i = 0; i < inputText.Length; i++)
         {
-            Debug.Log(inputText[i].text);
-            if (inputText[i].text != PIN[i]){isInputCorrect = false; Debug.Log("false: " + PIN[i]);}
+            if (inputText[i].text != PIN[i]) isInputCorrect = false;
         }
         // 停止移动
         canMove = false;
@@ -748,10 +780,124 @@ public class Player : MonoBehaviour
     }
 
     /// <summary>
+    /// 存储游戏数据
+    /// </summary>
+    public void SaveGame()
+    {
+        // 定义新的PlayerData存储实现
+        PlayerData playerData = new PlayerData();
+        // 将玩家数据写入实现
+        playerData.position = transform.position;
+        playerData.rotation = transform.rotation;
+        playerData.isMarked = isMarked;
+        playerData.playerHealth = playerHealth;
+        // 遍历所有枪械
+        foreach (Weapon_AutomaticGun weapon in weapons)
+        {
+            // 定义新的WeaponData存储实现
+            WeaponData weaponData = new WeaponData();
+            // 将枪械数据写入实现
+            weaponData.isActive = weapon.gameObject == null ? false : weapon.gameObject.activeSelf;
+            weaponData.currentBullet = weapon == null ? 0 : weapon.currentBullet;
+            weaponData.bulletLeft = weapon == null ? 0 : weapon.bulletLeft;
+            // 将WeaponData添加到PlayerData
+            playerData.weaponsData.Add(weaponData);
+        }
+        // 遍历所有敌人
+        foreach (GameObject enemy in enemies)
+        {
+            // 定义新的EnemyData存储实现
+            EnemyData enemyData = new EnemyData();
+            // 将敌人数据写入实现
+            enemyData.position = enemy.transform.position;
+            enemyData.patrolIndex = enemy.GetComponent<Enemy>() == null ? 0 : enemy.GetComponent<Enemy>().patrolIndex;
+            enemyData.isDead = enemy.GetComponent<Enemy>() == null ? false : enemy.GetComponent<Enemy>().isDead;
+            // 将EnemyData添加到PlayerData
+            playerData.enemiesData.Add(enemyData);
+        }
+        // 遍历所有可拾取的枪械
+        foreach (GameObject pickUpItem in pickUpItems){
+            // 将枪械是否被拾取的信息写入PlayerData
+            playerData.isItemPick.Add((pickUpItem == null || !pickUpItem.activeSelf) ? true : false);
+        }
+        // 遍历所有食物
+        foreach (GameObject food in foods){
+            // 将食物是否被拾取的信息写入PlayerData
+            playerData.isFoodEaten.Add((food == null || !food.activeSelf) ? true : false);
+        }
+        // 遍历所有油桶
+        foreach (GameObject explosiveBarrel in explosiveBarrels){
+            // 将油桶是否被引爆的信息写入PlayerData
+            playerData.isExplosiveBarrelsExplode.Add((explosiveBarrel == null || !explosiveBarrel.activeSelf) ? true : false);
+        }
+        // 遍历所有气瓶
+        foreach (GameObject gasTank in gasTanks){
+            // 将气瓶是否被引爆的信息写入PlayerData
+            playerData.isGasTanksHit.Add((gasTank == null || !gasTank.activeSelf) ? true : false);
+        }
+        // 通过JSON保存数据
+        SaveSystem.SaveData(playerData);
+    }
+
+    /// <summary>
+    /// 读取游戏数据
+    /// </summary>
+    public void LoadGame()
+    {
+        PlayerData playerData = SaveSystem.LoadData();
+        if (playerData == null) return;
+        // 读取玩家数据
+        transform.position = playerData.position;
+        transform.rotation = playerData.rotation;
+        isMarked = playerData.isMarked;
+        playerHealth = playerData.playerHealth;
+        // 读取枪械数据
+        for (int i = 0; i < weapons.Length; i++)
+        {
+            weapons[i].gameObject.SetActive(playerData.weaponsData[i].isActive);
+            weapons[i].currentBullet = playerData.weaponsData[i].currentBullet;
+            weapons[i].bulletLeft = playerData.weaponsData[i].bulletLeft;
+        }
+        // 读取敌人数据
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            enemies[i].transform.position = playerData.enemiesData[i].position;
+            enemies[i].GetComponent<Enemy>().patrolIndex = playerData.enemiesData[i].patrolIndex;
+            enemies[i].GetComponent<Enemy>().isDead = playerData.enemiesData[i].isDead;
+        }
+        // 读取可拾取的枪械数据
+        for (int i = 0; i < pickUpItems.Length; i++)
+        {
+            // 如果枪械被拾取则直接禁用
+            if(playerData.isItemPick[i]) pickUpItems[i].SetActive(false);
+        }
+        // 读取食物数据
+        for (int i = 0; i < foods.Length; i++)
+        {
+            // 如果食物被拾取则直接禁用
+            if(playerData.isFoodEaten[i]) foods[i].SetActive(false);
+        }
+        // 读取油桶数据
+        for (int i = 0; i < explosiveBarrels.Length; i++)
+        {
+            // 如果油桶被引爆则直接禁用
+            if(playerData.isExplosiveBarrelsExplode[i]) explosiveBarrels[i].SetActive(false);
+        }
+        // 读取气瓶数据
+        for (int i = 0; i < gasTanks.Length; i++)
+        {
+            // 如果气瓶被引爆则直接禁用
+            if(playerData.isGasTanksHit[i]) gasTanks[i].SetActive(false);
+        }
+    }
+
+    /// <summary>
     /// 渐变更改结局面板颜色
     /// </summary>
     public IEnumerator OpenEndingPanel(Graphic graphic, Color targetColor, float time, float waitTime)
     {
+        // 清除存档数据
+        SaveSystem.ClearData();
         // 初始化颜色
         graphic.color = Color.clear;
         foreach (Text text in inputText)
@@ -824,6 +970,24 @@ public class Player : MonoBehaviour
             inputPanelContent[i].color = colors[i];
         }
     }
+
+    // 判断用户是否聚焦在了游戏窗口上
+    void OnApplicationFocus(bool hasFocus)
+    {
+        // 用户离开了当前窗口
+        if (!hasFocus && !isMenuMode && !isViewNotes && !isDead)
+        {
+            // 切换面板状态和玩家移动的状态
+            CloseSetting();
+            EscPanel.SetActive(true);
+            // 切换鼠标锁定状态
+            Cursor.lockState = CursorLockMode.None;
+            canMove = false;
+            // 存档
+            SaveGame();
+        }
+    }
+
 
     /// <summary>
     /// 通过绘制GUI显示FPS

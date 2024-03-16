@@ -1444,7 +1444,7 @@ GameObject:
   - component: {fileID: 8382727579616970249}
   m_Layer: 0
   m_Name: HitPoint
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2107,12 +2107,15 @@ MonoBehaviour:
   slider: {fileID: 3531320525701015118}
   isEnableSlider: 1
   enemyHealth: 8000
+  currentHealth: 0
   walkSpeed: 4
   runSpeed: 12
+  currentSpeed: 0
   minAttackDamage: 40
   maxAttackDamage: 60
   isDead: 0
   isPatrol: 1
+  isDamage: 0
   discoverCrouchPlayerDistance: 12
   originalPosition: {x: 0, y: 0, z: 0}
   attackList: []

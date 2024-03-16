@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2336826970490902396}
   m_Layer: 0
   m_Name: Croissant
-  m_TagString: Untagged
+  m_TagString: Food
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

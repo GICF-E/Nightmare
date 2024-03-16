@@ -65,7 +65,7 @@ public class Weapon_AutomaticGun : Weapon
     [Tooltip("射击模式枚举")] public enum ShootMode { AutoRifle, SemiGun };
     [Tooltip("射击模式枚举值")] public ShootMode shootingMode;
     [Tooltip("射击输入方法的变更")] private bool GunShootInput;
-    [Tooltip("用来区分中间参数（1.Auto 2.Semi）")] private int modeNum;
+    [Tooltip("用来区分中间参数(1.Auto 2.Semi)")] private int modeNum;
     [Tooltip("是否是自动武器")] public bool IS_AUTORIFLE;
     [Tooltip("是否带有消音器")] public bool IS_SILENCER;
     [Tooltip("是否是霰弹枪")] public bool IS_SHOTGUN;
@@ -126,12 +126,6 @@ public class Weapon_AutomaticGun : Weapon
         // 赋值摄像机
         mainCamera = Camera.main;
 
-        // 根据玩家设置更改变量
-        UpdateSettings();
-    }
-
-    private void Start()
-    {
         // 隐藏开火灯光并调整摄像机视野
         muzzleflashLight.enabled = false;
         flashLight.SetActive(false);
@@ -151,11 +145,17 @@ public class Weapon_AutomaticGun : Weapon
         // 定义UI属性
         maxCrossDegree = 15f;
         // 显示或隐藏UI
-        if (isDisplayAmmo) ammoTextUI.gameObject.SetActive(true);
+        if (isDisplayAmmo && !player.isMenuMode) ammoTextUI.gameObject.SetActive(true);
         else ammoTextUI.gameObject.SetActive(false);
-        if (isDisplayShootMode) shootModeTextUI.gameObject.SetActive(true);
+        if (isDisplayShootMode && !player.isMenuMode) shootModeTextUI.gameObject.SetActive(true);
         else shootModeTextUI.gameObject.SetActive(false);
 
+        // 根据玩家设置更改变量
+        UpdateSettings();
+    }
+
+    private void Start()
+    {
         // 如果是全自动武器
         if (IS_AUTORIFLE)
         {
@@ -482,7 +482,6 @@ public class Weapon_AutomaticGun : Weapon
             // 进行射线判定
             if (Physics.Raycast(ShootPoint.position, shootDirection, out hit, range))
             {
-                Debug.Log(hit.transform.gameObject.name);
                 // 霰弹枪生成子弹
                 if (IS_SHOTGUN)
                 {
@@ -494,7 +493,6 @@ public class Weapon_AutomaticGun : Weapon
                 // 击中头部判断
                 if (hit.transform.tag == "HeadCollider")
                 {
-                    Debug.Log("Head");
                     // 对击中碰撞题的父级进行两倍扣血
                     if (currentBullet > 2) hit.transform.GetComponentInParent<Enemy>().Health(Random.Range(minDamgae, maxDamage) * 2);
                     else hit.transform.GetComponentInParent<Enemy>().Health(minDamgae * 4);

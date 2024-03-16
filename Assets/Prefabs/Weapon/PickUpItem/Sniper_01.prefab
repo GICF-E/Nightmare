@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5474196395639195588}
   m_Layer: 0
   m_Name: Sniper_01
-  m_TagString: Untagged
+  m_TagString: PickUpItem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -155,8 +155,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49172abec7aa94ce0a7eb1830be28ac3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemID: 4
   pickUpSound: {fileID: 8300000, guid: bc1fb63ddabf045fc8b666267a7f5953, type: 3}
+  itemID: 4
 --- !u!1 &1057201629371776
 GameObject:
   m_ObjectHideFlags: 0

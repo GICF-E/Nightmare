@@ -45,6 +45,12 @@ public class Menu : MonoBehaviour
         StartCoroutine(StartGame(panel.GetComponent<Graphic>(), Color.black, 2));
     }
 
+    // 清除存档
+    public void ClearGame() {
+        // 清除存档
+        SaveSystem.ClearData();
+    }
+
     // 退出游戏
     public void QuitGame() {
         // 退出游戏程序

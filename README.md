@@ -1,6 +1,6 @@
 # Nightmare English Documentation
 ## Project Overview
-This is a simple horror FPS game. It provides several weapons that can be picked up and has designed shooting and enemy systems. It's created using the `C#` language and `Unity3D Build-In` rendering pipeline.  
+This is a simple horror FPS game. It provides several weapons that can be picked up and has designed shooting and enemy systems. It's created using the `C#` language and `Unity3D Build-In` rendering pipeline.Please click [here](https://www.bilibili.com/video/BV1kz421Q7Zs/?spm_id_from=333.999.0.0&vd_source=0fe56d06a40b2ce75fc37997448a105c) to watch the promotional video.
 
 **Note: This project is for learning and reference only. It may lack certain entertainment and fun elements and is not intended for commercial use. We do not take any responsibility for the stability and final results of the project.**
 
@@ -9,13 +9,14 @@ The default README language for Nightmare projects is English, if you want to ch
    - [Nightmare 中文文档](README_ZH.md)
 
 ## Table of Contents
-If you only want to experience the project simply, you can refer to the first and second parts without understanding the underlying principles. If you are learning C# or Unity, we recommend reading our entire documentation to familiarize yourself with the operation logic and mechanisms of FPS-Demo for reference and learning.
+If you only want to experience the project simply, you can refer to the first and second parts without understanding the underlying principles. If you are learning C# or Unity, we recommend reading our entire documentation to familiarize yourself with the operation logic and mechanisms of Nightmare for reference and learning.
 #### Part One - [Download and Usage](#section1)
 #### Part Two - [Operation Mode](#section2)
 #### Part Three - [Implementation of Firearms](#section3)
 #### Part Four - [Implementation of Enemies](#section4)
 #### Part Five - [Scene Implementation](#section5)
-#### Part Six - [Material Usage](#section6)
+#### Part Six - [Archive System](#section6)
+#### Part Seven - [Material Usage](#section7)
 
 <h2 id="section1">Download and Usage</h2>
 
@@ -23,11 +24,14 @@ If you only want to experience the project simply, you can refer to the first an
 Generally, we recommend users to directly go to the `Releases` page to download the packaged game software corresponding to the operating version, instead of directly downloading the source code in `Code - DownloadZip`.
 
 ### Launch
-FPS-Demo has different installation methods on different operating systems. Please follow the instructions below after downloading the software for your architecture:
+Nightmare has different installation methods on different operating systems. Please follow the instructions below after downloading the software for your architecture:
+
 #### MacOS
-If you are using MacOS, you can directly move the downloaded software to `Finder-Sidebar-Applications` or `Users/(Your Username)/Application`. If all goes well, you will see it in the Launchpad. Clicking the left mouse button will open it, and you can force exit the game by clicking `Esc - Quit Game` in the game or pressing `[LeftCommand] + [Q]` on any interface.
+If you are using MacOS, you can directly move the downloaded software to `Finder-Sidebar-Applications` or `Users/(Your Username)/Application`. If all goes well, you will see it in the Launchpad. Clicking the left mouse button will open it, and you can force exit the game by clicking `Esc - Quit Game` in the game.
+
 #### Windows
 If you are using Windows, you will typically receive a folder. If you want to launch the program directly, you can enter the folder and open `Nightmare.exe`. For a better launch experience, you can manually move the folder to the default download folder or a custom path, i.e., `C:\Program Files\`, and add a shortcut to the desktop.
+
 #### Linux
 If you're using the Linux operating system, first ensure that the Unity game folder you've downloaded contains a Linux platform executable file. Typically, this file won't have a .exe extension but will be an executable file without any extension, and you might need to manually grant it execution permissions. Here's how to install and start the game: 
 1. Grant Execution Permission: Open the terminal and use the cd command to navigate to the game folder's location. Then, use the chmod command to grant the main game executable file execution permissions. Assuming the main executable file is named Nightmare, you can use the following command:
@@ -45,12 +49,12 @@ For convenience, you may also create a desktop shortcut or add the game to your 
 <h2 id="section2">Operation Mode</h2>
 
 ### Input Devices
-Nightmare supports most keyboards, mice, and gamepads. Generally speaking, as long as the keyboard, mouse, and gamepad can function normally within the system, the game can automatically recognize all supported input devices. The FPS-Demo has the following requirements for input devices:
+Nightmare supports most keyboards, mice, and gamepads. Generally speaking, as long as the keyboard, mouse, and gamepad can function normally within the system, the game can automatically recognize all supported input devices. The Nightmare has the following requirements for input devices:
    - Keyboard: At least 60 keys, including basic function and auxiliary keys.
    - Mouse: Must include at least a left and right button, along with a scroll wheel.
    - Gamepad: It is recommended to use Xbox or PlayStation controllers. Other layouts have not been tested, and their feasibility and usability are not guaranteed.
  
-***Note: FPS-Demo can connect multiple gamepads and keyboards simultaneously and supports simultaneous input. Once a gamepads is recognized, the game will automatically adjust the input sensitivity and aiming mode. Therefore, we do not recommend using a keyboard to play the game when a gamepad is connected.**
+***Note: Nightmare can connect multiple gamepads and keyboards simultaneously and supports simultaneous input. Once a gamepads is recognized, the game will automatically adjust the input sensitivity and aiming mode. Therefore, we do not recommend using a keyboard to play the game when a gamepad is connected.**
 
 ### Character Movement
 Nightmare utilizes universally common and logical input key bindings. You can perform actions for the player using the following keys:
@@ -61,7 +65,7 @@ Nightmare utilizes universally common and logical input key bindings. You can pe
    - Press `[Tap]` or `[Left Shoulder] & [Right Shoulder]` to roll.
 
 ### Weapon Operation
-All weapons in Nightmare use a unified operating logic. Shooting is achieved through the left mouse button, and for fully automatic weapons, holding down the left mouse button allows for continuous firing. Aiming in FPS-Demo can be done by either clicking or holding down the right mouse button, and you can switch control methods in the settings. Control the weapons with the following keys:
+All weapons in Nightmare use a unified operating logic. Shooting is achieved through the left mouse button, and for fully automatic weapons, holding down the left mouse button allows for continuous firing. Aiming in Nightmare can be done by either clicking or holding down the right mouse button, and you can switch control methods in the settings. Control the weapons with the following keys:
    - Press `[I]/[Button North]` to inspect.
    - Press `[R]/[Button East]` to reload.
    - Press `[C]/[D-Pad Left]` to toggle the flashlight on and off.
@@ -79,7 +83,7 @@ In Nightmare, if you want to pick up weapons or interactable objects, you need t
 ***Note: The weapon inventory is limited to 3, meaning if you already have 3 weapons, you will not be able to pick up a new one.**
 
 ### Health Regeneration
-In Nightmare, the only way to regenerate health currently is by consuming food. If you want to regenerate health through food, you need to pick up the food (for the method, please refer to `/Operation Mode - Object Dropping and Picking Up/`). The character will automatically consume the food after you pick it up. During the consumption of the food, you will hear sound cues, and the health will continuously increase. Currently, the FPS-Demo supports a variety of foods, each with different amounts of health regeneration and chewing times.  
+In Nightmare, the only way to regenerate health currently is by consuming food. If you want to regenerate health through food, you need to pick up the food (for the method, please refer to `/Operation Mode - Object Dropping and Picking Up/`). The character will automatically consume the food after you pick it up. During the consumption of the food, you will hear sound cues, and the health will continuously increase. Currently, the Nightmare supports a variety of foods, each with different amounts of health regeneration and chewing times.  
   
 ***Note: Note: Only one food item can be consumed at a time.**
 
@@ -109,13 +113,18 @@ In Nightmare, the interactive UI elements are divided into two types: buttons an
 
 When the mouse pointer enters the range, the button/checkbox turns white and plays a prompt sound. Clicking a button will directly perform the corresponding action, while clicking a checkbox will toggle its state.
 
+### Automatic Archiving System
+The archiving system of Nightmare is automatic, fast, and requires no manual intervention. As long as you end the game through normal means, Nightmare will automatically save your progress upon exit, and will restore to the last save point when you start the game again next time. To delete a save, please click `Main Page - Clear Archive` or `Esc - Clear Archive`. After clearing the archive, it will automatically return to the main page. It is normal for there to be no response when clicking `Clear Archive` on the main page.
+
+***Note: Under certain abnormal forced exits, the auto-save feature will not work.**
+
 ### Multiple Ending System
 Nightmare features multiple endings, where any action or choice made in the game can affect the final outcome. Including the normal death scenario, Nightmare has 4 regular endings and 2 secret endings, and we look forward to players exploring these endings on their own.
 
 <h2 id="section3">Implementation of Firearms</h2>
 
 ### Implementation of Firearms
-All firearms in Nightmare are rendered separately from the scene, overlaying the depth view of the Player layer rendered by Gun Camera on top of Main Camera. Thus, all firearms in FPS-Demo can never penetrate through scene objects.
+All firearms in Nightmare are rendered separately from the scene, overlaying the depth view of the Player layer rendered by Gun Camera on top of Main Camera. Thus, all firearms in Nightmare can never penetrate through scene objects.
 
 ### Shooting Judgment
 Nightmare uses two systems for judgment. For hit detection and damage deduction on enemies, it uses Physics.Raycast (ray detection) emitted from the gun muzzle. For the generation of bullet holes and interactive objects in the scene (such as oil drums, gas cylinders), and bullet holes, it uses real bullets based on Rigidbody physics, applying initial velocity to the bullets, and uses geometric node-based collision to determine impacts.
@@ -178,8 +187,24 @@ In the Nightmare scene, oil drums and gas cylinders can interact with bullets an
 ### Special Scenes
 Some specific scenes in Nightmare will have certain effects on the player. For example, in water, players will be forced to crouch, cannot jump, and will play the sound of moving in water when moving. For all scenes entered by the player and at this time the height of the ceiling is less than the standing height of the player, the player will be forced to crouch. Even if the user releases `[Control]/[Left Shoulder]`, as long as the user does not press `[Control]/[Left Shoulder]` after leaving the scene, the player will automatically re-enter the standing state.
 
-<h2 id="section6">Material Usage</h2>
-The FPS-Demo has utilized a certain amount of open-source materials, covering most of the modeling, animation, and a very small number of prefabs. We express our admiration for the selfless open-source spirit of these material creators. The project has utilized the following materials:
+<h2 id="section6">Archive System</h2>
+
+### System Overview
+The save system of Nightmare adopts a simple and efficient method to save and load players' game progress. By serializing the player's position, health value, weapon status, and other information into JSON format and saving it to a file, the game's save and load functions are implemented. This not only ensures data persistence but also facilitates data management and migration.
+
+### Creation of Save Files
+To exit the game, users need to press the `Esc` key or switch window focus. Nightmare will capture and listen to these actions and automatically trigger the save process when these behaviors occur, theoretically covering all possible situations except for force quitting. This process involves collecting various information about the current game state, including but not limited to the player's position, character's orientation, current health value, weapons owned and their statuses (such as current ammo), enemy statuses, and other factors that may affect game progress. This information will be serialized and saved to a local file so that these states can be reloaded later.
+
+### Loading Saves
+When a player starts the game and a save file has already been saved, the game will read the previously saved save file and deserialize the information in the save, restoring the game state to the state at the time of the save. This means that the player's position, health value, weapon status, enemies' positions and statuses, and more will be restored, allowing players to continue the game from the exact point they left off.
+
+### Clearing Saves
+Players may wish to restart the game or need to clear existing saves in some cases. For this, we provide a feature to clear saves, allowing players to delete the current save file. You can find it in `Main Menu - Clear Saves` or `Esc - Clear Saves`. Nightmare will first ensure that the save file exists before performing the operation; otherwise, it will not proceed.
+
+***Note: Clearing saves through `Esc - Clear Saves` will automatically return to the main menu to prevent the save from being automatically saved again.**
+
+<h2 id="section7">Material Usage</h2>
+The Nighmare has utilized a certain amount of open-source materials, covering most of the modeling, animation, and a very small number of prefabs. We express our admiration for the selfless open-source spirit of these material creators. The project has utilized the following materials:
 
    - Low Poly FPS Pack
    - Flooded Grounds Map Model

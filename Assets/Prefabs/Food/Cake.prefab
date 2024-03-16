@@ -263,7 +263,7 @@ GameObject:
   - component: {fileID: 934408905734486474}
   m_Layer: 0
   m_Name: Cake
-  m_TagString: Untagged
+  m_TagString: Food
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
