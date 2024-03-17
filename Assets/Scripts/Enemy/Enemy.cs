@@ -96,16 +96,6 @@ public class Enemy : MonoBehaviour
 
         // 游戏一开始就进入巡逻状态
         TransitionToState(patrolState);
-
-        // 判断是否死亡
-        if(isDead){
-            // 隐藏血量条
-            slider.gameObject.SetActive(false);
-            // 如果死亡，停止移动
-            agent.isStopped = true;
-            // 播放死亡动画
-            animator.SetTrigger("dying");
-        }
     }
 
 
@@ -148,6 +138,8 @@ public class Enemy : MonoBehaviour
             slider.gameObject.SetActive(false);
             // 如果死亡，停止移动
             agent.isStopped = true;
+            // 播放死亡动画
+            animator.SetTrigger("dying");
         }
 
         // 判断玩家到敌人的距离
