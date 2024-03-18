@@ -32,7 +32,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 4005921527480207417}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5818182}
+  m_AnchorMin: {x: 0, y: 0.18512398}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
@@ -896,7 +896,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: -510}
+  m_AnchoredPosition: {x: 0, y: 200}
   m_SizeDelta: {x: -90, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8611430267223595695
@@ -941,9 +941,11 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\t- \u4F7F\u7528 `[WASD]/[Left Stick]` \u952E\u5B9E\u73B0\u5E73\u9762\u79FB\u52A8\n\t-
-    \u6309 `[SPACE]/[Button West]` \u952E\u5B9E\u73B0\u8DF3\u8DC3\n\t- \u6309 `[Shift]/[Right
-    Shoulder]` \u952E\u5B9E\u73B0\u5954\u8DD1\u4EE5\u589E\u52A0\u901F\u5EA6\n\t-
-    \u6309 `[Control]/[Left Shoulder]` \u952E\u5B9E\u73B0\u4E0B\u8E72\u4EE5\u964D\u4F4E\u79FB\u52A8\u58F0\u97F3\u5E76\u51CF\u5C0F\u901F\u5EA6\n\t-
+    \u4F7F\u7528 `[Left Button]/[Right Trigger]` \u5C04\u51FB\n\t- \u4F7F\u7528 `[Right
+    Button]/[Alt]/[Option]/[Left Trigger]` \u7784\u51C6\n\t- \u6309 `[SPACE]/[Button
+    West]` \u952E\u5B9E\u73B0\u8DF3\u8DC3\n\t- \u6309 `[Shift]/[Right Shoulder]`
+    \u952E\u5B9E\u73B0\u5954\u8DD1\u4EE5\u589E\u52A0\u901F\u5EA6\n\t- \u6309 `[Control]/[Left
+    Shoulder]` \u952E\u5B9E\u73B0\u4E0B\u8E72\u4EE5\u964D\u4F4E\u79FB\u52A8\u58F0\u97F3\u5E76\u51CF\u5C0F\u901F\u5EA6\n\t-
     \u6309 `[Tap]` \u952E\u6216 `[Left Shoulder]&[Right Shoulder]` \u952E\u5B9E\u73B0\u7FFB\u6EDA\n\t-
     \u6309 `[I]/[Button North]` \u952E\u8FDB\u884C\u68C0\u89C6\n\t- \u6309 `[R]/[Button
     East]` \u952E\u8FDB\u884C\u6362\u5F39\n\t- \u6309 `[C]/[D-Pad Left]` \u952E\u53EF\u4EE5\u5F00\u5173\u5B89\u88C5\u5728\u67AA\u68B0\u4E0A\u7684\u624B\u7535\u7B52\n\t-
@@ -1249,7 +1251,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 8621344977376606425}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.41818178
+  m_Size: 0.814876
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -3099,7 +3101,6 @@ MonoBehaviour:
   controller: {fileID: 6157932770557797457}
   movementAudioSource: {fileID: 4479592160764324334}
   auxiliaryAudioSource: {fileID: 8509618559586661147}
-  cemara: {fileID: 5936723126529206130}
   standHeight: 2
   crouchHeight: 0.5
   crouchSpeed: 3
@@ -3175,6 +3176,10 @@ MonoBehaviour:
   - {fileID: 5250930996011677644}
   - {fileID: 8606866264242619995}
   - {fileID: 6061389223434244351}
+  pickUpItems: []
+  foods: []
+  explosiveBarrels: []
+  gasTanks: []
 --- !u!82 &4479592160764324334
 AudioSource:
   m_ObjectHideFlags: 0

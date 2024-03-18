@@ -511,6 +511,17 @@ public partial class @InputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""6dd9e68e-a872-426d-9236-d0c5fea3b626"",
+                    ""path"": ""<Keyboard>/alt"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Mouse Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""edcd41c4-a4ab-4ca6-ad23-3dd4a9f7a035"",
                     ""path"": ""<Keyboard>/x"",
                     ""interactions"": """",
